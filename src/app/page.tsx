@@ -5,11 +5,19 @@ import Contact from '@/components/Contact';
 
 export default function Home() {
   return (
-    <>
-      <Hero />
-      <Experience />
-      <Projects />
-      <Contact />
-    </>
+    <main className="min-h-screen">
+      <section id="hero" aria-label="Hero section">
+        <Hero />
+      </section>
+      <section id="experience" aria-label="Work experience">
+        <Experience />
+      </section>
+      <section id="projects" aria-label="Portfolio projects">
+        <Projects />
+      </section>
+      <section id="contact" aria-label="Contact information">
+        <Contact />
+      </section>
+    </main>
   );
 }

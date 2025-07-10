@@ -114,25 +114,31 @@ function ExperienceCard({
       className="relative"
     >
       {/* Timeline dot */}
-      <div className="border-background absolute top-6 -left-0.5 size-5 rounded-full border-4 bg-purple-500"></div>
+      <div
+        className="border-background absolute top-6 -left-0.5 size-5 rounded-full border-4 bg-purple-500"
+        aria-hidden="true"
+      ></div>
 
       {/* Content */}
       <div className="ml-8 pb-12">
         <div className="bg-card/30 border-border/50 rounded-lg border p-6">
           {/* Header */}
-          <div className="mb-4">
+          <header className="mb-4">
             <div className="mb-2 flex items-start justify-between">
               <h3 className="text-foreground text-xl font-bold">
                 {experience.title}
               </h3>
-              <span className="ml-4 text-sm whitespace-nowrap text-purple-400">
+              <time
+                className="ml-4 text-sm whitespace-nowrap text-purple-400"
+                dateTime={experience.period}
+              >
                 {experience.period}
-              </span>
+              </time>
             </div>
             <p className="text-muted-foreground text-sm">
               {experience.organization}
             </p>
-          </div>
+          </header>
 
           {/* Description */}
           <p className="text-muted-foreground mb-6 leading-relaxed">
@@ -140,17 +146,20 @@ function ExperienceCard({
           </p>
 
           {/* Highlights */}
-          <div className="mb-6">
+          <section className="mb-6">
             <h4 className="text-foreground mb-3 text-sm font-medium">
               Key Highlights
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-2" role="list">
               {experience.highlights.slice(0, 3).map((highlight, idx) => (
                 <li
                   key={idx}
                   className="text-muted-foreground flex items-center text-sm"
                 >
-                  <span className="mr-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400" />
+                  <span
+                    className="mr-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400"
+                    aria-hidden="true"
+                  />
                   {highlight}
                 </li>
               ))}
@@ -176,25 +185,30 @@ function ExperienceCard({
                 </li>
               )}
             </ul>
-          </div>
+          </section>
 
           {/* Technologies */}
           {experience.technologies && (
-            <div>
+            <section>
               <h4 className="text-foreground mb-3 text-sm font-medium">
                 Technologies
               </h4>
-              <div className="flex flex-wrap gap-2">
+              <div
+                className="flex flex-wrap gap-2"
+                role="list"
+                aria-label="Technologies used"
+              >
                 {experience.technologies.map((tech, idx) => (
                   <span
                     key={idx}
                     className="bg-muted/50 border-border rounded border px-2 py-1 text-xs text-white"
+                    role="listitem"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
-            </div>
+            </section>
           )}
         </div>
       </div>
@@ -204,7 +218,11 @@ function ExperienceCard({
 
 export default function Experience() {
   return (
-    <section className="bg-background py-20">
+    <section
+      id="experience"
+      className="bg-background py-20"
+      aria-label="Work experience and education"
+    >
       <div className="container mx-auto px-4 md:px-6">
         {/* Section Header */}
         <motion.div
@@ -225,16 +243,25 @@ export default function Experience() {
         {/* Timeline */}
         <div className="relative mx-auto max-w-3xl">
           {/* Vertical line */}
-          <div className="bg-border absolute top-0 bottom-12 left-2 w-px"></div>
+          <div
+            className="bg-border absolute top-0 bottom-12 left-2 w-px"
+            aria-hidden="true"
+          ></div>
 
           {/* Experience items */}
-          <div className="space-y-0">
+          <div
+            className="space-y-0"
+            role="list"
+            aria-label="Work experience timeline"
+          >
             {experiences.map((experience, index) => (
-              <ExperienceCard
+              <article
                 key={experience.id}
-                experience={experience}
-                index={index}
-              />
+                role="listitem"
+                aria-label={`Experience: ${experience.title} at ${experience.organization}`}
+              >
+                <ExperienceCard experience={experience} index={index} />
+              </article>
             ))}
           </div>
         </div>

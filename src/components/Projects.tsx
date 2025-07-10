@@ -112,7 +112,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       viewport={{ once: true }}
       className="bg-card/30 border-border/50 flex h-full flex-col rounded-lg border p-6"
     >
-      <div className="flex flex-1 flex-col">
+      <header className="flex flex-1 flex-col">
         {/* Header */}
         <div className="mb-4">
           <h3 className="text-foreground mb-1 text-xl font-bold">
@@ -127,17 +127,20 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </p>
 
         {/* Key Features */}
-        <div className="mb-6">
+        <section className="mb-6">
           <h4 className="text-foreground mb-3 text-sm font-medium">
             Key Features
           </h4>
-          <ul className="space-y-2">
+          <ul className="space-y-2" role="list">
             {project.features.slice(0, 3).map((feature, idx) => (
               <li
                 key={idx}
                 className="text-muted-foreground flex items-center text-sm"
               >
-                <span className="mr-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400" />
+                <span
+                  className="mr-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400"
+                  aria-hidden="true"
+                />
                 {feature}
               </li>
             ))}
@@ -161,46 +164,56 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               </li>
             )}
           </ul>
-        </div>
+        </section>
 
         {/* Technologies */}
-        <div className="mb-6 flex-1">
+        <section className="mb-6 flex-1">
           <h4 className="text-foreground mb-3 text-sm font-medium">
             Technologies
           </h4>
-          <div className="flex flex-wrap gap-2">
+          <div
+            className="flex flex-wrap gap-2"
+            role="list"
+            aria-label="Technologies used"
+          >
             {project.technologies.map((tech, idx) => (
               <span
                 key={idx}
                 className="bg-muted/50 border-border rounded border px-2 py-1 text-xs text-white"
+                role="listitem"
               >
                 {tech}
               </span>
             ))}
           </div>
-        </div>
-      </div>
+        </section>
+      </header>
 
       {/* Action Buttons */}
-      <div className="mt-auto">
+      <footer className="mt-auto">
         {project.liveUrl ? (
           <CTAButton
             isAnchor={true}
             url={project.liveUrl}
             text="View Live"
             variant="outlined"
+            aria-label={`View live project: ${project.title}`}
           />
         ) : (
           <CTAButton text="Coming Soon" variant="outlined" disabled={true} />
         )}
-      </div>
+      </footer>
     </motion.div>
   );
 }
 
 export default function Projects() {
   return (
-    <section id="projects" className="bg-background py-20">
+    <section
+      id="projects"
+      className="bg-background py-20"
+      aria-label="Portfolio projects"
+    >
       <div className="container mx-auto px-4 md:px-6">
         {/* Section Header */}
         <motion.div
@@ -222,9 +235,19 @@ export default function Projects() {
         </motion.div>
 
         {/* Projects Grid */}
-        <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div
+          className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2"
+          role="list"
+          aria-label="Project portfolio"
+        >
           {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <article
+              key={project.id}
+              role="listitem"
+              aria-label={`Project: ${project.title}`}
+            >
+              <ProjectCard project={project} index={index} />
+            </article>
           ))}
         </div>
 
@@ -243,8 +266,9 @@ export default function Projects() {
             text="Start a Project"
             variant="filled"
             onClick={() => {
-              // TODO: Add contact form or email link
-              console.log('Start project clicked');
+              document
+                .querySelector('#contact')
+                ?.scrollIntoView({ behavior: 'smooth' });
             }}
           />
         </motion.div>

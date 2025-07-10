@@ -59,7 +59,11 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="bg-background py-20">
+    <section
+      id="contact"
+      className="bg-background py-20"
+      aria-label="Contact information and form"
+    >
       <div className="container mx-auto px-4 md:px-6">
         {/* Section Header */}
         <motion.div
@@ -240,14 +244,18 @@ export default function Contact() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="space-y-6"
+                  aria-label="Contact form"
+                >
                   {/* Full Name */}
                   <div>
                     <label
                       htmlFor="fullName"
                       className="mb-2 block text-sm text-white"
                     >
-                      Full Name
+                      Full Name *
                     </label>
                     <input
                       type="text"
@@ -259,9 +267,17 @@ export default function Contact() {
                           : 'border-border focus:border-purple-500'
                       }`}
                       placeholder="John Doe"
+                      required
+                      aria-describedby={
+                        errors.fullName ? 'fullName-error' : undefined
+                      }
                     />
                     {errors.fullName && (
-                      <p className="mt-1 text-sm text-red-400">
+                      <p
+                        id="fullName-error"
+                        className="mt-1 text-sm text-red-400"
+                        role="alert"
+                      >
                         {errors.fullName.message}
                       </p>
                     )}
@@ -274,7 +290,7 @@ export default function Contact() {
                         htmlFor="email"
                         className="mb-2 block text-sm text-white"
                       >
-                        Email
+                        Email *
                       </label>
                       <input
                         type="email"
@@ -286,9 +302,17 @@ export default function Contact() {
                             : 'border-border focus:border-purple-500'
                         }`}
                         placeholder="john@example.com"
+                        required
+                        aria-describedby={
+                          errors.email ? 'email-error' : undefined
+                        }
                       />
                       {errors.email && (
-                        <p className="mt-1 text-sm text-red-400">
+                        <p
+                          id="email-error"
+                          className="mt-1 text-sm text-red-400"
+                          role="alert"
+                        >
                           {errors.email.message}
                         </p>
                       )}
@@ -311,9 +335,16 @@ export default function Contact() {
                             : 'border-border focus:border-purple-500'
                         }`}
                         placeholder="+359 123 456 789"
+                        aria-describedby={
+                          errors.phone ? 'phone-error' : undefined
+                        }
                       />
                       {errors.phone && (
-                        <p className="mt-1 text-sm text-red-400">
+                        <p
+                          id="phone-error"
+                          className="mt-1 text-sm text-red-400"
+                          role="alert"
+                        >
                           {errors.phone.message}
                         </p>
                       )}
@@ -326,7 +357,7 @@ export default function Contact() {
                       htmlFor="message"
                       className="mb-2 block text-sm text-white"
                     >
-                      Message
+                      Message *
                     </label>
                     <textarea
                       id="message"
@@ -338,9 +369,17 @@ export default function Contact() {
                           : 'border-border focus:border-purple-500'
                       }`}
                       placeholder="What do you want to discuss?"
+                      required
+                      aria-describedby={
+                        errors.message ? 'message-error' : undefined
+                      }
                     />
                     {errors.message && (
-                      <p className="mt-1 text-sm text-red-400">
+                      <p
+                        id="message-error"
+                        className="mt-1 text-sm text-red-400"
+                        role="alert"
+                      >
                         {errors.message.message}
                       </p>
                     )}
@@ -353,6 +392,11 @@ export default function Contact() {
                       variant="filled"
                       disabled={isSubmitting}
                       className="px-12"
+                      aria-label={
+                        isSubmitting
+                          ? 'Sending message...'
+                          : 'Send contact message'
+                      }
                     />
                   </div>
                 </form>
