@@ -98,7 +98,7 @@ export default function Hero() {
                       stiffness: 150,
                       damping: 25,
                     }}
-                    className="inline-block bg-gradient-to-br from-white via-purple-300 to-purple-500 bg-clip-text font-black text-transparent drop-shadow-sm"
+                    className="inline-block bg-gradient-to-br from-white via-purple-200 to-purple-500 bg-clip-text font-black text-transparent drop-shadow-sm"
                   >
                     {letter}
                   </motion.span>
@@ -114,9 +114,9 @@ export default function Hero() {
             transition={{ delay: 1.5, duration: 0.8 }}
             className="mx-auto mb-12 max-w-3xl text-lg text-gray-300 sm:text-xl md:text-2xl"
           >
-            I specialize in building custom e-commerce platforms, content
-            management systems, and admin dashboards that give you complete
-            control over your business.
+            I specialize in building custom websites, e-commerce platforms,
+            content management systems, and admin dashboards that give you
+            complete control over your business.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -130,16 +130,18 @@ export default function Hero() {
               text="Contact Me"
               variant="filled"
               onClick={() => {
-                // TODO: Add contact form or email link
-                console.log('Contact clicked');
+                document
+                  .querySelector('#contact')
+                  ?.scrollIntoView({ behavior: 'smooth' });
               }}
             />
             <CTAButton
               text="View My Work"
               variant="outlined"
               onClick={() => {
-                // TODO: Add scroll to work section or navigation
-                console.log('View work clicked');
+                document
+                  .querySelector('#projects')
+                  ?.scrollIntoView({ behavior: 'smooth' });
               }}
             />
           </motion.div>

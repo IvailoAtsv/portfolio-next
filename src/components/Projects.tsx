@@ -200,7 +200,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 export default function Projects() {
   return (
-    <section className="bg-background py-20">
+    <section id="projects" className="bg-background py-20">
       <div className="container mx-auto px-4 md:px-6">
         {/* Section Header */}
         <motion.div
