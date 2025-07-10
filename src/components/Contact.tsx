@@ -2,111 +2,59 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import CTAButton from './ui/CTAButton';
 import Link from 'next/link';
-
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  websiteType: string;
-  message: string;
-}
-
-interface FormErrors {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  phone?: string;
-  websiteType?: string;
-  message?: string;
-}
+import { contactFormSchema, type ContactFormData } from '@/lib/contact-schema';
 
 export default function Contact() {
-  const [formData, setFormData] = useState<FormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    websiteType: '',
-    message: '',
-  });
-  const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      fullName: '',
+      email: '',
+      phone: '',
+      message: '',
+    },
+  });
 
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
-    }
-
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone is required';
-    }
-
-    if (!formData.websiteType) {
-      newErrors.websiteType = 'Please select a website type';
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) return;
-
+  const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        websiteType: '',
-        message: '',
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
-    }, 3000);
-  };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
 
-    // Clear error when user starts typing
-    if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }));
+      setIsSubmitted(true);
+      reset();
+
+      // Reset success state after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 3000);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      // You could add a toast notification here for error handling
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -292,36 +240,31 @@ export default function Contact() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* First Name and Last Name */}
-                  <div className="grid grid-cols-1">
-                    <div>
-                      <label
-                        htmlFor="firstName"
-                        className="mb-2 block text-sm text-white"
-                      >
-                        {errors.firstName ? (
-                          <p className="mt-1 text-sm text-red-400">
-                            {errors.firstName}
-                          </p>
-                        ) : (
-                          'Full Name'
-                        )}
-                      </label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                        className={`text-foreground placeholder-muted-foreground w-full border-0 border-b-2 bg-transparent pt-1 pb-2 transition-colors focus:outline-none ${
-                          errors.firstName
-                            ? 'border-red-500 focus:border-red-500'
-                            : 'border-border focus:border-purple-500'
-                        }`}
-                        placeholder="John Doe"
-                      />
-                    </div>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  {/* Full Name */}
+                  <div>
+                    <label
+                      htmlFor="fullName"
+                      className="mb-2 block text-sm text-white"
+                    >
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      {...register('fullName')}
+                      className={`text-foreground placeholder-muted-foreground w-full rounded-b-md border-0 border-b-2 border-l-2 p-2 transition-colors focus:outline-none ${
+                        errors.fullName
+                          ? 'border-red-500 focus:border-red-500'
+                          : 'border-border focus:border-purple-500'
+                      }`}
+                      placeholder="John Doe"
+                    />
+                    {errors.fullName && (
+                      <p className="mt-1 text-sm text-red-400">
+                        {errors.fullName.message}
+                      </p>
+                    )}
                   </div>
 
                   {/* Email and Phone */}
@@ -331,27 +274,24 @@ export default function Contact() {
                         htmlFor="email"
                         className="mb-2 block text-sm text-white"
                       >
-                        {errors.email ? (
-                          <p className="mt-1 text-sm text-red-400">
-                            {errors.email}
-                          </p>
-                        ) : (
-                          'Email'
-                        )}
+                        Email
                       </label>
                       <input
                         type="email"
                         id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className={`text-foreground placeholder-muted-foreground w-full border-0 border-b-2 bg-transparent pt-1 pb-2 transition-colors focus:outline-none ${
+                        {...register('email')}
+                        className={`text-foreground placeholder-muted-foreground w-full rounded-b-md border-0 border-b-2 border-l-2 p-2 transition-colors focus:outline-none ${
                           errors.email
                             ? 'border-red-500 focus:border-red-500'
                             : 'border-border focus:border-purple-500'
                         }`}
                         placeholder="john@example.com"
                       />
+                      {errors.email && (
+                        <p className="mt-1 text-sm text-red-400">
+                          {errors.email.message}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -359,27 +299,24 @@ export default function Contact() {
                         htmlFor="phone"
                         className="mb-2 block text-sm text-white"
                       >
-                        {errors.phone ? (
-                          <p className="mt-1 text-sm text-red-400">
-                            {errors.phone}
-                          </p>
-                        ) : (
-                          'Phone'
-                        )}
+                        Phone
                       </label>
                       <input
                         type="tel"
                         id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className={`text-foreground placeholder-muted-foreground w-full border-0 border-b-2 bg-transparent pt-1 pb-2 transition-colors focus:outline-none ${
+                        {...register('phone')}
+                        className={`text-foreground placeholder-muted-foreground w-full rounded-b-md border-0 border-b-2 border-l-2 p-2 transition-colors focus:outline-none ${
                           errors.phone
                             ? 'border-red-500 focus:border-red-500'
                             : 'border-border focus:border-purple-500'
                         }`}
                         placeholder="+359 123 456 789"
                       />
+                      {errors.phone && (
+                        <p className="mt-1 text-sm text-red-400">
+                          {errors.phone.message}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -389,26 +326,24 @@ export default function Contact() {
                       htmlFor="message"
                       className="mb-2 block text-sm text-white"
                     >
-                      {errors.message ? (
-                        <p className="mt-1 text-sm text-red-400">
-                          {errors.message}
-                        </p>
-                      ) : (
-                        'Message'
-                      )}
+                      Message
                     </label>
                     <textarea
                       id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      className={`text-foreground placeholder-muted-foreground w-full border-0 border-b-2 bg-transparent pt-1 pb-2 transition-colors focus:outline-none ${
+                      {...register('message')}
+                      rows={4}
+                      className={`text-foreground placeholder-muted-foreground w-full rounded-b-md border-0 border-b-2 border-l-2 p-2 transition-colors focus:outline-none ${
                         errors.message
                           ? 'border-red-500 focus:border-red-500'
                           : 'border-border focus:border-purple-500'
                       }`}
                       placeholder="What do you want to discuss?"
                     />
+                    {errors.message && (
+                      <p className="mt-1 text-sm text-red-400">
+                        {errors.message.message}
+                      </p>
+                    )}
                   </div>
 
                   {/* Submit Button */}
