@@ -1,0 +1,164 @@
+@import 'tailwindcss';
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #f8fafc;
+  --primary: #8b5cf6;
+  --primary-foreground: #ffffff;
+  --secondary: #1e1b4b;
+  --secondary-foreground: #f1f5f9;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #7c3aed;
+  --accent-foreground: #ffffff;
+  --border: #334155;
+  --input: #1e293b;
+  --ring: #8b5cf6;
+  --card: #0f172a;
+  --card-foreground: #f8fafc;
+  --popover: #0f172a;
+  --popover-foreground: #f8fafc;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+
+  /* Neon colors */
+  --neon-purple: #a855f7;
+  --neon-cyan: #06b6d4;
+  --neon-pink: #ec4899;
+  --neon-green: #10b981;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  --gradient-neon: linear-gradient(
+    135deg,
+    #a855f7 0%,
+    #06b6d4 50%,
+    #ec4899 100%
+  );
+  --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  /* Custom neon colors */
+  --color-neon-purple: var(--neon-purple);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-pink: var(--neon-pink);
+  --color-neon-green: var(--neon-green);
+
+  /* Font families */
+  --font-sans:
+    ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo,
+    monospace;
+
+  /* Spacing and sizing */
+  --radius: 0.5rem;
+
+  /* Animation */
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow:
+      0 0 5px #a855f7,
+      0 0 10px #a855f7,
+      0 0 15px #a855f7;
+  }
+  to {
+    text-shadow:
+      0 0 10px #a855f7,
+      0 0 20px #a855f7,
+      0 0 30px #a855f7;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+/* Custom utility classes */
+.glow-text {
+  animation: var(--animate-glow);
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.bg-gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.bg-gradient-neon {
+  background: var(--gradient-neon);
+}
+
+.bg-gradient-dark {
+  background: var(--gradient-dark);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Selection styling */
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
