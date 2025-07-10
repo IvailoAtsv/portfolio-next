@@ -5,7 +5,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/private/'],
     },
     sitemap: 'https://www.ivailo.dev/sitemap.xml',
   };
