@@ -25,7 +25,6 @@ function FloatingPaths({ position }: { position: number }) {
         viewBox="0 0 696 316"
         fill="none"
       >
-        <title>Background Paths</title>
         {paths.map(path => (
           <motion.path
             key={path.id}
@@ -69,14 +68,14 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
-          className="mx-auto max-w-6xl"
+          className="container mx-auto"
         >
           {/* Greeting */}
           <motion.p
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="mb-4 text-lg font-medium text-purple-300 sm:text-xl md:text-2xl"
+            className="mb-4 text-lg font-medium text-white sm:text-xl md:text-2xl"
           >
             {greeting}
           </motion.p>
@@ -99,7 +98,7 @@ export default function Hero() {
                       stiffness: 150,
                       damping: 25,
                     }}
-                    className="inline-block bg-gradient-to-br from-white via-purple-200 to-purple-400 bg-clip-text font-black text-transparent drop-shadow-sm"
+                    className="inline-block bg-gradient-to-br from-white via-purple-300 to-purple-500 bg-clip-text font-black text-transparent drop-shadow-sm"
                   >
                     {letter}
                   </motion.span>
@@ -112,7 +111,7 @@ export default function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.2, duration: 0.8 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
             className="mx-auto mb-12 max-w-3xl text-lg text-gray-300 sm:text-xl md:text-2xl"
           >
             I specialize in building custom e-commerce platforms, content

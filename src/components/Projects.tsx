@@ -11,7 +11,7 @@ interface Project {
   description: string;
   features: string[];
   technologies: string[];
-  liveUrl: string;
+  liveUrl?: string;
   image?: string;
 }
 
@@ -36,12 +36,12 @@ const projects: Project[] = [
       'MongoDB',
       'Translation API',
     ],
-    liveUrl: 'https://bite-code.com',
+    liveUrl: 'https://www.bite-code.com',
   },
   {
     id: 'alcona-solutions',
     title: 'Alcona Solutions',
-    category: 'E-commerce CMS',
+    category: 'E-commerce CMS Platform',
     description:
       'Custom content management system and e-commerce platform for a construction materials company specializing in fences, decking, and portals.',
     features: [
@@ -53,7 +53,53 @@ const projects: Project[] = [
       'Banner management',
     ],
     technologies: ['Next.js', 'React', 'TypeScript', 'PostgreSQL', 'Stripe'],
-    liveUrl: 'https://alcona-solutions.com',
+    liveUrl: 'https://www.alcona-solutions.com',
+  },
+  {
+    id: 'melko',
+    title: 'Melko (In Progress)',
+    category: 'E-commerce CMS Platform',
+    description:
+      'Collaborated with a designer to develop a comprehensive website for one of the largest flour distributors in Bulgaria, featuring a full online store, general information, and a CMS for recipes linked to specific flours.',
+    features: [
+      'Full e-commerce functionality',
+      'Recipe CMS with flour linking',
+      'Company information sections',
+      'Product catalog management',
+      'Email integration',
+      'Admin dashboard',
+    ],
+    technologies: [
+      'Next.js',
+      'JavaScript',
+      'Tailwind CSS',
+      'Mailgun',
+      'Express',
+      'MongoDB',
+    ],
+  },
+  {
+    id: 'webdiv',
+    title: 'Webdiv',
+    category: 'Web Design Agency',
+    description:
+      'Partnered up with a designer and marketing expert to create a fully SEO-optimized web design agency website featuring detailed case studies for each project and a comprehensive CMS for blog posts to boost search rankings.',
+    features: [
+      'SEO optimization',
+      'Project case studies',
+      'Blog CMS system',
+      'Portfolio showcase',
+      'Contact forms',
+      'Performance optimization',
+    ],
+    technologies: [
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'Gray-matter',
+      'Remark',
+    ],
+    liveUrl: 'https://www.webdiv.studio',
   },
 ];
 
@@ -64,81 +110,90 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
       viewport={{ once: true }}
-      className="bg-card/30 border-border/50 rounded-lg border p-6"
+      className="bg-card/30 border-border/50 flex h-full flex-col rounded-lg border p-6"
     >
-      {/* Header */}
-      <div className="mb-4">
-        <h3 className="text-foreground mb-1 text-xl font-bold">
-          {project.title}
-        </h3>
-        <span className="text-sm text-purple-400">{project.category}</span>
-      </div>
+      <div className="flex flex-1 flex-col">
+        {/* Header */}
+        <div className="mb-4">
+          <h3 className="text-foreground mb-1 text-xl font-bold">
+            {project.title}
+          </h3>
+          <span className="text-sm text-purple-400">{project.category}</span>
+        </div>
 
-      {/* Description */}
-      <p className="text-muted-foreground mb-6 leading-relaxed">
-        {project.description}
-      </p>
+        {/* Description */}
+        <p className="text-muted-foreground mb-6 leading-relaxed">
+          {project.description}
+        </p>
 
-      {/* Key Features */}
-      <div className="mb-6">
-        <h4 className="text-foreground mb-3 text-sm font-medium">
-          Key Features
-        </h4>
-        <ul className="space-y-2">
-          {project.features.slice(0, 3).map((feature, idx) => (
-            <li
-              key={idx}
-              className="text-muted-foreground flex items-center text-sm"
-            >
-              <span className="mr-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400" />
-              {feature}
-            </li>
-          ))}
-          {project.features.length > 3 && (
-            <li className="text-sm text-purple-400">
-              <Tooltip
-                content={
-                  <div className="text-left">
-                    {project.features.slice(3).map((feature, idx) => (
-                      <div key={idx} className="flex items-center py-1">
-                        <span className="mr-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400" />
-                        {feature}
-                      </div>
-                    ))}
-                  </div>
-                }
-                delay={300}
+        {/* Key Features */}
+        <div className="mb-6">
+          <h4 className="text-foreground mb-3 text-sm font-medium">
+            Key Features
+          </h4>
+          <ul className="space-y-2">
+            {project.features.slice(0, 3).map((feature, idx) => (
+              <li
+                key={idx}
+                className="text-muted-foreground flex items-center text-sm"
               >
-                +{project.features.length - 3} more features
-              </Tooltip>
-            </li>
-          )}
-        </ul>
-      </div>
+                <span className="mr-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400" />
+                {feature}
+              </li>
+            ))}
+            {project.features.length > 3 && (
+              <li className="text-sm text-purple-400">
+                <Tooltip
+                  content={
+                    <div className="text-left">
+                      {project.features.slice(3).map((feature, idx) => (
+                        <div key={idx} className="flex items-center py-1">
+                          <span className="mr-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-purple-400" />
+                          {feature}
+                        </div>
+                      ))}
+                    </div>
+                  }
+                  delay={300}
+                >
+                  +{project.features.length - 3} more features
+                </Tooltip>
+              </li>
+            )}
+          </ul>
+        </div>
 
-      {/* Technologies */}
-      <div className="mb-6">
-        <h4 className="text-foreground mb-3 text-sm font-medium">
-          Technologies
-        </h4>
-        <div className="flex flex-wrap gap-2">
-          {project.technologies.map((tech, idx) => (
-            <span
-              key={idx}
-              className="bg-muted/50 border-border rounded border px-2 py-1 text-xs text-white"
-            >
-              {tech}
-            </span>
-          ))}
+        {/* Technologies */}
+        <div className="mb-6 flex-1">
+          <h4 className="text-foreground mb-3 text-sm font-medium">
+            Technologies
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {project.technologies.map((tech, idx) => (
+              <span
+                key={idx}
+                className="bg-muted/50 border-border rounded border px-2 py-1 text-xs text-white"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <CTAButton
-        text="View Live"
-        variant="outlined"
-        onClick={() => window.open(project.liveUrl, '_blank')}
-      />
+      <div className="mt-auto">
+        {project.liveUrl ? (
+          <CTAButton
+            isAnchor={true}
+            url={project.liveUrl}
+            text="View Live"
+            variant="outlined"
+          />
+        ) : (
+          <CTAButton text="Coming Soon" variant="outlined" disabled={true} />
+        )}
+      </div>
     </motion.div>
   );
 }
@@ -156,7 +211,7 @@ export default function Projects() {
           className="mb-16 text-center"
         >
           <h2 className="text-foreground mb-4 text-4xl font-black md:text-5xl">
-            Featured{' '}
+            Some of my{' '}
             <span className="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
               Projects
             </span>
