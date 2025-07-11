@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import CTAButton from '@/components/ui/CTAButton';
+import { ArrowDown } from 'lucide-react';
 
 function FloatingPaths({ position }: { position: number }) {
   const paths = Array.from({ length: 36 }, (_, i) => ({
@@ -13,15 +14,15 @@ function FloatingPaths({ position }: { position: number }) {
     } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
       684 - i * 5 * position
     } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-    color: `rgba(139, 92, 246, ${0.1 + i * 0.02})`, // Purple neon colors
+    color: `rgba(139, 92, 246, ${0.2 + i * 0.03})`, // Purple neon colors
     // Responsive width: thicker on mobile, thinner on desktop
     width: Math.max(1.5 + i * 0.05, 0.8 + i * 0.03),
   }));
 
   return (
-    <div className="pointer-events-none absolute inset-0">
+    <div className="pointer-events-none absolute inset-0 w-full">
       <svg
-        className="h-full w-full text-purple-400/60"
+        className="h-full w-full text-purple-400/80"
         viewBox="0 0 696 316"
         fill="none"
       >
@@ -58,7 +59,7 @@ export default function Hero() {
 
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 w-full">
         <FloatingPaths position={1} />
         <FloatingPaths position={-1} />
       </div>
@@ -81,7 +82,7 @@ export default function Hero() {
           </motion.p>
 
           {/* Main Title */}
-          <h1 className="mb-8 text-5xl leading-[0.85] font-black tracking-tight sm:text-7xl md:text-8xl lg:text-[7rem] xl:text-[9rem]">
+          <h1 className="mb-8 text-6xl leading-[0.85] font-black tracking-tight sm:text-7xl md:text-8xl lg:text-[7rem] xl:text-[9rem]">
             {mainWords.map((word, wordIndex) => (
               <span
                 key={wordIndex}
@@ -123,8 +124,8 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.8, duration: 0.8 }}
-            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+            transition={{ delay: 1.8, duration: 0.8 }}
+            className="flex flex-col items-center justify-center gap-8"
           >
             <CTAButton
               text="Contact Me"
@@ -135,14 +136,10 @@ export default function Hero() {
                   ?.scrollIntoView({ behavior: 'smooth' });
               }}
             />
-            <CTAButton
-              text="View My Work"
-              variant="outlined"
-              onClick={() => {
-                document
-                  .querySelector('#projects')
-                  ?.scrollIntoView({ behavior: 'smooth' });
-              }}
+            <ArrowDown
+              color="#fff"
+              size={32}
+              className="mt-4 animate-bounce opacity-70"
             />
           </motion.div>
         </motion.div>

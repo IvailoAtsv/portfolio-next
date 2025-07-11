@@ -20,7 +20,7 @@ export default function CTAButton({
   disabled = false,
 }: CTAButtonProps) {
   const baseClasses = `
-    group relative px-8 py-3 rounded-lg font-semibold
+    group relative flex items-center justify-center text-center px-8 py-3 rounded-lg font-semibold
     transition-all duration-300 ease-out
     hover:-translate-y-[1px] active:translate-y-0
     overflow-hidden
@@ -46,9 +46,9 @@ export default function CTAButton({
 
   const content = (
     <>
-      <span className="relative z-10 flex items-center gap-2">
+      <span className="relative z-10 flex items-center justify-center gap-2 text-center">
         {text}
-        <span className="transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110">
+        <span className="flex items-center justify-center text-center transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110">
           →
         </span>
       </span>
