@@ -79,8 +79,8 @@ const projects: Project[] = [
     ],
   },
   {
-    id: 'webdiv',
-    title: 'Webdiv',
+    id: 'astro-web-design',
+    title: 'Astro Web Design',
     category: 'Web Design Agency',
     description:
       'Partnered up with a designer and marketing expert to create a fully SEO-optimized web design agency website featuring detailed case studies for each project and a comprehensive CMS for blog posts to boost search rankings.',
@@ -99,7 +99,7 @@ const projects: Project[] = [
       'Gray-matter',
       'Remark',
     ],
-    liveUrl: 'https://www.webdiv.studio',
+    liveUrl: 'https://www.astro-web.design',
   },
 ];
 
