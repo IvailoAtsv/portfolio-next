@@ -83,7 +83,7 @@ const projects: Project[] = [
     title: 'Astro Web Design',
     category: 'Web Design Agency',
     description:
-      'Partnered up with a designer and marketing expert to create a fully SEO-optimized web design agency website featuring detailed case studies for each project and a comprehensive CMS for blog posts to boost search rankings.',
+      'Partnered up with a designer and marketing expert to create a fully SEO-optimized web design agency website featuring a comprehensive CMS for blog posts to boost search engine rankings.',
     features: [
       'SEO optimization',
       'Project case studies',
@@ -93,11 +93,12 @@ const projects: Project[] = [
       'Performance optimization',
     ],
     technologies: [
-      'Next.js',
+      'Astro.js',
       'TypeScript',
       'Tailwind CSS',
-      'Gray-matter',
-      'Remark',
+      'SEO Optimization',
+      'Content Management System',
+      'Performance Optimization',
     ],
     liveUrl: 'https://www.astro-web.design',
   },
