@@ -1,0 +1,19 @@
+src/pages/work/hlp-labs.astro
+  s_3a7d22f02f4ffb::t_25c2a8cb79f7a9 460-466
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "1711246186b9aeb047ec9a305215080c24daa8d9",
+  "prompts": {},
+  "sessions": {
+    "s_3a7d22f02f4ffb": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "a5f5a2ee-976a-4ea4-9b8a-aae12b066627",
+        "model": "grok-4.6"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    }
+  }
+}
