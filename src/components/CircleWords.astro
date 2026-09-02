@@ -1,0 +1,123 @@
+---
+interface Props {
+  id: string;
+  words: string[];
+  separator?: string;
+  repeats?: number;
+  radius: number;
+  size?: number;
+  class?: string;
+}
+
+const {
+  id,
+  words,
+  separator = '•',
+  repeats = 1,
+  radius,
+  size = 400,
+  class: className,
+} = Astro.props;
+
+const cx = size / 2;
+const cy = size / 2;
+const sequence = Array.from({ length: repeats }, () => words).flat();
+const wordCount = sequence.length;
+---
+
+<svg
+  class:list={['circle-words', className]}
+  viewBox={`0 0 ${size} ${size}`}
+  aria-hidden="true"
+  data-circle-words
+>
+  <slot name="back" />
+  <path
+    id={id}
+    data-circle-path
+    d={`M ${cx} ${cy - radius} a ${radius} ${radius} 0 1 1 0 ${radius * 2} a ${radius} ${radius} 0 1 1 0 ${-radius * 2} Z`}
+    fill="none"></path>
+  {
+    sequence.map((word, index) => (
+      <text>
+        <textPath
+          href={`#${id}`}
+          data-circle-word
+          startOffset={`${((index + 0.5) / wordCount) * 100}%`}
+          text-anchor="middle"
+        >
+          {word}
+        </textPath>
+      </text>
+    ))
+  }
+  {
+    sequence.map((_, index) => (
+      <text>
+        <textPath
+          href={`#${id}`}
+          data-circle-sep
+          startOffset={`${((index + 0.95) / wordCount) * 100}%`}
+          text-anchor="middle"
+        >
+          {separator}
+        </textPath>
+      </text>
+    ))
+  }
+  <slot />
+</svg>
+
+<script>
+  const placeOnPath = (
+    token: SVGTextPathElement,
+    center: number,
+    pathLength: number,
+  ) => {
+    const width = token.getComputedTextLength();
+    let start = ((center - width / 2) % pathLength) + pathLength;
+    start %= pathLength;
+    token.setAttribute('text-anchor', 'start');
+    token.setAttribute('startOffset', String(start));
+  };
+
+  const layoutRing = (svg: SVGSVGElement) => {
+    const path = svg.querySelector<SVGPathElement>('[data-circle-path]');
+    const words = [
+      ...svg.querySelectorAll<SVGTextPathElement>('[data-circle-word]'),
+    ];
+    const separators = [
+      ...svg.querySelectorAll<SVGTextPathElement>('[data-circle-sep]'),
+    ];
+    if (!path || words.length === 0) return;
+
+    const pathLength = path.getTotalLength();
+    if (!pathLength) return;
+
+    const wordWidths = words.map((word) => word.getComputedTextLength());
+    if (wordWidths.some((width) => width <= 0)) return;
+
+    const totalWordWidth = wordWidths.reduce((sum, width) => sum + width, 0);
+    const gap = (pathLength - totalWordWidth) / words.length;
+    if (gap <= 0) return;
+
+    let cursor = gap / 2;
+    words.forEach((word, index) => {
+      placeOnPath(word, cursor + wordWidths[index] / 2, pathLength);
+      cursor += wordWidths[index];
+      if (separators[index]) {
+        placeOnPath(separators[index], cursor + gap / 2, pathLength);
+      }
+      cursor += gap;
+    });
+  };
+
+  const layoutAllRings = () => {
+    document
+      .querySelectorAll<SVGSVGElement>('[data-circle-words]')
+      .forEach(layoutRing);
+  };
+
+  layoutAllRings();
+  void document.fonts.ready.then(layoutAllRings);
+</script>

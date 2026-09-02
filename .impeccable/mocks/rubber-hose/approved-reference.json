@@ -1,0 +1,11 @@
+{
+  "approved": true,
+  "selectedOptionId": "challenger-rubber-hose",
+  "selectedLabel": "Animated Studio Reel",
+  "buildPath": "comp",
+  "seed": "b67eb7fd",
+  "userReference": ".impeccable/mocks/rubber-hose/bouncy-beats-reference.png",
+  "qualityBoard": ".impeccable/mocks/rubber-hose/quality-board.webp",
+  "qualityHero": ".impeccable/mocks/rubber-hose/quality-hero.webp",
+  "note": "The user explicitly chose Adopt anyway and asked for a closer, more animated execution based on the attached Bouncy Beats reference."
+}

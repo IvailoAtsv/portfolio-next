@@ -1,0 +1,38 @@
+{
+  "title": "Lock the Maker Stack composition",
+  "question": "All three use the same visual world. Which structure should govern the real responsive build?",
+  "options": [
+    {
+      "id": "stacked-case-file",
+      "label": "Stacked Case File",
+      "thesis": "A large active project card carries the product, with maker evidence unfolding beneath it.",
+      "palette": ["#FFFFFF", "#0B0B0B", "#B9B9B9", "#2557FF"],
+      "materials": ["one-bit UI", "stippled gray", "fixed card stack", "cobalt focus state"],
+      "viewport": "Identity at left, one dominant HLP Labs card at right, project tabs above, and the maker layer docked below.",
+      "risk": "The most balanced option, but the split between introduction and work is more conventional.",
+      "comp": ".impeccable/mocks/decision/maker-stack.webp"
+    },
+    {
+      "id": "browse-maker-split",
+      "label": "Browse / Maker Split",
+      "thesis": "The finished interface and the thinking behind it remain visible at the same time.",
+      "palette": ["#FFFFFF", "#0B0B0B", "#B9B9B9", "#2557FF"],
+      "materials": ["one-bit UI", "stippled gray", "draggable seam", "tool-panel anatomy"],
+      "viewport": "A slim identity rail frames one enormous card split between the live HLP Labs experience and its design, system, and shipping evidence.",
+      "risk": "The strongest proof structure, but it is dense and demands careful mobile adaptation.",
+      "comp": ".impeccable/mocks/maker-stack/split-browse-maker.webp"
+    },
+    {
+      "id": "spatial-project-stack",
+      "label": "Spatial Project Stack",
+      "thesis": "All four products inhabit one navigable workspace, with the selected card opening its evidence drawer.",
+      "palette": ["#FFFFFF", "#0B0B0B", "#B9B9B9", "#2557FF"],
+      "materials": ["one-bit UI", "stippled gray", "layered project cards", "docked maker tools"],
+      "viewport": "The active HLP Labs card dominates a staggered horizontal stack while Keep Up, Sellphy, and Finance Me remain visibly within reach.",
+      "risk": "The most memorable option, but the spatial behavior must collapse intelligently rather than merely shrink on mobile.",
+      "comp": ".impeccable/mocks/maker-stack/spatial-project-stack.webp"
+    }
+  ],
+  "buildPath": {"value": "comp", "toggle": false},
+  "followup": false
+}

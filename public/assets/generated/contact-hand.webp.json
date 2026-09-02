@@ -1,0 +1,4 @@
+{
+  "prompt": "Perform a background-removal edit only. Preserve the existing black-and-white drawing of the white-gloved rubber-hose hand holding the open envelope and blank card: same pose, proportions, crop, linework, gray shading, paper texture inside the objects, and arm. Remove only the flat rectangular paper background surrounding the hand, arm, envelope, and card and replace it with true transparent alpha. No checkerboard baked into the image; the result must have actual transparency.",
+  "createdAt": "2026-09-02T20:35:28.099Z"
+}
