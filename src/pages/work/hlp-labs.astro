@@ -46,7 +46,6 @@ const systemNodes = [
 ];
 const hub = systemNodes[0];
 const spokes = systemNodes.slice(1);
-const nextProject: { href: string; label: string } | null = null;
 ---
 
 <BaseLayout
@@ -458,42 +457,17 @@ const nextProject: { href: string; label: string } | null = null;
                   depth both matter.
                 </p>
               </div>
-              {
-                nextProject ? (
-                  <a
-                    class="button button-light button-large"
-                    href="mailto:ivailoatanassov@gmail.com"
-                    data-squash
-                  >
-                    Start a conversation <ArrowIcon />
-                  </a>
-                ) : (
-                  <a
-                    class="button button-light button-large"
-                    href="/#top"
-                    data-squash
-                  >
-                    Back to the reel <ArrowIcon />
-                  </a>
-                )
-              }
+              <a
+                class="button button-light button-large"
+                href="/#top"
+                data-squash
+              >
+                Back to the reel <ArrowIcon />
+              </a>
             </section>
           </div>
         </div>
       </article>
     </main>
-
-    {
-      nextProject && (
-        <footer class="case-footer">
-          <a class="pill-link pill-link-inverse" href="/">
-            <ArrowIcon direction="left" /> Ivaylo Atanassov
-          </a>
-          <a class="pill-link pill-link-inverse" href={nextProject.href}>
-            {nextProject.label} <ArrowIcon />
-          </a>
-        </footer>
-      )
-    }
   </div>
 </BaseLayout>
