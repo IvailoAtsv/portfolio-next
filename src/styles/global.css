@@ -68,13 +68,13 @@
   --ease-snap: cubic-bezier(0.34, 1.45, 0.64, 1);
   --shadow-soft: 0 14px 34px rgba(17, 17, 15, 0.18);
   --shadow-deep: 0 28px 60px rgba(0, 0, 0, 0.34);
-  --gate-hold-first: 560ms;
-  --gate-hold-nav: 200ms;
+  --gate-hold-first: 720ms;
+  --gate-hold-nav: 560ms;
   --gate-open: 880ms;
   --gate-open-delay: 300ms;
   --gate-close: 600ms;
   --gate-card-out: 320ms;
-  --gate-leave-wait: 740ms;
+  --gate-leave-wait: 1100ms;
 }
 
 *,

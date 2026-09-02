@@ -120,19 +120,30 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         }
       };
       const openGate = () => document.body.classList.add('is-ready');
-
-      if (!reduceMotion) {
+      const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      const afterPaint = () =>
+        new Promise((resolve) => {
+          requestAnimationFrame(() => requestAnimationFrame(resolve));
+        });
+      let entranceStarted = false;
+      const playEntrance = async () => {
+        if (reduceMotion) {
+          openGate();
+          return;
+        }
+        if (entranceStarted) return;
+        entranceStarted = true;
+        await afterPaint();
         const holdMs =
           document.documentElement.dataset.gate === 'nav'
-            ? gateMs('--gate-hold-nav', 200)
-            : gateMs('--gate-hold-first', 560);
-        const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-        const fontsReady = document.fonts
-          ? Promise.race([document.fonts.ready, wait(800)])
-          : Promise.resolve();
-        Promise.all([fontsReady, wait(holdMs)]).then(() => {
-          requestAnimationFrame(() => requestAnimationFrame(openGate));
-        });
+            ? gateMs('--gate-hold-nav', 560)
+            : gateMs('--gate-hold-first', 720);
+        await wait(holdMs);
+        openGate();
+      };
+
+      if (!reduceMotion) {
+        playEntrance();
 
         const revealObserver = new IntersectionObserver(
           (entries) => {
@@ -214,7 +225,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         document.body.classList.add('is-leaving');
         window.setTimeout(
           () => window.location.assign(next.href),
-          gateMs('--gate-leave-wait', 740),
+          gateMs('--gate-leave-wait', 1100),
         );
       });
 
@@ -288,7 +299,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           /* sessionStorage can be blocked */
         }
         document.body.classList.remove('is-leaving');
-        if (event.persisted) openGate();
+        if (event.persisted) {
+          entranceStarted = false;
+          document.body.classList.remove('is-ready');
+          playEntrance();
+        }
         landAtHashOrTop();
       });
 
