@@ -1,0 +1,93 @@
+.impeccable/questions/35204680.next.json
+  s_89819a69bc6413::t_d2665a1bf274b6 1-38
+public/assets/generated/contact-hand.webp.json
+  s_89819a69bc6413::t_28f9b9e093d168 1-4
+public/assets/generated/finance-me-scene-v2.webp.json
+  s_89819a69bc6413::t_ece0b2f4c41770 1-4
+public/assets/generated/hero-workshop-v2.webp.json
+  s_89819a69bc6413::t_00a46d6cc6df16 1-4
+public/assets/generated/hlp-lab-scene.webp.json
+  s_89819a69bc6413::t_06970fa83c3478 1-4
+public/assets/generated/keep-up-scene.webp.json
+  s_89819a69bc6413::t_d764d1cb6608a3 1-4
+public/assets/generated/sellphy-scene-v2.webp.json
+  s_89819a69bc6413::t_7e419c989af41b 1-4
+.impeccable/config.json
+  s_89819a69bc6413::t_86c523062d9857 2
+.impeccable/mocks/decision/color-chord-canopy.prompt.md
+  s_e9304fb31a863a::t_b6d9505a66f7e4 1-13
+.impeccable/mocks/decision/contemporary-canon.prompt.md
+  s_1af98beee40efb::t_90ab49c8e29991 1-13
+.impeccable/mocks/decision/directions-b67eb7fd.json
+  s_89819a69bc6413::t_7f3844cbbd5db2 1-139
+.impeccable/mocks/decision/maker-stack.prompt.md
+  s_89819a69bc6413::t_e9192c53ab7b40 1,3,5,7-18,20,22,24-26
+.impeccable/mocks/decision/release-ledger.prompt.md
+  s_8069ddd7886fea::t_372895bd5e1f32 1-14
+.impeccable/mocks/maker-stack/composition-round.json
+  s_89819a69bc6413::t_2ae808d7c37bc4 2-4,6-13,16-33,36-38
+.impeccable/mocks/rubber-hose/approved-reference.json
+  s_89819a69bc6413::t_86de907279129d 1-11
+.impeccable/surface-brief-body.md
+  s_89819a69bc6413::t_604204c384edd5 1-38
+.impeccable/surfaces/src-pages-index-astro.md
+  s_89819a69bc6413::t_1caefb26df03bf 1-45
+.prettierignore
+  s_2c783ecce61cca::t_a6b056d9142ad2 2,12
+.prettierrc.mjs
+  s_89819a69bc6413::t_36cbbf078c65a3 1-5
+PRODUCT.md
+  s_89819a69bc6413::t_4663f8d5f22d96 1-65
+astro.config.mjs
+  s_89819a69bc6413::t_2dce7a1f26510f 1-8,10
+package.json
+  s_89819a69bc6413::t_43dab61a3fc83d 2-3,5,7-10,12,15-19,22-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "b3e7fcee859c157ffe9c6fd78aea995341bac8e8",
+  "prompts": {},
+  "sessions": {
+    "s_1af98beee40efb": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06250-9f43-73c2-a2d9-d578024e11e2",
+        "model": "unknown"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_2c783ecce61cca": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a063c9-ae8d-7120-9c5b-b08663a34214",
+        "model": "unknown"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_8069ddd7886fea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0624c-53e2-7c30-a5af-b839db800633",
+        "model": "unknown"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_89819a69bc6413": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0623b-addc-7a82-9d1d-c90d750d69d2",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_e9304fb31a863a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0624c-bf1a-78d0-a156-fbfc0e6af8ee",
+        "model": "unknown"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    }
+  }
+}
