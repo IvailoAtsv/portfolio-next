@@ -1,0 +1,21 @@
+src/layouts/BaseLayout.astro
+  s_786cbf0cbed483::t_5439631740c7b6 123-136,139-146,228,302-306
+src/styles/global.css
+  s_786cbf0cbed483::t_777c87526c63b7 71-72,77
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "75940c3a1ac6352685527bc4112e78946e9bf210",
+  "prompts": {},
+  "sessions": {
+    "s_786cbf0cbed483": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "2287ced4-cf1c-4e48-86c4-0d3432d79733",
+        "model": "grok-4.6"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    }
+  }
+}
