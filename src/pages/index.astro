@@ -281,7 +281,9 @@ const practiceBeats = [
                   <p data-motion="copy">{project.description}</p>
                   <ul>
                     {project.disciplines.map((item) => (
-                      <li data-motion="detail">{item}</li>
+                      <li data-motion="detail" data-motion-order="2">
+                        {item}
+                      </li>
                     ))}
                   </ul>
                   <a
@@ -418,7 +420,7 @@ const practiceBeats = [
             ivailoatanassov@gmail.com <ArrowIcon />
           </a>
         </div>
-        <div class="contact-stage" data-motion="cel" data-motion-side="right">
+        <div class="contact-stage" data-motion="slide" data-motion-side="right">
           <img
             class="contact-hand"
             src="/assets/generated/contact-hand.webp"

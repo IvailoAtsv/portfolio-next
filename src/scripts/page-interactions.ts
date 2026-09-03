@@ -114,10 +114,20 @@ document.addEventListener('astro:page-load', () => {
     );
   }
 
+  const caseNav = document.querySelector<HTMLElement>('.case-nav');
   const sectionLinks = Array.from(
     document.querySelectorAll<HTMLAnchorElement>('.case-nav a[href^="#"]'),
   );
-  if (sectionLinks.length) {
+  if (caseNav && sectionLinks.length) {
+    // When the strip is a single scrolling row, keep the current link in view.
+    const revealLink = (link: HTMLAnchorElement) => {
+      if (caseNav.scrollWidth - caseNav.clientWidth < 8) return;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      caseNav.scrollTo({
+        left: link.offsetLeft - (caseNav.clientWidth - link.offsetWidth) / 2,
+        behavior: reduced.matches ? 'auto' : 'smooth',
+      });
+    };
     const sectionObserver = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -126,6 +136,7 @@ document.addEventListener('astro:page-load', () => {
         if (!visible[0]) return;
         sectionLinks.forEach((link) => {
           if (link.hash === `#${visible[0].target.id}`) {
+            if (!link.hasAttribute('aria-current')) revealLink(link);
             link.setAttribute('aria-current', 'true');
           } else {
             link.removeAttribute('aria-current');

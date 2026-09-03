@@ -383,7 +383,7 @@ ol {
   color: var(--ink);
   text-decoration: none;
   transform-origin: 35% 100%;
-  transition: transform 320ms var(--ease-out);
+  transition: transform 340ms var(--ease-snap);
 }
 
 .studio-mark:hover {
@@ -468,7 +468,7 @@ ol {
   transition:
     background 200ms ease,
     color 200ms ease,
-    transform 260ms var(--ease-out);
+    transform 340ms var(--ease-snap);
 }
 
 .desktop-nav a:hover,
@@ -588,8 +588,9 @@ ol {
   isolation: isolate;
   overflow: hidden;
   transform-origin: 50% 100%;
+  /* The snap easing overshoots a little, so lifts and releases rebound. */
   transition:
-    transform 320ms var(--ease-out),
+    transform 380ms var(--ease-snap),
     color 220ms ease,
     box-shadow 320ms var(--ease-out);
 }
@@ -621,6 +622,15 @@ ol {
 .button.is-pressed {
   transform: scaleX(1.05) scaleY(0.88) translateY(4px);
   box-shadow: 0 3px 7px rgba(17, 17, 15, 0.14);
+  transition-duration: 120ms, 220ms, 120ms;
+  transition-timing-function: var(--ease-out), ease, var(--ease-out);
+}
+
+/* The arrow keeps beckoning while the pointer rests on the button. */
+@media (hover: hover) {
+  .button:hover .arrow-icon {
+    animation: arrow-beckon 1.1s ease-in-out 200ms infinite;
+  }
 }
 
 .button-dark {
@@ -661,8 +671,9 @@ ol {
   transition: transform 260ms var(--ease-out);
 }
 
+/* Rotate first so the nudge travels the way the arrow points. */
 a:hover .arrow-icon {
-  transform: translateX(4px) rotate(var(--arrow-rotate, 0deg));
+  transform: rotate(var(--arrow-rotate, 0deg)) translateX(4px);
 }
 
 /* ---------------------------------------------------------------------------
@@ -1701,7 +1712,9 @@ a:hover .arrow-icon {
   margin: 0;
   transform: rotate(var(--hand-rot-a));
   transform-origin: var(--hand-elbow-x) var(--hand-elbow-y);
-  animation: hand-swing 2.7s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+  /* The delay is the beat the hand holds after arriving, before it offers. */
+  animation: hand-swing 2.7s cubic-bezier(0.37, 0, 0.63, 1) 620ms infinite
+    alternate;
   animation-play-state: var(--loop-state, running);
 }
 
@@ -1803,11 +1816,12 @@ a:hover .arrow-icon {
 
 .js .cel-enter {
   opacity: 0;
-  transform: translate(6%, 4%) rotate(2.5deg);
+  transform: translateY(24px) scale(0.9);
+  transform-origin: 50% 80%;
 }
 
 .js body.is-ready .cel-enter {
-  animation: cel-enter 900ms var(--ease-out)
+  animation: cel-enter 720ms linear
     calc(var(--gate-open-delay) + var(--gate-open) * 0.6) both;
 }
 
@@ -1831,18 +1845,6 @@ a:hover .arrow-icon {
 
 .js [data-reveal].is-visible {
   opacity: 1;
-  transform: none;
-}
-
-/* The hand enters from off-stage instead of rising like copy. */
-.js .contact-stage[data-reveal] {
-  transform: translate(28%, 36%) rotate(9deg);
-  transition:
-    opacity 500ms var(--ease-out),
-    transform 900ms var(--ease-out);
-}
-
-.js .contact-stage[data-reveal].is-visible {
   transform: none;
 }
 
@@ -1930,10 +1932,12 @@ a:hover .arrow-icon {
 }
 
 .case-body {
+  --case-inline: clamp(1rem, 5vw, 5rem);
+  --case-rule: #4a4943;
   display: grid;
   grid-template-columns: 13rem minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 6rem);
-  padding: clamp(4rem, 8vw, 8rem) clamp(1rem, 5vw, 5rem);
+  padding: clamp(4rem, 8vw, 8rem) var(--case-inline);
   background: var(--ink);
   color: var(--paper-light);
 }
@@ -1941,6 +1945,7 @@ a:hover .arrow-icon {
 .case-nav {
   position: sticky;
   top: 2rem;
+  z-index: 20;
   align-self: start;
   display: grid;
   gap: 0.35rem;
@@ -2432,12 +2437,24 @@ a:hover .arrow-icon {
   }
 }
 
+/* Set down, overshoot a touch, settle. Each leg eases out on its own. */
 @keyframes cel-enter {
-  from {
+  0% {
     opacity: 0;
-    transform: translate(6%, 4%) rotate(2.5deg);
+    transform: translateY(24px) scale(0.9);
+    animation-timing-function: var(--ease-out);
   }
-  to {
+  44% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.03);
+    animation-timing-function: var(--ease-out);
+  }
+  72% {
+    opacity: 1;
+    transform: translateY(1px) scale(0.992);
+    animation-timing-function: var(--ease-out);
+  }
+  100% {
     opacity: 1;
     transform: none;
   }
@@ -2466,6 +2483,16 @@ a:hover .arrow-icon {
   to {
     opacity: 1;
     transform: rotate(3deg);
+  }
+}
+
+@keyframes arrow-beckon {
+  0%,
+  100% {
+    transform: rotate(var(--arrow-rotate, 0deg)) translateX(4px);
+  }
+  50% {
+    transform: rotate(var(--arrow-rotate, 0deg)) translateX(7.5px);
   }
 }
 
@@ -2546,21 +2573,47 @@ a:hover .arrow-icon {
   }
 
   .case-body {
+    --case-nav-block: 1rem;
     grid-template-columns: 1fr;
+    /* The strip carries its own top padding once it can stick. */
+    padding-top: calc(clamp(4rem, 8vw, 8rem) - var(--case-nav-block));
   }
 
+  /* One scrolling row that parks at the top of the screen. Full-bleed ink
+     covers whatever slides underneath; the hairline stays on the text grid. */
   .case-nav {
-    position: relative;
-    top: auto;
+    top: 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem 1.2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #4a4943;
+    flex-wrap: nowrap;
+    gap: 0 1.2rem;
+    margin: 0 calc(-1 * var(--case-inline));
+    padding: calc(var(--case-nav-block) + env(safe-area-inset-top, 0px))
+      var(--case-inline) var(--case-nav-block);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    background:
+      linear-gradient(var(--case-rule), var(--case-rule)) bottom center /
+        calc(100% - 2 * var(--case-inline)) 1px no-repeat,
+      var(--ink);
+  }
+
+  .case-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .case-nav span {
-    width: 100%;
+    display: none;
+  }
+
+  .case-nav a {
+    flex: 0 0 auto;
+    padding-block: 0.5rem;
+  }
+
+  /* Anchors land just below the parked strip. */
+  html:has(.case-nav) {
+    scroll-padding-top: 5.75rem;
   }
 
   .system-node {
@@ -2967,9 +3020,12 @@ a:hover .arrow-icon {
   .work-section,
   .practice-section,
   .about-section,
-  .contact-section,
-  .case-body {
+  .contact-section {
     padding-inline: 0.85rem;
+  }
+
+  .case-body {
+    --case-inline: 0.85rem;
   }
 
   .section-intro h2,
@@ -3065,21 +3121,6 @@ a:hover .arrow-icon {
     border-left: 0;
   }
 
-  .case-nav {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 0.75rem;
-    scrollbar-width: thin;
-  }
-
-  .case-nav span {
-    display: none;
-  }
-
-  .case-nav a {
-    flex: 0 0 auto;
-  }
-
   .case-section h2,
   .mobile-proof h2,
   .case-next h2 {
@@ -3147,9 +3188,5 @@ a:hover .arrow-icon {
 
   .film-static::before {
     animation: none !important;
-  }
-
-  .js .contact-stage {
-    transform: none;
   }
 }
