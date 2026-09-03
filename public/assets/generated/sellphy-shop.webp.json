@@ -1,0 +1,14 @@
+{
+  "tool": "Built-in ImageGen",
+  "createdAt": "2026-09-03T07:41:23.155Z",
+  "prompt": "Use case: precise-object-edit.\nInput image 1 is the EDIT TARGET: the single browser-window storefront character sealing one parcel at a packing bench. Preserve this character concept, the browser header, striped awning, face drawn directly on its rectangular screen, two attached arms, two gloves, two legs and shoes, and the clear tape-and-parcel action. NO human, human head, person or humanoid torso. NO white circular or oval patch behind the face. The face belongs directly to the existing screen material.\nThe user likes object characters but wants more life and purposeful detail. Turn this into a richer, inviting small shop's packing corner without piling on props. Give the character a slightly more delighted and concentrated expression with expressive eyebrows and a gentle body tilt toward its parcel. Keep the gloved hands physically pressing and drawing the same single tape strip across the closed box lid. Improve intentional ink detail in the awning seams and scallops, browser bevel, little screen glints, glove creases and shoe highlights. The tabletop is visibly made of worn wooden planks with a few clean ink grain lines.\nUseful surroundings: retain the two boxes on the shelf at the left, now with folded seams and simple blank labels. Add one small roll of blank shipping labels and a compact tape dispenser at the far side of the workbench, separated from the hero parcel. A single pendant light overhead at upper-left and a faint simple window in the distant right wall establish a cozy real workspace. A few pale floor boards and one soft cast shadow ground the scene. No factory, no conveyor, no switches or gears. The upper-right corner stays mostly pale for the site's overlaid seal.\nMedium: beautiful controlled 1930s hand-inked cartoon, warm ivory paper, black and neutral gray only, subtle gray-wash depth and light print grain. Detail is specific to the shop, never arbitrary decoration. Keep large readable silhouettes and lots of breathing room. No heavy grunge, sepia staining, hatching everywhere, gradients, 3D plastic or photorealism.\nMaintain a full rectangular 5:4 frame; no baked oval, circle, border, badge or vignette. No writing, letters, numbers, logos, watermark, extra characters or extra limbs.",
+  "sourceImage": "exec-67875a86-39cb-4bdb-a94e-93483246435d.png",
+  "referenceImages": [
+    "exec-ae9564c6-0349-44eb-9560-85e96e758cdc.png"
+  ],
+  "dimensions": {
+    "width": 1400,
+    "height": 1120
+  },
+  "replaces": "sellphy-scene-v2.webp"
+}

@@ -1,0 +1,14 @@
+{
+  "tool": "Built-in ImageGen",
+  "createdAt": "2026-09-03T07:41:23.155Z",
+  "prompt": "Use case: precise-object-edit.\nInput image 1 is the EDIT TARGET: the wallet placing a coin into a household savings jar beside a ledger. Keep this understandable concept, wallet identity, one character, gray-and-ivory palette, exact coin-over-slot interaction, perspective and main left-wallet/right-jar arrangement.\nRequired correction: REMOVE THE LARGE WHITE OVAL FACE PATCH completely. The entire front of the wallet must be one continuous medium-gray leather material, including the area around and between its eyes, nose and mouth. Draw the facial features directly on this leather. Each individual eye may have its normal white sclera, but there must be NO white oval, circle, skin-colored patch, face insert, mask, plate or panel behind the facial features. Do not draw a human head or person. The character is the wallet object itself.\nGive the scene more life through meaningful crafted detail: a more engaged cheerful expression with an expressive brow, the wallet body leaning slightly into the saving gesture. Keep exactly two attached gloved arms and no extra limbs. Add subtle believable leather grain and crisp stitching, a few tidy card edges inside the wallet fold, clean ink detail in the snap, ribbed metal jar lid and curved glass reflections that still let the coins show. The ledger should feel used: a slight page curl, light ruled columns, and a plain pencil resting along its lower edge. Keep the short receipt. Use restrained wood grain on the table instead of an empty gray slab.\nEnrich the domestic setting without crowding it: the faint window becomes a softly ink-washed real window with one gently gathered curtain on its left and a tiny potted plant on the sill. Soft daylight makes a pale window-shaped shadow on the wooden floor. Floor boards and a short baseboard establish the room. Background remains much lighter and quieter than the subject. No extra character, face, photo of people or living prop.\nStyle: excellent 1930s ink cartoon illustration on warm ivory, confident tapered black outline, rich darks, soft neutral gray wash, carefully selected material detail rather than scratches or all-over noise. Charming lived-in household scene, not sterile floating mascot, not overloaded machinery.\nKeep the original scene crop 5:4 landscape, entire wallet/glove/coin/jar/table group within frame with clean margins and clear upper-right area for the page badge. No text, no logos, no numerals, no extra currency marks, no watermarks. No white face patch, no humanoid figure.",
+  "sourceImage": "exec-3c9c73e5-ced9-423f-885f-277aa5319715.png",
+  "referenceImages": [
+    "exec-b43980f0-a6da-4325-877e-8b759931a4b8.png"
+  ],
+  "dimensions": {
+    "width": 1400,
+    "height": 1120
+  },
+  "replaces": "finance-me-scene-v2.webp"
+}

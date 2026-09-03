@@ -120,4 +120,5 @@ const wordCount = sequence.length;
 
   layoutAllRings();
   void document.fonts.ready.then(layoutAllRings);
+  document.addEventListener('astro:page-load', layoutAllRings);
 </script>

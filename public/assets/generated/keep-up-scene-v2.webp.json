@@ -1,0 +1,14 @@
+{
+  "tool": "Built-in ImageGen",
+  "createdAt": "2026-09-03T07:41:23.155Z",
+  "prompt": "Use case: precise-object-edit.\nAsset type: small correction to an existing 5:4 portfolio project illustration.\nInput image 1 is the EDIT TARGET. Preserve the entire original image as closely as possible: the large running stack-of-flashcards character, its face, its exact running pose, both gloves, both shoes, the raised ring-bound calendar, the pale city skyline, curved running track, foreground stepping tiles, oval ground shadow, ink lines, soft gray tones, warm ivory paper, texture, proportions and composition.\nChange ONLY the two tiny running bracket-shaped characters on the right side. REMOVE BOTH small characters completely, along with the small black excitement strokes over their heads and little dust puffs directly caused by their feet. Reconstruct the existing pale running-track surface and faint city skyline behind them seamlessly. Leave calm negative space on the right. Do not add replacement characters, props, letters, symbols, or new action. Keep the large runner and all of its original detail unchanged. The finished image contains exactly ONE living character, the large flashcard runner. Preserve the original 5:4 format and color palette. No new text, no watermark.",
+  "sourceImage": "exec-47cb4433-43bf-4af3-877c-6a84cd754b6b.png",
+  "referenceImages": [
+    "keep-up-scene.webp"
+  ],
+  "dimensions": {
+    "width": 1400,
+    "height": 1120
+  },
+  "replaces": "keep-up-scene.webp"
+}

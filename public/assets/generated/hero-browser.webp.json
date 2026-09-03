@@ -1,0 +1,14 @@
+{
+  "tool": "Built-in ImageGen",
+  "createdAt": "2026-09-03T07:41:23.155Z",
+  "prompt": "Use case: precise-object-edit. Input image 1 is the edit target.\nREMOVE ALL TYPOGRAPHY from the upper-right quadrant: remove every word and letter, including \"I make\", \"digital products\", \"sing\", and the black swoosh underline. Seamlessly restore the warm ivory acoustic studio wall behind that lettering, matching the surrounding gray wash, lighting and paper texture. There must be no lettering, no symbols in place of lettering, no logo and no watermark.\nPreserve EVERYTHING ELSE exactly: the one browser-window object character, rectangular screen with face drawn directly on it, its singing expression, header controls, tilted pose, both arms, both gloves, both feet, vintage microphone, its stand and cable, the left curtain, two little music notes, floorboards, lighting and shadows. Do not change character scale or position. Do not add any person, human, humanoid or second character. Maintain the original 3:2 landscape dimensions.\nThe finished image is a clean text-free illustration, not a poster. The right wall should be quietly detailed warm paper, no new graphics.",
+  "sourceImage": "exec-5f1692f8-6666-48be-8704-c588e773b9fe.png",
+  "referenceImages": [
+    "exec-c0cb2cdc-30de-4d26-9d87-98a5150befc2.png"
+  ],
+  "dimensions": {
+    "width": 1536,
+    "height": 1024
+  },
+  "replaces": "hero-workshop-v2.webp"
+}

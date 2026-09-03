@@ -3,6 +3,7 @@ import fredokaLatin from '@fontsource-variable/fredoka/files/fredoka-latin-wght-
 import barlow500 from '@fontsource/barlow-condensed/files/barlow-condensed-latin-500-normal.woff2?url';
 import barlow700 from '@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2?url';
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -13,13 +14,13 @@ interface Props {
 const {
   title = 'Ivaylo Atanassov — Product designer & full-stack developer',
   description = 'I design and build digital products from first interaction to production system.',
-  image = '/assets/generated/hero-workshop-v2.webp',
+  image = '/assets/generated/hero-browser.webp',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,6 +35,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
     <title>{title}</title>
+    <ClientRouter fallback="swap" />
     <link
       rel="preload"
       href={fredokaLatin}
@@ -57,317 +59,33 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     />
     <script is:inline>
       document.documentElement.classList.add('js');
-      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     </script>
   </head>
   <body id="top">
     <!-- DIRECTION CONTRACT — THESIS: Refuse the generic portfolio grid; present shipped products as a performed animation reel where design and engineering share the same stage. OWN-WORLD: warm paper, confident ink, gray wash, object-led rubber-hose characters, theatrical poster staging, wavy frames, bold outlined lettering, a film-gate transition, and physical cel motion without hover zooms. STORY: a hiring visitor recognizes dual craft, opens the HLP Labs proof, then contacts Ivaylo. FIRST VIEWPORT: compact studio mark and pill nav; huge two-line promise left; animated maker scene right; concise copy, two actions, three proof seals, and a wavy curtain edge. FORM: rubber-hose challenger, seed b67eb7fd. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance -->
     <a class="skip-link" href="#main-content">Skip to the work</a>
 
-    <div class="film-gate" aria-hidden="true">
+    <div
+      class="film-gate"
+      aria-hidden="true"
+      data-state="closed"
+      transition:persist="film-gate"
+    >
       <div class="film-scrim"></div>
       <div class="film-shutter film-shutter-top"><span></span></div>
       <div class="film-slot">
         <div class="film-card">
           <small>Now showing</small>
-          <strong data-transition-title>How Ivaylo does it all</strong>
+          <strong data-transition-title>Ivaylo does it all</strong>
         </div>
       </div>
       <div class="film-shutter film-shutter-bottom"><span></span></div>
     </div>
-    <script is:inline>
-      (() => {
-        const titleEl = document.querySelector('[data-transition-title]');
-        const root = document.documentElement;
-        let fromNav = false;
-        try {
-          const pending = sessionStorage.getItem('film-gate-title');
-          if (pending && titleEl) {
-            titleEl.textContent = pending;
-            sessionStorage.removeItem('film-gate-title');
-            fromNav = true;
-          }
-        } catch {
-          /* sessionStorage can be blocked; keep the markup default */
-        }
-        root.dataset.gate = fromNav ? 'nav' : 'first';
-      })();
-    </script>
     <slot />
 
-    <script is:inline>
-      const reduceMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
-      ).matches;
-      const gateMs = (token, fallback) => {
-        const value = getComputedStyle(document.documentElement)
-          .getPropertyValue(token)
-          .trim()
-          .toLowerCase();
-        const parsed = Number.parseFloat(value);
-        if (!Number.isFinite(parsed) || parsed < 0) return fallback;
-        // Production CSS can shorten 720ms to .72s; timers always need ms.
-        if (value.endsWith('ms')) return parsed;
-        if (value.endsWith('s')) return parsed * 1000;
-        return fallback;
-      };
-      const revealItems = Array.from(
-        document.querySelectorAll('[data-reveal]'),
-      );
-      const transitionTitle = document.querySelector('[data-transition-title]');
-      const setTransitionTitle = (label) => {
-        if (transitionTitle) transitionTitle.textContent = label;
-        try {
-          sessionStorage.setItem('film-gate-title', label);
-        } catch {
-          /* sessionStorage can be blocked; the leaving card still updates */
-        }
-      };
-      const openGate = () => document.body.classList.add('is-ready');
-      const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-      const afterPaint = () =>
-        new Promise((resolve) => {
-          requestAnimationFrame(() => requestAnimationFrame(resolve));
-        });
-      let entranceStarted = false;
-      const playEntrance = async () => {
-        if (reduceMotion) {
-          openGate();
-          return;
-        }
-        if (entranceStarted) return;
-        entranceStarted = true;
-        await afterPaint();
-        const holdMs =
-          document.documentElement.dataset.gate === 'nav'
-            ? gateMs('--gate-hold-nav', 560)
-            : gateMs('--gate-hold-first', 720);
-        await wait(holdMs);
-        openGate();
-      };
-
-      if (!reduceMotion) {
-        playEntrance();
-
-        const revealObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                revealObserver.unobserve(entry.target);
-              }
-            });
-          },
-          { rootMargin: '0px 0px -8%', threshold: 0.1 },
-        );
-        revealItems.forEach((item) => revealObserver.observe(item));
-
-        // Idle loops only run while their stage is on screen.
-        const loopObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              entry.target.classList.toggle('is-live', entry.isIntersecting);
-            });
-          },
-          { rootMargin: '10% 0px' },
-        );
-        document
-          .querySelectorAll('[data-loop]')
-          .forEach((item) => loopObserver.observe(item));
-      } else {
-        document.body.classList.add('is-ready');
-        revealItems.forEach((item) => item.classList.add('is-visible'));
-        document
-          .querySelectorAll('[data-loop]')
-          .forEach((item) => item.classList.add('is-live'));
-      }
-
-      document.querySelectorAll('[data-squash]').forEach((control) => {
-        control.addEventListener('pointerdown', () =>
-          control.classList.add('is-pressed'),
-        );
-        ['pointerup', 'pointercancel', 'pointerleave'].forEach((eventName) => {
-          control.addEventListener(eventName, () =>
-            control.classList.remove('is-pressed'),
-          );
-        });
-      });
-
-      document.addEventListener('click', (event) => {
-        if (
-          reduceMotion ||
-          event.defaultPrevented ||
-          event.button !== 0 ||
-          event.metaKey ||
-          event.ctrlKey ||
-          event.shiftKey ||
-          event.altKey
-        )
-          return;
-        const link = event.target.closest('a[href]');
-        if (!link || link.target === '_blank' || link.hasAttribute('download'))
-          return;
-        const next = new URL(link.href, window.location.href);
-        if (
-          next.origin !== window.location.origin ||
-          !['http:', 'https:'].includes(next.protocol)
-        )
-          return;
-        const sameDocument =
-          next.pathname === window.location.pathname &&
-          next.search === window.location.search;
-        if (sameDocument && next.hash) return;
-        if (next.href === window.location.href) return;
-
-        event.preventDefault();
-        setTransitionTitle(
-          link.dataset.transitionLabel ||
-            (next.pathname.includes('/work/')
-              ? 'The case file'
-              : 'The main reel'),
-        );
-        document.body.classList.add('is-leaving');
-        window.setTimeout(
-          () => window.location.assign(next.href),
-          gateMs('--gate-leave-wait', 1100),
-        );
-      });
-
-      const homeWantsTop = () =>
-        (location.pathname === '/' || location.pathname === '') &&
-        (!location.hash || location.hash === '#top');
-      const pinHomeTop = () => {
-        if (!homeWantsTop()) return false;
-        const html = document.documentElement;
-        html.style.scrollBehavior = 'auto';
-        const active = document.activeElement;
-        if (active && active !== document.body && active.blur) active.blur();
-        window.scrollTo(0, 0);
-        html.scrollTop = 0;
-        document.body.scrollTop = 0;
-        if (location.hash === '#top') {
-          history.replaceState(null, '', '/');
-        }
-        return true;
-      };
-      let holdingHomeTop = false;
-      const holdHomeTop = () => {
-        if (!pinHomeTop()) return;
-        if (holdingHomeTop) return;
-        holdingHomeTop = true;
-        const onScroll = () => pinHomeTop();
-        window.addEventListener('scroll', onScroll, { passive: true });
-        let released = false;
-        const release = () => {
-          if (released) return;
-          released = true;
-          holdingHomeTop = false;
-          window.removeEventListener('scroll', onScroll);
-          document.documentElement.style.scrollBehavior = '';
-        };
-        const releaseOnUser = () => release();
-        window.addEventListener('wheel', releaseOnUser, {
-          passive: true,
-          once: true,
-        });
-        window.addEventListener('touchstart', releaseOnUser, {
-          passive: true,
-          once: true,
-        });
-        window.addEventListener('pointerdown', releaseOnUser, { once: true });
-        window.addEventListener('keydown', releaseOnUser, { once: true });
-        window.setTimeout(release, 2000);
-      };
-      const landAtHashOrTop = () => {
-        if (homeWantsTop()) {
-          holdHomeTop();
-          return;
-        }
-        if (location.hash) {
-          const target = document.querySelector(location.hash);
-          if (target) {
-            target.scrollIntoView({ block: 'start', behavior: 'auto' });
-          }
-        }
-      };
-
-      landAtHashOrTop();
-      window.addEventListener('pageshow', (event) => {
-        try {
-          const pending = sessionStorage.getItem('film-gate-title');
-          if (pending && transitionTitle) {
-            transitionTitle.textContent = pending;
-            sessionStorage.removeItem('film-gate-title');
-          }
-        } catch {
-          /* sessionStorage can be blocked */
-        }
-        document.body.classList.remove('is-leaving');
-        if (event.persisted) {
-          entranceStarted = false;
-          document.body.classList.remove('is-ready');
-          playEntrance();
-        }
-        landAtHashOrTop();
-      });
-
-      const mobileMenuButton = document.querySelector('.mobile-menu-button');
-      const mobileMenu = document.querySelector('#mobile-menu');
-      if (mobileMenuButton && mobileMenu) {
-        const closeMobileMenu = () => {
-          mobileMenuButton.setAttribute('aria-expanded', 'false');
-          mobileMenu.hidden = true;
-        };
-        mobileMenuButton.addEventListener('click', () => {
-          const isOpen =
-            mobileMenuButton.getAttribute('aria-expanded') === 'true';
-          mobileMenuButton.setAttribute('aria-expanded', String(!isOpen));
-          mobileMenu.hidden = isOpen;
-          if (!isOpen) mobileMenu.querySelector('a')?.focus();
-        });
-        mobileMenu
-          .querySelectorAll('a')
-          .forEach((link) => link.addEventListener('click', closeMobileMenu));
-        document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape' && !mobileMenu.hidden) {
-            closeMobileMenu();
-            mobileMenuButton.focus();
-          }
-        });
-        document.addEventListener('click', (event) => {
-          if (!mobileMenu.hidden && !event.target.closest('.mobile-nav'))
-            closeMobileMenu();
-        });
-      }
-
-      // Case-study section nav follows the reader.
-      const sectionLinks = Array.from(
-        document.querySelectorAll('.case-nav a[href^="#"]'),
-      );
-      if (sectionLinks.length) {
-        const targets = sectionLinks
-          .map((link) => document.querySelector(link.getAttribute('href')))
-          .filter(Boolean);
-        const setCurrent = (id) => {
-          sectionLinks.forEach((link) => {
-            const isCurrent = link.getAttribute('href') === `#${id}`;
-            if (isCurrent) link.setAttribute('aria-current', 'true');
-            else link.removeAttribute('aria-current');
-          });
-        };
-        const sectionObserver = new IntersectionObserver(
-          (entries) => {
-            const visible = entries
-              .filter((entry) => entry.isIntersecting)
-              .sort(
-                (a, b) => a.boundingClientRect.top - b.boundingClientRect.top,
-              );
-            if (visible[0]) setCurrent(visible[0].target.id);
-          },
-          { rootMargin: '-35% 0px -55% 0px' },
-        );
-        targets.forEach((target) => sectionObserver.observe(target));
-      }
+    <script>
+      import '../scripts/film-gate';
+      import '../scripts/page-interactions';
     </script>
   </body>
 </html>

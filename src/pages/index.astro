@@ -7,34 +7,53 @@ import CircleWords from '../components/CircleWords.astro';
 
 const projects = [
   {
+    title: 'HLP Labs',
+    image: '/assets/generated/hlp-lab-scene-v2.webp',
+    alt: 'A friendly vial character points at a microscope slide beside a laboratory specimen cabinet',
+    description:
+      'A technical catalog made understandable for customers and manageable for the people running it.',
+    disciplines: ['Product UX', 'Full-stack', 'Operations'],
+    tone: 'smoke',
+    stamp: ['FIND', 'LEARN', 'OPERATE'],
+    href: '/work/hlp-labs',
+    width: 1400,
+    height: 1000,
+  },
+  {
     title: 'Keep Up',
-    image: '/assets/generated/keep-up-scene.webp',
-    alt: 'A pocket quiz-card character sprints along a track holding a daily calendar, with two smaller cards chasing behind',
+    image: '/assets/generated/keep-up-scene-v2.webp',
+    alt: 'A smiling flashcard character runs along a track holding a daily calendar',
     description:
       'An offline-capable learning PWA built around daily programming quizzes, spaced repetition, and visible progress.',
     disciplines: ['Product UX', 'PWA engineering', 'Offline systems'],
     tone: 'yellow',
     stamp: ['LEARN', 'RECALL', 'REPEAT'],
+    width: 1400,
+    height: 1120,
   },
   {
     title: 'Sellphy',
-    image: '/assets/generated/sellphy-scene-v2.webp',
-    alt: 'A browser foreman pulls three levers on a machine that assembles storefronts on a conveyor, while the last shop comes alive to receive a parcel',
+    image: '/assets/generated/sellphy-shop.webp',
+    alt: 'A browser-window shopkeeper with a striped awning carefully seals a parcel at a packing table',
     description:
       'A multi-tenant platform for creating and operating online shops, public websites, products, content, and orders.',
     disciplines: ['Platform design', 'Full-stack', 'Commerce systems'],
     tone: 'red',
     stamp: ['BUILD', 'SELL', 'OPERATE'],
+    width: 1400,
+    height: 1120,
   },
   {
     title: 'Finance Me',
-    image: '/assets/generated/finance-me-scene-v2.webp',
-    alt: 'A receipt, a phone, and a calendar route spending through a budget machine toward a small house-shaped goal',
+    image: '/assets/generated/finance-me-savings.webp',
+    alt: 'A wallet character puts a coin into a household savings jar beside an open budget ledger',
     description:
       'A mobile-first family finance product for shared transactions, goals, recurring activity, analytics, and exports.',
     disciplines: ['Mobile UX', 'PWA engineering', 'Data workflows'],
     tone: 'smoke',
     stamp: ['TRACK', 'PLAN', 'SHARE'],
+    width: 1400,
+    height: 1120,
   },
 ];
 
@@ -120,8 +139,8 @@ const practiceBeats = [
         <div class="hero-stage" data-loop>
           <div class="hero-cel cel-enter has-film">
             <img
-              src="/assets/generated/hero-workshop-v2.webp"
-              alt="A fountain pen and a browser window run a machine that turns interface drawings into finished products"
+              src="/assets/generated/hero-browser.webp"
+              alt="A browser-window character sings into a vintage microphone on a small wooden stage"
               width="1536"
               height="1024"
               fetchpriority="high"
@@ -129,42 +148,51 @@ const practiceBeats = [
             <FilmStatic />
           </div>
           <div class="stage-notes" aria-hidden="true">
-            <svg class="stage-note" style="--i: 0" viewBox="0 0 28 40">
-              <path d="M15 5v26"></path>
-              <ellipse
-                cx="10"
-                cy="31.5"
-                rx="6"
-                ry="4.2"
-                transform="rotate(-18 10 31.5)"></ellipse>
-              <path d="M15 5c6 1.5 9 5 9.5 10.5"></path>
-            </svg>
-            <svg class="stage-note" style="--i: 1" viewBox="0 0 40 40">
-              <path d="M14 8v24M32 5v24"></path>
-              <ellipse
-                cx="9"
-                cy="32.5"
-                rx="5.6"
-                ry="4"
-                transform="rotate(-18 9 32.5)"></ellipse>
-              <ellipse
-                cx="27"
-                cy="29.5"
-                rx="5.6"
-                ry="4"
-                transform="rotate(-18 27 29.5)"></ellipse>
-              <path d="M14 8 32 5M14 14l18-3"></path>
-            </svg>
-            <svg class="stage-note" style="--i: 2" viewBox="0 0 28 40">
-              <path d="M15 5v26"></path>
-              <ellipse
-                cx="10"
-                cy="31.5"
-                rx="6"
-                ry="4.2"
-                transform="rotate(-18 10 31.5)"></ellipse>
-              <path d="M15 5c6 1.5 9 5 9.5 10.5"></path>
-            </svg>
+            {
+              Array.from({ length: 8 }, (_, index) => (
+                <svg
+                  class="stage-note"
+                  viewBox={index % 4 === 1 ? '0 0 40 40' : '0 0 28 40'}
+                  focusable="false"
+                >
+                  {index % 4 === 1 ? (
+                    <>
+                      <path d="M14 8v24M32 5v24" />
+                      <ellipse
+                        cx="9"
+                        cy="32.5"
+                        rx="5.6"
+                        ry="4"
+                        transform="rotate(-18 9 32.5)"
+                      />
+                      <ellipse
+                        cx="27"
+                        cy="29.5"
+                        rx="5.6"
+                        ry="4"
+                        transform="rotate(-18 27 29.5)"
+                      />
+                      <path d="M14 8 32 5M14 14l18-3" />
+                    </>
+                  ) : (
+                    <>
+                      <path d="M15 5v26" />
+                      <ellipse
+                        cx="10"
+                        cy="31.5"
+                        rx="6"
+                        ry="4.2"
+                        transform="rotate(-18 10 31.5)"
+                      />
+                      {index % 4 !== 2 && <path d="M15 5c6 1.5 9 5 9.5 10.5" />}
+                      {index % 4 === 3 && (
+                        <path d="M15 12c5 1.5 7.5 4.5 8 8.5" />
+                      )}
+                    </>
+                  )}
+                </svg>
+              ))
+            }
           </div>
           <div class="stage-sign" aria-hidden="true">
             <span>Design</span>
@@ -182,7 +210,7 @@ const practiceBeats = [
       <div class="wave-divider wave-hero" data-loop aria-hidden="true">
         <svg viewBox="0 0 2880 96" preserveAspectRatio="none">
           <path
-            d="M0 51c80-42 160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0v45H0Z"
+            d="M0 51c80-42 160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0v80H0Z"
           ></path>
         </svg>
       </div>
@@ -199,86 +227,7 @@ const practiceBeats = [
           </p>
         </div>
 
-        <article class="feature-project" data-reveal>
-          <figure class="feature-illustration">
-            <div class="feature-still has-film" data-loop>
-              <img
-                src="/assets/generated/hlp-lab-scene.webp"
-                alt="A friendly vial character points at a microscope slide beside a glass display of organized samples"
-                width="1400"
-                height="1000"
-                loading="lazy"
-              />
-              <FilmStatic />
-            </div>
-            <figcaption class="feature-caption">
-              The research commerce machine
-            </figcaption>
-          </figure>
-
-          <div class="feature-proof">
-            <div class="project-title-row">
-              <h3>HLP Labs</h3>
-              <a
-                class="pill-link"
-                href="https://www.hlplabs.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Live site <ArrowIcon direction="external" />
-              </a>
-            </div>
-            <p class="project-lede">
-              A technical catalog made understandable for customers and
-              manageable for the people running it.
-            </p>
-
-            <a
-              class="screen-window has-film"
-              href="/work/hlp-labs"
-              aria-label="Read the HLP Labs case study"
-              data-loop
-            >
-              <div class="screen-bar" aria-hidden="true">
-                <span></span><span></span><span></span>
-                <b>hlplabs.com</b>
-              </div>
-              <img
-                src="/assets/projects/hlp/storefront-live.png"
-                alt=""
-                width="1440"
-                height="1000"
-                loading="lazy"
-              />
-              <FilmStatic />
-              <span class="screen-action">
-                Open the case study <ArrowIcon />
-              </span>
-            </a>
-
-            <ul class="project-facts">
-              <li data-reveal style="--i: 0">
-                <strong>Designed</strong>
-                <span
-                  >Storefront, product discovery, education, mobile journeys</span
-                >
-              </li>
-              <li data-reveal style="--i: 1">
-                <strong>Engineered</strong>
-                <span
-                  >Commerce, content, AI assistant, search, admin operations</span
-                >
-              </li>
-              <li data-reveal style="--i: 2">
-                <strong>Owned</strong>
-                <span>Product direction through implementation and release</span
-                >
-              </li>
-            </ul>
-          </div>
-        </article>
-
-        <div class="project-reel" aria-label="More selected projects">
+        <div class="project-reel" aria-label="Selected projects">
           {
             projects.map((project, index) => (
               <article
@@ -290,8 +239,8 @@ const practiceBeats = [
                     <img
                       src={project.image}
                       alt={project.alt}
-                      width="1000"
-                      height="800"
+                      width={project.width}
+                      height={project.height}
                       loading="lazy"
                     />
                     <FilmStatic />
@@ -380,8 +329,8 @@ const practiceBeats = [
         <div class="about-portrait" data-reveal data-loop>
           <div class="portrait-disc has-film">
             <img
-              src="/assets/generated/different-hats.webp"
-              alt="An ink-bottle character gives a thumbs-up while balancing a wobbling stack of hats: a beret, an engineer's cap, a hard hat, a bowler, and a paper crown"
+              src="/assets/generated/different-hats-browser.webp"
+              alt="A browser-window character tips a designer's beret while holding a builder's hard hat"
               width="1024"
               height="1024"
               loading="lazy"

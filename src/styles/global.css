@@ -69,12 +69,11 @@
   --shadow-soft: 0 14px 34px rgba(17, 17, 15, 0.18);
   --shadow-deep: 0 28px 60px rgba(0, 0, 0, 0.34);
   --gate-hold-first: 720ms;
-  --gate-hold-nav: 560ms;
-  --gate-open: 880ms;
-  --gate-open-delay: 300ms;
-  --gate-close: 600ms;
-  --gate-card-out: 320ms;
-  --gate-leave-wait: 1100ms;
+  --gate-hold-nav: 160ms;
+  --gate-open: 620ms;
+  --gate-open-delay: 120ms;
+  --gate-close: 420ms;
+  --gate-card-out: 160ms;
 }
 
 *,
@@ -216,7 +215,9 @@ ol {
 .film-gate {
   position: fixed;
   z-index: 100;
-  inset: 0;
+  inset: 0 0 auto;
+  height: 100vh;
+  height: 100lvh;
   display: none;
   overflow: hidden;
   pointer-events: none;
@@ -230,7 +231,7 @@ ol {
 }
 
 /* Once the shutters are parked offscreen, drop the gate out of compositing. */
-.js body.is-ready:not(.is-leaving) .film-gate {
+.js .film-gate[data-state="open"] {
   visibility: hidden;
   transition-delay: calc(var(--gate-open-delay) + var(--gate-open) + 80ms);
 }
@@ -323,37 +324,37 @@ ol {
   line-height: 1;
 }
 
-.js body.is-ready:not(.is-leaving) .film-shutter-top {
+.js .film-gate[data-state="open"] .film-shutter-top {
   transform: translateY(-103%);
   transition-delay: var(--gate-open-delay);
 }
 
-.js body.is-ready:not(.is-leaving) .film-shutter-bottom {
+.js .film-gate[data-state="open"] .film-shutter-bottom {
   transform: translateY(103%);
   transition-delay: var(--gate-open-delay);
 }
 
-.js body.is-ready:not(.is-leaving) .film-slot {
+.js .film-gate[data-state="open"] .film-slot {
   opacity: 0;
   filter: blur(8px);
 }
 
-.js body.is-leaving .film-shutter {
+.js .film-gate[data-state="closed"] .film-shutter {
   transition-duration: var(--gate-close);
   transition-delay: 0s;
 }
 
-.js body.is-leaving .film-scrim {
+.js .film-gate[data-state="closed"] .film-scrim {
   opacity: 0.2;
-  transition-delay: 420ms;
+  transition-delay: 240ms;
   transition-duration: 180ms;
 }
 
-.js body.is-leaving .film-slot {
+.js .film-gate[data-state="closed"] .film-slot {
   opacity: 1;
   filter: blur(0);
-  transition-delay: 100ms, 0ms;
-  transition-duration: 480ms, 0ms;
+  transition-delay: 80ms, 0ms;
+  transition-duration: 260ms, 0ms;
 }
 
 /* ---------------------------------------------------------------------------
@@ -792,41 +793,26 @@ a:hover .arrow-icon {
 }
 
 .stage-notes {
+  --note-headroom: 96px;
   position: absolute;
   z-index: 5;
-  top: -3.4rem;
-  left: 52%;
-  width: 10.5rem;
-  height: 4.15rem;
+  inset: 0;
   pointer-events: none;
 }
 
 .stage-note {
   position: absolute;
-  bottom: 0;
-  width: clamp(1.6rem, 2.8vw, 2.6rem);
+  top: 0;
+  left: 0;
+  width: auto;
+  height: clamp(1.6rem, 2.7vw, 2.6rem);
   fill: var(--ink);
   stroke: var(--ink);
   stroke-width: 2.6;
   stroke-linecap: round;
   stroke-linejoin: round;
   opacity: 0;
-  animation: note-rise 3.6s var(--ease-out) infinite;
-  animation-delay: calc(1.6s + var(--i, 0) * 1.2s);
-  animation-play-state: var(--loop-state, running);
-}
-
-.stage-note:nth-child(1) {
-  left: 4%;
-}
-
-.stage-note:nth-child(2) {
-  left: 42%;
-  width: clamp(2rem, 3.4vw, 3.2rem);
-}
-
-.stage-note:nth-child(3) {
-  left: 80%;
+  transform-origin: 50% 65%;
 }
 
 .stage-sign {
@@ -915,14 +901,31 @@ a:hover .arrow-icon {
   z-index: 4;
   height: clamp(3rem, 6vw, 6rem);
   margin-top: -1px;
+  margin-bottom: -3px;
   overflow: hidden;
+}
+
+/* Solid ink at the join so fractional heights and path anti-alias
+   cannot let paper show through between the wave and the next section. */
+.wave-divider::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: var(--ink);
+  pointer-events: none;
 }
 
 .wave-divider svg {
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 200%;
   max-width: none;
-  height: 100%;
+  height: calc(100% + 4px);
   animation: wave-roll 32s linear infinite;
   animation-play-state: var(--loop-state, running);
 }
@@ -1479,6 +1482,7 @@ a:hover .arrow-icon {
 
 .about-portrait {
   position: relative;
+  width: 100%;
   max-width: 30rem;
   aspect-ratio: 1;
   margin-inline: auto;
@@ -1500,7 +1504,6 @@ a:hover .arrow-icon {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.04);
 }
 
 .portrait-ring {
@@ -2323,24 +2326,6 @@ a:hover .arrow-icon {
   }
 }
 
-@keyframes note-rise {
-  0% {
-    opacity: 0;
-    transform: translateY(30%) rotate(-10deg) scale(0.7);
-  }
-  20% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 1;
-    transform: translateY(-140%) rotate(8deg) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-230%) rotate(-4deg) scale(1.05);
-  }
-}
-
 @keyframes scroll-hop {
   0%,
   100% {
@@ -2554,11 +2539,7 @@ a:hover .arrow-icon {
   }
 
   .stage-notes {
-    top: -1rem;
-    left: auto;
-    right: 6%;
-    width: 8.5rem;
-    height: 1.9rem;
+    --note-headroom: 12px;
   }
 
   .stage-sign {
@@ -2904,14 +2885,15 @@ a:hover .arrow-icon {
     --hand-size: min(24rem, 98vw);
     --hand-rot-a: -8deg;
     --hand-rot-b: 10deg;
+    gap: 0.3rem;
   }
 
   .contact-copy {
-    padding-bottom: 1.25rem;
+    padding-bottom: 0;
   }
 
   .contact-stage {
-    min-height: 24rem;
+    min-height: 22.25rem;
     margin-top: 0;
   }
 
@@ -3006,6 +2988,10 @@ a:hover .arrow-icon {
 
   .film-gate {
     display: none !important;
+  }
+
+  .stage-notes {
+    display: none;
   }
 
   .film-static::before {
