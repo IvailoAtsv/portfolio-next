@@ -1814,14 +1814,14 @@ a:hover .arrow-icon {
   );
 }
 
+/* The hero picture waits off-stage to the right, then is pushed on. */
 .js .cel-enter {
-  opacity: 0;
-  transform: translateY(24px) scale(0.9);
+  transform: translateX(125%) rotate(2.2deg);
   transform-origin: 50% 80%;
 }
 
 .js body.is-ready .cel-enter {
-  animation: cel-enter 720ms linear
+  animation: cel-enter 840ms linear
     calc(var(--gate-open-delay) + var(--gate-open) * 0.6) both;
 }
 
@@ -2437,25 +2437,22 @@ a:hover .arrow-icon {
   }
 }
 
-/* Set down, overshoot a touch, settle. Each leg eases out on its own. */
+/* Slide in leaning into the move, overshoot the mark, ease back. Each leg
+   eases out on its own. */
 @keyframes cel-enter {
   0% {
-    opacity: 0;
-    transform: translateY(24px) scale(0.9);
+    transform: translateX(125%) rotate(2.2deg);
     animation-timing-function: var(--ease-out);
   }
-  44% {
-    opacity: 1;
-    transform: translateY(-4px) scale(1.03);
+  70% {
+    transform: translateX(-1.6%) rotate(-0.6deg);
     animation-timing-function: var(--ease-out);
   }
-  72% {
-    opacity: 1;
-    transform: translateY(1px) scale(0.992);
+  87% {
+    transform: translateX(0.4%) rotate(0.15deg);
     animation-timing-function: var(--ease-out);
   }
   100% {
-    opacity: 1;
     transform: none;
   }
 }
