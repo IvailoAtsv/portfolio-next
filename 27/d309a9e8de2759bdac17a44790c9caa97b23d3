@@ -1,0 +1,19 @@
+src/layouts/BaseLayout.astro
+  s_32ee5390d2ded8::t_653dca4e048352 103-112
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "27d309a9e8de2759bdac17a44790c9caa97b23d3",
+  "prompts": {},
+  "sessions": {
+    "s_32ee5390d2ded8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06620-2564-7db3-9123-770982d79cba",
+        "model": "unknown"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    }
+  }
+}
