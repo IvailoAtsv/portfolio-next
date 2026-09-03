@@ -1,0 +1,57 @@
+public/assets/generated/different-hats-browser.webp.json
+  s_f2d907f8d0ba34::t_1e182572d2df0a 1-14
+public/assets/generated/finance-me-savings.webp.json
+  s_f2d907f8d0ba34::t_9010a9f7968e26 1-14
+public/assets/generated/hero-browser.webp.json
+  s_f2d907f8d0ba34::t_9167d6b6e44fd3 1-14
+public/assets/generated/hlp-lab-scene-v2.webp.json
+  s_f2d907f8d0ba34::t_b5b197b38a38e4 1-15
+public/assets/generated/keep-up-scene-v2.webp.json
+  s_f2d907f8d0ba34::t_6390d0d3403223 1-14
+public/assets/generated/sellphy-shop.webp.json
+  s_f2d907f8d0ba34::t_1e0d73350cd1a2 1-14
+src/components/CircleWords.astro
+  s_32ee5390d2ded8::t_48641814783254 123
+src/scripts/film-gate.ts
+  s_32ee5390d2ded8::t_d9e02956e91a16 1-127
+src/scripts/hero-notes.ts
+  s_f2d907f8d0ba34::t_261d646b28c3ff 1-118
+public/assets/generated/manifest.md
+  s_f2d907f8d0ba34::t_0cf56253e9cdf8 3,7-11,13,16
+src/pages/index.astro
+  s_f2d907f8d0ba34::t_1f18572a8a3118 9-21,24-25,31-32,36-37,43-44,48-49,55-56,142-143,151-195,213,230,242-243,332-333
+src/scripts/page-interactions.ts
+  s_6ff461e6411aa8::t_e078eea7ca39d9 1-142
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "5f52612d6f546180dbe987e38ed8b404d53849a4",
+  "prompts": {},
+  "sessions": {
+    "s_32ee5390d2ded8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06620-2564-7db3-9123-770982d79cba",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_6ff461e6411aa8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0663a-84eb-7411-9cfd-660415b0a7f2",
+        "model": "unknown"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_f2d907f8d0ba34": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06620-7335-7ec3-a35f-3fa02fdf00da",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    }
+  }
+}
