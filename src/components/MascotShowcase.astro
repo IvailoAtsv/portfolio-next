@@ -5,20 +5,21 @@ const states = [
     id: 'idle',
     label: 'Idle',
     description:
-      'The home-screen pose. A tip sits in the bubble; the duck waits.',
+      'The home-screen pose. A tip sits in the bubble and the duck waits.',
     sprite: sprites.states.idle,
   },
   {
     id: 'right',
     label: 'Correct',
-    description: 'Right answer. The loop plays while the explanation is up.',
+    description:
+      'Right answer. The loop plays while the explanation is on screen.',
     sprite: sprites.states.right,
   },
   {
     id: 'wrong',
     label: 'Wrong',
     description:
-      'Wrong answer. Same timing, different face, so you can still read.',
+      'Wrong answer. Same timing, a different face, so you can still read.',
     sprite: sprites.states.wrong,
   },
 ];
@@ -55,8 +56,7 @@ const initial = states[0].sprite;
     {states[0].description}
   </p>
   <p class="character-origin">
-    The original production sprites, playing here at their native 10 frames per
-    second.
+    The original production sprites, playing here at 10 frames per second.
   </p>
 </mascot-showcase>
 

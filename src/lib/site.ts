@@ -45,9 +45,9 @@ export const pages = {
     ogType: 'website',
   },
   hlpLabs: {
-    title: 'HLP Labs - Research-commerce product | Ivaylo Atanassov',
+    title: 'HLP Labs - Research peptide shop | Ivaylo Atanassov',
     description:
-      'How I designed and built HLP Labs: a technical catalog, scientific knowledge base, AI assistant, and operations - one connected research-commerce product.',
+      'How I designed and built HLP Labs: a Bulgarian shop for research peptides, with a reference library, an AI assistant, and the admin panel that runs both.',
     path: '/work/hlp-labs',
     image: '/og/hlp-labs.png',
     imageAlt:
@@ -58,7 +58,7 @@ export const pages = {
   keepUp: {
     title: 'Keep Up - Programming practice PWA | Ivaylo Atanassov',
     description:
-      'Keep Up is a programming practice app with a daily quiz, learning paths, and a pixel-art duck that reacts to answers. Designed and built by Ivaylo Atanassov.',
+      'Keep Up is a programming quiz app with a daily quiz, learning paths, and a pixel-art duck that reacts to answers. Designed and built by Ivaylo Atanassov.',
     path: '/work/keep-up',
     image: '/og/keep-up.png',
     imageAlt:
@@ -67,9 +67,9 @@ export const pages = {
     breadcrumbs: [{ name: 'Keep Up', path: '/work/keep-up' }],
   },
   sellphy: {
-    title: 'Sellphy - Shop platform case study | Ivaylo Atanassov',
+    title: 'Sellphy - Shop platform | Ivaylo Atanassov',
     description:
-      'Sellphy is a shop platform with statically generated storefronts, product pages each shop can dress, and a tour on each main dashboard screen. Hosting cost dropped 83%; maintenance dropped 25+ hours a month.',
+      'Sellphy is a shop platform with a six-step editor, product pages each shop can dress, and dashboard tours. Hosting cost dropped 83%; maintenance dropped 25+ hours a month.',
     path: '/work/sellphy',
     image: '/og/sellphy.png',
     imageAlt:
@@ -80,7 +80,7 @@ export const pages = {
   financeMe: {
     title: 'Finance Me - Family finance app | Ivaylo Atanassov',
     description:
-      'A family finance app that turns an Apple Wallet purchase into a categorized expense, shared history, and savings goals. Product design and full-stack by Ivaylo.',
+      'A family expense tracker that turns an Apple Pay purchase into a categorized expense, shared history, and savings goals. Product design and full-stack by Ivaylo.',
     path: '/work/finance-me',
     image: '/og/finance-me.png',
     imageAlt:

@@ -21,13 +21,14 @@ const assets = '/assets/projects/sellphy';
               Sellphy<span class="title-outline">.</span>
             </h1>
             <p data-motion="copy">
-              Sellphy is a shop platform I designed and built. Public pages ship
-              as static HTML. That change, plus moving off Vercel, cut the
-              hosting bill by 83%.
+              Sellphy is a shop platform I designed and built. A seller sets up
+              a storefront in a six-step editor, manages products and orders
+              from one dashboard, and gets a site served as static HTML. Serving
+              those pages from a small VPS cut my hosting bill by 83%.
             </p>
             <div class="case-actions" data-motion="action">
-              <a class="button button-dark" href="#static" data-squash>
-                Static storefronts <ArrowIcon direction="down" />
+              <a class="button button-dark" href="#builder" data-squash>
+                How a shop gets built <ArrowIcon direction="down" />
               </a>
             </div>
           </div>
@@ -54,8 +55,9 @@ const assets = '/assets/projects/sellphy';
               />
             </a>
             <figcaption>
-              Step 2 is the homepage. The preview is the public page.<br /><span
-                >Product demo capture. Select to enlarge.</span
+              Step 2 of 6 in the site editor: the homepage. The preview in the
+              middle is the real public page.<br /><span
+                >Demo shop. Select to enlarge.</span
               >
             </figcaption>
           </figure>
@@ -66,15 +68,17 @@ const assets = '/assets/projects/sellphy';
             </div>
             <div data-motion="detail">
               <dt>Product</dt><dd>
-                Shop platform<br />Seller dashboard
+                Shop platform<br />Storefronts · Seller dashboard
               </dd>
             </div>
             <div data-motion="detail">
-              <dt>System</dt><dd>Next.js · ISR<br />TypeScript · MongoDB</dd>
+              <dt>System</dt><dd>
+                Next.js · TypeScript<br />MongoDB · Docker on Hetzner
+              </dd>
             </div>
             <div data-motion="detail">
-              <dt>Scope</dt><dd>
-                Static storefronts<br />Dashboard tours
+              <dt>Outcome</dt><dd>
+                83% lower hosting cost<br />25+ hours saved a month
               </dd>
             </div>
           </dl>
@@ -91,59 +95,39 @@ const assets = '/assets/projects/sellphy';
         <div class="case-body">
           <nav class="case-nav" aria-label="Case study sections">
             <span>On this reel</span>
-            <a href="#static">Static pages</a>
             <a href="#builder">The editor</a>
             <a href="#product-pages">Product pages</a>
+            <a href="#dashboard">The dashboard</a>
             <a href="#tours">Tours</a>
-            <a href="#catalog">Catalog &amp; SEO</a>
+            <a href="#static">Static pages</a>
           </nav>
 
           <div class="case-content">
             <section
               class="case-section case-opening"
-              id="static"
+              id="builder"
               data-motion-group
             >
-              <h2 data-motion="title">The catalog is a static file.</h2>
+              <h2 data-motion="title">A shop in six steps.</h2>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  Home, shop, category, about, and legal pages are force-static.
-                  The first request builds the HTML. Later requests get that
-                  file until a seller saves, then those paths and cache tags are
-                  rebuilt.
+                  The site editor walks a new seller through layout, homepage,
+                  shop page, navigation, colors and fonts. Most of the work is
+                  in the homepage step: each section has a handful of variants,
+                  including a video hero, and the preview in the middle is
+                  rendered with the same components as the live shop.
                 </p>
                 <div>
                   <p data-motion="copy">
-                    Cart and checkout stay dynamic, because those need a live
-                    cart. Category filters would normally skip the cache, so the
-                    proxy encodes the filter into the path and leaves the public
-                    URL readable. Redirect rules run in the proxy before a
-                    cached page is served.
+                    You can click a heading in the preview and type straight
+                    into it, so there is no hunting for the matching field in
+                    the side panel. A product grid in the editor is the grid the
+                    customer will see.
                   </p>
                   <p data-motion="copy">
-                    I used to run this on Vercel. After the pages were static, a
-                    Hetzner VPS behind Caddy was enough. Hosting cost dropped
-                    83%.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            <section class="case-section" id="builder" data-motion-group>
-              <h2 data-motion="title">Six steps, then a live homepage.</h2>
-              <div class="case-columns">
-                <p class="case-lede" data-motion="copy">
-                  The editor is layout, home, shop, navigation, colors, and
-                  fonts. Step two is the homepage. You pick a section variant,
-                  including a video hero, and the preview in the middle is the
-                  public page.
-                </p>
-                <div>
-                  <p data-motion="copy">
-                    Click a heading in the preview and type. You do not have to
-                    hunt for the matching field in the panel. The preview uses
-                    the same public components as the live shop, so a product
-                    grid in the editor is the grid the customer gets.
+                    When the six steps are done the shop is live on a
+                    sellphy.store subdomain. Connecting a custom domain is a
+                    dashboard setting.
                   </p>
                 </div>
               </div>
@@ -156,16 +140,16 @@ const assets = '/assets/projects/sellphy';
                   <strong>Layout</strong><span>Width, corners, spacing</span>
                 </li>
                 <li>
-                  <strong>Home</strong><span>Sections and variants</span>
+                  <strong>Home</strong><span>Sections and their variants</span>
                 </li>
                 <li>
-                  <strong>Shop</strong><span>Catalog page</span>
+                  <strong>Shop</strong><span>The catalog page</span>
                 </li>
                 <li>
-                  <strong>Navigation</strong><span>Menu, footer, bar</span>
+                  <strong>Navigation</strong><span>Menu and footer</span>
                 </li>
                 <li>
-                  <strong>Colors</strong><span>Palette, then custom</span>
+                  <strong>Colors</strong><span>A preset or your own</span>
                 </li>
                 <li>
                   <strong>Fonts</strong><span>Heading and body pair</span>
@@ -179,21 +163,23 @@ const assets = '/assets/projects/sellphy';
               </h2>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  Theme, gallery, trust cards, quantity, and the button label
-                  are shop settings. Variants can be size pills, color swatches,
-                  or a length dropdown. The checkout verb can be order, request,
-                  or calculator.
+                  Every shop on Sellphy uses the same product page. What differs
+                  is settings: theme, gallery, trust cards, whether the quantity
+                  field shows, and what the button says. Variants can be size
+                  pills, color swatches or a dropdown, depending on what the
+                  shop sells.
                 </p>
                 <div>
                   <p data-motion="copy">
-                    DEMO sells shirts and the button says add to request. Alcona
-                    sells fence panels and the button says add to calculator.
-                    Gymleco is dark, with feature cards and a specs table. I
-                    wrote one product page and let each shop dress it.
+                    DEMO sells clothes, so the variants are sizes and colors and
+                    the button says add to request. Alcona sells fence panels,
+                    so the variant is a length dropdown and the button says add
+                    to calculator. Gymleco sells gym equipment on a dark theme
+                    with feature cards and a specs table.
                   </p>
                   <p data-motion="copy">
-                    I moved all of my shops onto Sellphy. That saved 25+ hours
-                    of maintenance a month.
+                    I wrote the page once. Each shop dresses it from the
+                    dashboard.
                   </p>
                 </div>
               </div>
@@ -222,7 +208,7 @@ const assets = '/assets/projects/sellphy';
                 </a>
                 <figcaption>
                   <strong>DEMO</strong><span
-                    >Sizes, colors, add to request. Demo shop; select to
+                    >Sizes, colors, add to request. The demo shop; select to
                     enlarge.</span
                   >
                 </figcaption>
@@ -250,7 +236,8 @@ const assets = '/assets/projects/sellphy';
                 </a>
                 <figcaption>
                   <strong>Alcona</strong><span
-                    >Color swatches, length, calculator. Select to enlarge.</span
+                    >Color swatches, a length dropdown, add to calculator.
+                    Select to enlarge.</span
                   >
                 </figcaption>
               </figure>
@@ -278,88 +265,34 @@ const assets = '/assets/projects/sellphy';
                 </a>
                 <figcaption>
                   <strong>Gymleco</strong><span
-                    >Dark theme, feature cards, specs. Select to enlarge.</span
+                    >Dark theme, feature cards, a specs table. Select to
+                    enlarge.</span
                   >
                 </figcaption>
               </figure>
             </div>
 
-            <section class="case-section" id="tours" data-motion-group>
-              <h2 data-motion="title">The first visit starts a tour.</h2>
+            <section class="case-section" id="dashboard" data-motion-group>
+              <h2 data-motion="title">Where sellers spend the day.</h2>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  I wrote a tour for each of the main dashboard screens. First
-                  open starts it. The question mark in the header starts it
-                  again. Completion is stored per shop.
+                  Products, orders, inventory, promo codes, analytics, the site
+                  editor, SEO tools and domains all live in one dashboard. It is
+                  in Bulgarian, because that is the language the sellers work
+                  in.
                 </p>
                 <div>
                   <p data-motion="copy">
-                    Analytics is ten steps. The capture is step four, on the
-                    visits chart. The tour also covers the privacy model: no
-                    cookies, and unique visitors reset at midnight UTC. A person
-                    who visits each day of a week counts as seven.
+                    The products screen is a table: thumbnail, status, price,
+                    discount, variant count, sizes and categories, with filters
+                    across the top. Ticking rows opens bulk edit.
                   </p>
                   <p data-motion="copy">
-                    The same pattern is on products, orders, the site editor,
-                    SEO, domains, and inventory. Bulgarian copy, because that is
-                    the language the product ships in.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            <figure class="case-screen" data-motion-group>
-              <a
-                class="screen-window"
-                href={`${assets}/analytics-tour.webp`}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Open the Sellphy analytics tour screenshot at full size"
-                data-motion="cel"
-              >
-                <div class="screen-bar" aria-hidden="true">
-                  <span></span><span></span><span></span><b
-                    >Analytics / tour step 4 of 10</b
-                  >
-                </div>
-                <img
-                  src={`${assets}/analytics-tour.webp`}
-                  alt="Sellphy analytics page with a guided tour popup on step 4 of 10, explaining the visits chart"
-                  width="1024"
-                  height="662"
-                  loading="lazy"
-                />
-              </a>
-              <figcaption>
-                <strong>Step 4, the visits chart</strong><span
-                  >The tour names both lines, then the rest of the page. Demo
-                  capture; select to enlarge.</span
-                >
-              </figcaption>
-            </figure>
-
-            <section class="case-section" id="catalog" data-motion-group>
-              <h2 data-motion="title">
-                See the Google result before you publish.
-              </h2>
-              <div class="case-columns">
-                <p class="case-lede" data-motion="copy">
-                  Daily work is a dense table and a preview of how the page will
-                  look in search. I kept both in Bulgarian, which is the
-                  language the sellers use.
-                </p>
-                <div>
-                  <p data-motion="copy">
-                    The catalog is a table: thumbnail, status, price, discount,
-                    variants, sizes. Filters sit on top. Checkboxes open bulk
-                    edit.
-                  </p>
-                  <p data-motion="copy">
-                    Page Preview fetches a store URL and draws the Google
-                    snippet and the Open Graph card. It counts title and
-                    description length. A title under 30 characters gets an
-                    attention flag. The numbers in the screenshot are the demo
-                    shop's current metadata.
+                    Page Preview takes any URL from the shop and shows what
+                    Google, Facebook and X will display for it, with character
+                    counts on the title and description. A title under 30
+                    characters gets a warning. The audit table underneath lists
+                    every field it checked.
                   </p>
                 </div>
               </div>
@@ -387,9 +320,9 @@ const assets = '/assets/projects/sellphy';
                   />
                 </a>
                 <figcaption>
-                  <strong>Scan the catalog</strong><span
-                    >Name, price, category, status, discount. Demo capture;
-                    select to enlarge.</span
+                  <strong>The products table</strong><span
+                    >Filters across the top, bulk edit through the checkboxes.
+                    Demo shop; select to enlarge.</span
                   >
                 </figcaption>
               </figure>
@@ -414,9 +347,9 @@ const assets = '/assets/projects/sellphy';
                   />
                 </a>
                 <figcaption>
-                  <strong>Check the snippet</strong><span
-                    >Google, Open Graph, and a length audit on the same screen.
-                    Demo capture; select to enlarge.</span
+                  <strong>Page Preview</strong><span
+                    >The Google snippet, the Open Graph cards and the audit
+                    table for one category page. Demo shop; select to enlarge.</span
                   >
                 </figcaption>
               </figure>
@@ -445,12 +378,99 @@ const assets = '/assets/projects/sellphy';
                 />
               </a>
               <figcaption>
-                <strong>Traffic without a cookie banner</strong><span
-                  >Page views, unique visitors, add-to-carts, and orders. All
-                  figures shown are demonstration data.</span
+                <strong>Analytics without a cookie banner</strong><span
+                  >Page views, unique visitors, add-to-carts and orders, then
+                  the visits chart and the top pages. Visitors are counted
+                  without cookies. The figures are demo data.</span
                 >
               </figcaption>
             </figure>
+
+            <section class="case-section" id="tours" data-motion-group>
+              <h2 data-motion="title">Every screen explains itself.</h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  Each main dashboard screen has a guided tour. It starts on the
+                  first visit, and the question mark in the header replays it.
+                  Completion is stored per shop. There are seventeen tours,
+                  covering products, orders, the site editor, SEO, domains and
+                  inventory.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    The analytics tour is ten steps. Step four, in the capture,
+                    explains the visits chart: the dark line is total page
+                    views, the light one is unique visitors per day. Because
+                    there are no cookies, unique visitors reset at midnight UTC,
+                    and someone who comes back every day for a week counts seven
+                    times.
+                  </p>
+                  <p data-motion="copy">
+                    That is the price of counting without cookies, and the tour
+                    says so in plain words where the seller will read it.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <figure class="case-screen" data-motion-group>
+              <a
+                class="screen-window"
+                href={`${assets}/analytics-tour.webp`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open the Sellphy analytics tour screenshot at full size"
+                data-motion="cel"
+              >
+                <div class="screen-bar" aria-hidden="true">
+                  <span></span><span></span><span></span><b
+                    >Analytics / tour step 4 of 10</b
+                  >
+                </div>
+                <img
+                  src={`${assets}/analytics-tour.webp`}
+                  alt="Sellphy analytics page with a guided tour popup on step 4 of 10, explaining the visits chart"
+                  width="1024"
+                  height="662"
+                  loading="lazy"
+                />
+              </a>
+              <figcaption>
+                <strong>Step 4 of 10</strong><span
+                  >The tour names both lines on the chart before it moves on to
+                  the tables below. Demo shop; select to enlarge.</span
+                >
+              </figcaption>
+            </figure>
+
+            <section class="case-section" id="static" data-motion-group>
+              <h2 data-motion="title">Public pages are plain HTML.</h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  The home, shop, category, about, services and legal pages are
+                  rendered once and served as files. The first request builds
+                  the page; every request after that gets the file, until the
+                  seller saves a change. Then only the affected paths are
+                  rebuilt.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    Cart, checkout and the dashboard stay dynamic. Category
+                    filters would normally defeat the cache, so a proxy folds
+                    the filter into an internal path while the public URL stays
+                    readable. Redirects run in the same proxy, before a cached
+                    page is served.
+                  </p>
+                  <p data-motion="copy">
+                    Once the storefronts were static I no longer needed Vercel.
+                    The whole platform now runs in Docker on a Hetzner VPS
+                    behind Caddy, and the hosting bill is 83% lower. Moving all
+                    of my own shops onto it saves me 25 or more hours of
+                    maintenance a month.
+                  </p>
+                </div>
+              </div>
+            </section>
 
             <section class="case-next" data-motion-group>
               <div>
@@ -458,8 +478,8 @@ const assets = '/assets/projects/sellphy';
                   Next up:<br /><span class="title-outline">Finance Me.</span>
                 </h2>
                 <p data-motion="copy">
-                  A smaller screen, a shared household, and a different kind of
-                  daily decision.
+                  A family expense tracker that picks up Apple Pay purchases
+                  through an iOS Shortcut.
                 </p>
               </div>
               <a

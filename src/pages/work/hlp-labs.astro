@@ -11,7 +11,7 @@ const systemNodes = [
   {
     id: 'catalog',
     label: 'Catalog',
-    note: 'Find and compare',
+    note: 'Peptides by research area',
     x: 500,
     y: 250,
     tone: 'red',
@@ -19,14 +19,14 @@ const systemNodes = [
   {
     id: 'encyclopedia',
     label: 'Encyclopedia',
-    note: 'Understand terms',
+    note: 'What each peptide does',
     x: 175,
     y: 95,
   },
   {
     id: 'guides',
-    label: 'Guides',
-    note: 'Follow context',
+    label: 'Blog & FAQ',
+    note: 'Storage, preparation, handling',
     x: 825,
     y: 95,
     tone: 'yellow',
@@ -34,14 +34,14 @@ const systemNodes = [
   {
     id: 'calculator',
     label: 'Calculator',
-    note: 'Work through quantities',
+    note: 'Dilution and concentration',
     x: 175,
     y: 405,
   },
   {
     id: 'assistant',
     label: 'AI assistant',
-    note: 'Ask in context',
+    note: 'A goal in, an article out',
     x: 825,
     y: 405,
     tone: 'green',
@@ -67,8 +67,9 @@ const spokes = systemNodes.slice(1);
               <span class="title-line title-outline">Labs.</span>
             </h1>
             <p data-motion="copy">
-              A technical storefront, a scientific reference library, and the
-              tools to run both. Designed and built as one product.
+              HLP Labs is a Bulgarian online shop for research peptides. I
+              designed and built the storefront, the reference library that sits
+              beside it, and the admin panel the team uses to run both.
             </p>
             <div class="case-actions" data-motion="action">
               <a
@@ -85,7 +86,7 @@ const spokes = systemNodes.slice(1);
                 href="#checkout-motion"
                 data-squash
               >
-                Watch the checkout <ArrowIcon direction="down" />
+                Watch the order button <ArrowIcon direction="down" />
               </a>
             </div>
           </div>
@@ -113,13 +114,17 @@ const spokes = systemNodes.slice(1);
               <dt>Role</dt><dd>Product design<br />Full-stack development</dd>
             </div>
             <div data-reveal style="--i: 1">
-              <dt>Surface</dt><dd>Commerce<br />Knowledge & operations</dd>
+              <dt>Product</dt><dd>
+                Online shop<br />Reference library · Admin
+              </dd>
             </div>
             <div data-reveal style="--i: 2">
               <dt>System</dt><dd>Next.js · React<br />TypeScript · MongoDB</dd>
             </div>
             <div data-reveal style="--i: 3">
-              <dt>Ownership</dt><dd>Direction through<br />implementation</dd>
+              <dt>Market</dt><dd>
+                Bulgarian-language shop<br />Ships across Europe
+              </dd>
             </div>
           </dl>
         </header>
@@ -139,14 +144,12 @@ const spokes = systemNodes.slice(1);
             data-motion-group
           >
             <span data-motion="detail" data-motion-order="0">On this reel</span>
-            <a href="#brief" data-motion="detail">The brief</a>
-            <a href="#checkout-motion" data-motion="detail"
-              >Checkout in motion</a
-            >
-            <a href="#storefront" data-motion="detail">Public product</a>
-            <a href="#mobile" data-motion="detail">Mobile</a>
-            <a href="#knowledge" data-motion="detail">Connected knowledge</a>
-            <a href="#operations" data-motion="detail">Operations</a>
+            <a href="#brief" data-motion="detail">What it is</a>
+            <a href="#storefront" data-motion="detail">The storefront</a>
+            <a href="#mobile" data-motion="detail">On a phone</a>
+            <a href="#checkout-motion" data-motion="detail">The order button</a>
+            <a href="#knowledge" data-motion="detail">The library</a>
+            <a href="#operations" data-motion="detail">The admin panel</a>
             <a href="#decisions" data-motion="detail">Decisions</a>
           </nav>
 
@@ -156,97 +159,33 @@ const spokes = systemNodes.slice(1);
               id="brief"
               data-motion-group
             >
-              <h2 data-motion="title">
-                A storefront was only the visible half.
-              </h2>
+              <h2 data-motion="title">A shop with a library attached.</h2>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  HLP Labs needed to sell a technical catalog without flattening
-                  it into a conventional shop. Products, scientific context,
-                  guidance, and internal operations had to behave like one
-                  product.
+                  Nobody buys a research peptide on impulse. Someone looking at
+                  Retatrutide wants to know the mechanism, how to store it and
+                  how to dilute it before the add-to-cart button matters. So the
+                  brief was a storefront and a reference library, built as one
+                  site.
                 </p>
                 <div>
                   <p data-motion="copy">
-                    The work combined a public commerce experience with an
-                    encyclopedia, guides, a calculator, an AI assistant, search,
-                    account and order flows, and an administrative surface for
-                    running the catalog and content.
+                    The public site has a catalog sorted by research area, an
+                    encyclopedia, a blog of how-to guides, an FAQ, a dilution
+                    calculator, an AI assistant, search, accounts and order
+                    history. Behind it is an admin panel for the catalog and all
+                    of that content. Everything is in Bulgarian, because that is
+                    where the customers are.
                   </p>
                   <p data-motion="copy">
-                    I designed the customer-facing screens and built the systems
-                    behind them. A product needs a clear specification on the
-                    storefront, editable content in the back office, and a
-                    consistent identity wherever it appears.
+                    I designed the screens and built the system. That includes
+                    the data model behind a product page, which has to carry a
+                    CAS number, a formula, molecular weight, purity, sizes and
+                    price, and then a long article about the mechanism
+                    underneath.
                   </p>
                 </div>
               </div>
-            </section>
-
-            <section
-              class="checkout-showcase case-section"
-              id="checkout-motion"
-              data-motion-group
-            >
-              <div class="checkout-story">
-                <h2 data-motion="title">A delivery inside a button.</h2>
-                <p class="case-lede" data-motion="copy">
-                  The parcel slides into the truck. The doors close. The road
-                  starts moving, and the truck pulls away. All of it happens
-                  inside the checkout action.
-                </p>
-                <p data-motion="copy">
-                  I built this as a sequence of connected states: the same
-                  parcel moves from the idle button into the trailer, so every
-                  movement follows the one before it. The surrounding order
-                  stays still while the button becomes the scene.
-                </p>
-                <figure class="checkout-closeup">
-                  <ProjectVideo
-                    src="/assets/projects/hlp/checkout-detail.mp4"
-                    poster="/assets/projects/hlp/checkout-detail-poster.png"
-                    label="Close-up of the parcel loading into the checkout truck and driving away"
-                    width={244}
-                    height={60}
-                  />
-                  <figcaption>
-                    The checkout animation, enlarged from the recording.
-                  </figcaption>
-                </figure>
-                <p class="checkout-detail-note">
-                  The implementation also handles repeat taps, cleans up its
-                  timers, and uses a simpler confirmation state when reduced
-                  motion is requested.
-                </p>
-              </div>
-              <figure class="checkout-recording" data-loop>
-                <div class="checkout-phone">
-                  <ProjectVideo
-                    src="/assets/projects/hlp/checkout-motion.mp4"
-                    poster="/assets/projects/hlp/checkout-poster.png"
-                    label="HLP Labs checkout animation in the original mobile recording"
-                    width={288}
-                    height={636}
-                  />
-                </div>
-                <span class="reel-seal checkout-seal" aria-hidden="true">
-                  <CircleWords
-                    id="checkout-seal-ring"
-                    words={['PACK', 'SHIP', 'CONFIRM']}
-                    separator="·"
-                    radius={43}
-                    size={120}
-                  >
-                    <circle class="seal-disc" slot="back" cx="60" cy="60" r="58"
-                    ></circle>
-                    <circle class="seal-dot" cx="60" cy="60" r="5"></circle>
-                  </CircleWords>
-                </span>
-                <figcaption>
-                  Original mobile recording with a demo order. The animation
-                  lives in the bottom action bar.
-                </figcaption>
-              </figure>
             </section>
 
             <figure
@@ -278,40 +217,42 @@ const spokes = systemNodes.slice(1);
               </div>
               <figcaption>
                 <strong data-motion="detail" data-motion-order="1"
-                  >The public product</strong
+                  >The home page</strong
                 ><span data-motion="copy" data-motion-order="2"
-                  >The current experience leads with research context, then
-                  gives the catalog a clear path into products and supporting
-                  knowledge.</span
+                  >One peptide in the spotlight, a carousel of the others, then
+                  the catalog by research area. The header has two entries: Shop
+                  and Resources.</span
                 >
               </figcaption>
             </figure>
 
             <section class="case-section" data-motion-group>
-              <h2 data-motion="title">Clarity before conversion.</h2>
+              <h2 data-motion="title">Shop, Resources, then the spec.</h2>
               <div class="decision-row">
                 <div data-motion-group>
-                  <strong data-motion="title">Start with intent</strong><p
+                  <strong data-motion="title">Two doors in the header</strong><p
                     data-motion="copy"
                   >
-                    Navigation separates shopping, learning, and support without
-                    turning them into isolated destinations.
+                    Shop and Resources. The shop menu opens into research areas
+                    like weight regulation, longevity and recovery, so you can
+                    start from a goal without knowing a product name.
                   </p>
                 </div>
                 <div data-motion-group>
-                  <strong data-motion="title">Keep context nearby</strong><p
-                    data-motion="copy"
-                  >
-                    Technical products connect to educational material so the
-                    next useful answer is part of the journey.
+                  <strong data-motion="title">Spec on top, article below</strong
+                  ><p data-motion="copy">
+                    Every product page puts the label, sizes and price first.
+                    The article on the mechanism starts underneath. You can buy
+                    in two clicks or read for ten minutes.
                   </p>
                 </div>
                 <div data-motion-group>
-                  <strong data-motion="title">Design the small screen</strong><p
+                  <strong data-motion="title">Dark by default</strong><p
                     data-motion="copy"
                   >
-                    Discovery, reading, and product evaluation remain deliberate
-                    on mobile instead of becoming a compressed desktop page.
+                    The shop opens in a dark theme. A sun icon in the header
+                    switches to light. The captures on this page are the dark
+                    version, which is how most visitors first see it.
                   </p>
                 </div>
               </div>
@@ -339,10 +280,11 @@ const spokes = systemNodes.slice(1);
                 </div>
                 <figcaption>
                   <strong data-motion="detail" data-motion-order="1"
-                    >Technical detail, kept legible</strong
+                    >Retatrutide, the product page</strong
                   ><span data-motion="copy" data-motion-order="2"
-                    >Selection, evidence, product context, and the primary
-                    action share one controlled hierarchy.</span
+                    >The label carries the CAS number, formula and molecular
+                    weight. Three sizes, the price, delivery and purity notes,
+                    then add to cart. The mechanism article begins below.</span
                   >
                 </figcaption>
               </figure>
@@ -367,10 +309,11 @@ const spokes = systemNodes.slice(1);
                 </div>
                 <figcaption>
                   <strong data-motion="detail" data-motion-order="1"
-                    >Learning is part of the product</strong
+                    >Resources</strong
                   ><span data-motion="copy" data-motion-order="2"
-                    >Reference material, articles, answers, and tools sit beside
-                    the catalog instead of behind it.</span
+                    >Encyclopedia, blog, FAQ and calculator, one card each. The
+                    intro says what is inside: how to store, prepare and work
+                    with peptides.</span
                   >
                 </figcaption>
               </figure>
@@ -383,12 +326,12 @@ const spokes = systemNodes.slice(1);
               data-loop
             >
               <div class="mobile-copy">
-                <h2 data-motion="title">Keep the next action in reach.</h2>
+                <h2 data-motion="title">Laid out for one hand.</h2>
                 <p data-motion="copy">
-                  The mobile landing page gives the headline and product image
-                  their own space, then places two clear actions underneath.
-                  Catalog navigation stays compact, leaving the narrow screen
-                  for the content people came to see.
+                  On a phone the headline and the vial each get the full width,
+                  and the two buttons sit where a thumb rests. The catalog
+                  navigation folds into the menu. Same page, same content,
+                  arranged for one hand.
                 </p>
               </div>
               <div class="phone-stage" data-motion="cel">
@@ -405,10 +348,78 @@ const spokes = systemNodes.slice(1);
                       <FilmStatic />
                       <div class="thumb-arc" aria-hidden="true"></div>
                     </div>
-                    <span class="thumb-label" aria-hidden="true">Thumb reach</span>
+                    <span class="thumb-label" aria-hidden="true"
+                      >Thumb reach</span
+                    >
                   </div>
                 </div>
               </div>
+            </section>
+
+            <section
+              class="checkout-showcase case-section"
+              id="checkout-motion"
+              data-motion-group
+            >
+              <div class="checkout-story">
+                <h2 data-motion="title">The order button is a short film.</h2>
+                <p class="case-lede" data-motion="copy">
+                  Confirm the order and a parcel slides into a truck. The doors
+                  close, the road starts moving and the truck drives off. All of
+                  it happens inside the button, while the order summary above
+                  stays still.
+                </p>
+                <p data-motion="copy">
+                  It is one sequence of connected states, so the parcel sitting
+                  in the idle button is the same parcel that ends up in the
+                  trailer. Each movement starts where the previous one stopped.
+                </p>
+                <figure class="checkout-closeup">
+                  <ProjectVideo
+                    src="/assets/projects/hlp/checkout-detail.mp4"
+                    poster="/assets/projects/hlp/checkout-detail-poster.png"
+                    label="Close-up of the parcel loading into the checkout truck and driving away"
+                    width={244}
+                    height={60}
+                  />
+                  <figcaption>
+                    The button on its own, enlarged from the recording.
+                  </figcaption>
+                </figure>
+                <p class="checkout-detail-note">
+                  A second tap during the animation is ignored, timers are
+                  cleared if the screen unmounts, and with reduced motion the
+                  button shows a plain confirmation state.
+                </p>
+              </div>
+              <figure class="checkout-recording" data-loop>
+                <div class="checkout-phone">
+                  <ProjectVideo
+                    src="/assets/projects/hlp/checkout-motion.mp4"
+                    poster="/assets/projects/hlp/checkout-poster.png"
+                    label="HLP Labs checkout animation in the original mobile recording"
+                    width={288}
+                    height={636}
+                  />
+                </div>
+                <span class="reel-seal checkout-seal" aria-hidden="true">
+                  <CircleWords
+                    id="checkout-seal-ring"
+                    words={['PACK', 'SHIP', 'CONFIRM']}
+                    separator="·"
+                    radius={43}
+                    size={120}
+                  >
+                    <circle class="seal-disc" slot="back" cx="60" cy="60" r="58"
+                    ></circle>
+                    <circle class="seal-dot" cx="60" cy="60" r="5"></circle>
+                  </CircleWords>
+                </span>
+                <figcaption>
+                  The original phone recording of a demo order. The button is in
+                  the bottom bar.
+                </figcaption>
+              </figure>
             </section>
 
             <section
@@ -416,18 +427,20 @@ const spokes = systemNodes.slice(1);
               id="knowledge"
               data-motion-group
             >
-              <h2 data-motion="title">One connected knowledge system.</h2>
+              <h2 data-motion="title">Every product links to an answer.</h2>
               <p class="case-lede" data-motion="copy">
-                The catalog is easier to use when products are not dead ends.
-                HLP Labs connects discovery with structured explanations,
-                practical guides, and calculation tools.
+                A product page raises questions the buy box cannot settle. What
+                does this peptide do? How do I store it? How much do I dilute
+                it? The encyclopedia, the guides, the calculator and the
+                assistant each answer one kind of question, and each links back
+                to the catalog.
               </p>
               <div
                 class="system-map"
                 data-loop
                 data-motion-group
                 role="img"
-                aria-label="Diagram: the catalog sits at the center and connects to the encyclopedia, guides, calculator, and AI assistant"
+                aria-label="Diagram: the catalog sits at the center and connects to the encyclopedia, the blog and FAQ, the calculator, and the AI assistant"
               >
                 <svg
                   viewBox="0 0 1000 500"
@@ -488,10 +501,11 @@ const spokes = systemNodes.slice(1);
               </div>
               <figcaption>
                 <strong data-motion="detail" data-motion-order="1"
-                  >Answers stay inside the product</strong
+                  >The assistant</strong
                 ><span data-motion="copy" data-motion-order="2"
-                  >The assistant extends support and discovery without sending
-                  visitors out of the experience to assemble context themselves.</span
+                  >Type a question or pick a goal such as more energy or faster
+                  recovery, and it replies with an article or a product from the
+                  shop. It opens over whatever page you are on.</span
                 >
               </figcaption>
             </figure>
@@ -501,14 +515,12 @@ const spokes = systemNodes.slice(1);
               id="operations"
               data-motion-group
             >
-              <h2 data-motion="title">
-                The back office belongs in the design.
-              </h2>
+              <h2 data-motion="title">The admin panel is half the product.</h2>
               <p class="case-lede" data-motion="copy">
-                A polished storefront becomes fragile if the people behind it
-                cannot keep products, content, and orders accurate. The
-                administrative surface was treated as part of the same product
-                system.
+                A shop with this much writing in it falls apart if the team
+                cannot edit it. The admin panel covers products, categories,
+                orders, banners, blog posts, encyclopedia entries and the FAQ.
+                Every list has the same filters and the same status column.
               </p>
               <div class="operations-frame" data-motion-group>
                 <div
@@ -535,7 +547,8 @@ const spokes = systemNodes.slice(1);
                   data-motion-order="1"
                 >
                   <span>Catalog</span><p>
-                    Products and taxonomy in one operational model.
+                    Products, categories and orders. New orders show up as a
+                    badge in the sidebar.
                   </p>
                 </div>
                 <div
@@ -544,7 +557,8 @@ const spokes = systemNodes.slice(1);
                   data-motion-order="2"
                 >
                   <span>Content</span><p>
-                    Scientific resources connect back to the public journey.
+                    Blog posts and encyclopedia entries, each with a draft or
+                    published state and its own categories.
                   </p>
                 </div>
                 <div
@@ -552,8 +566,9 @@ const spokes = systemNodes.slice(1);
                   data-motion="stamp"
                   data-motion-order="3"
                 >
-                  <span>Orders</span><p>
-                    Commerce activity stays visible to the team running it.
+                  <span>Filters</span><p>
+                    Search by title, then narrow by status, category and
+                    visibility. The capture shows the blog list.
                   </p>
                 </div>
               </div>
@@ -564,40 +579,42 @@ const spokes = systemNodes.slice(1);
               id="decisions"
               data-motion-group
             >
-              <h2 data-motion="title">The decisions that hold it together.</h2>
+              <h2 data-motion="title">Four decisions I'd make again.</h2>
               <div class="decision-ledger">
                 <div data-motion-group>
-                  <strong data-motion="title">Design the relationships</strong
+                  <strong data-motion="title"
+                    >One app for shop and library</strong
                   ><p data-motion="copy">
-                    A technical catalog raises questions. The encyclopedia,
-                    guides, calculator, and assistant give those questions a
-                    place inside the product journey.
+                    A single Next.js app on one MongoDB database. The
+                    storefront, the library and the admin panel read the same
+                    records, so there is no second system to keep in sync when a
+                    product or an article changes.
                   </p>
                 </div>
                 <div data-motion-group>
-                  <strong data-motion="title">Make complexity legible</strong><p
+                  <strong data-motion="title">Spec first, essay second</strong
+                  ><p data-motion="copy">
+                    The product page shows the label, sizes and price above the
+                    fold and keeps the mechanism article below. A customer who
+                    already knows what they want is not made to scroll past it.
+                  </p>
+                </div>
+                <div data-motion-group>
+                  <strong data-motion="title">Bulgarian all the way down</strong
+                  ><p data-motion="copy">
+                    The customers are Bulgarian, so the storefront, the
+                    articles, the assistant and the admin panel are all in
+                    Bulgarian. The captures on this page are the live site as
+                    they see it.
+                  </p>
+                </div>
+                <div data-motion-group>
+                  <strong data-motion="title">Motion in one place</strong><p
                     data-motion="copy"
                   >
-                    Product pages separate the image, specification, variant
-                    selector, and purchase action. Visitors can scan the
-                    essentials before reading the supporting material.
-                  </p>
-                </div>
-                <div data-motion-group>
-                  <strong data-motion="title">Make content maintainable</strong
-                  ><p data-motion="copy">
-                    Catalog and scientific content have their own editing
-                    surfaces. Maintaining the storefront is part of the product,
-                    alongside browsing it.
-                  </p>
-                </div>
-                <div data-motion-group>
-                  <strong data-motion="title"
-                    >Put craft at the point of action</strong
-                  ><p data-motion="copy">
-                    The checkout sequence gives a routine confirmation its own
-                    character. Its timing, repeat-tap guard, and reduced motion
-                    behavior belong to the same implementation.
+                    Most of the site is still. The order button is the
+                    exception, and it got the same care as the data model:
+                    repeat taps, timer cleanup, a reduced-motion fallback.
                   </p>
                 </div>
               </div>
@@ -610,8 +627,8 @@ const spokes = systemNodes.slice(1);
                   <span class="title-line title-outline">Keep Up.</span>
                 </h2>
                 <p data-motion="copy">
-                  A learning app where animation helps every answer feel like
-                  progress.
+                  A daily programming quiz on your phone, with a pixel-art duck
+                  that reacts to your answers.
                 </p>
               </div>
               <a
