@@ -15,9 +15,8 @@ const paymentSteps = [
     detail: 'A personal automation sends those fields to the import URL.',
   },
   {
-    title: 'Check & classify',
-    detail:
-      'Validate the payload, identify the category and check for a duplicate.',
+    title: 'Check and classify',
+    detail: 'Validate the payload, pick a category and check for a duplicate.',
   },
   {
     title: 'Add to the ledger',
@@ -41,8 +40,10 @@ const paymentSteps = [
               <span class="title-line title-outline"><span>Me.</span></span>
             </h1>
             <p data-motion="copy">
-              Household finances, built around the moment money moves. From an
-              Apple Pay purchase to a shared savings goal.
+              Finance Me is a family expense tracker I designed and built. After
+              an Apple Pay purchase, an iOS Shortcut can send the amount,
+              merchant and date into the app, where it lands as a categorized
+              expense the household can see.
             </p>
             <div class="case-actions" data-motion="action">
               <a class="button button-dark" href="#capture" data-squash>
@@ -94,10 +95,10 @@ const paymentSteps = [
         <div class="case-body">
           <nav class="case-nav" aria-label="Case study sections">
             <span>On this reel</span>
-            <a href="#capture">Capture the payment</a>
-            <a href="#classification">Make it useful</a>
-            <a href="#family">Share the picture</a>
-            <a href="#goals">Save with a purpose</a>
+            <a href="#capture">Apple Pay import</a>
+            <a href="#classification">Merchant and category</a>
+            <a href="#family">Shared household</a>
+            <a href="#goals">Savings goals</a>
           </nav>
 
           <div class="case-content">
@@ -106,24 +107,25 @@ const paymentSteps = [
               id="capture"
               data-motion-group
             >
-              <h2 data-motion="title">Less catching up. More keeping track.</h2>
+              <h2 data-motion="title">Catch the purchase as it happens.</h2>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  A household budget depends on small, repeated actions. Every
-                  forgotten payment leaves the shared picture a little less
-                  useful. I designed Finance Me around capturing those moments,
-                  then giving the family a clear place to review them.
+                  A household budget only works if the small payments actually
+                  get recorded. Forget a few of them and the shared ledger is
+                  useless. I designed Finance Me around that moment: capture the
+                  purchase, then give the family one place to look at it.
                 </p>
                 <div>
                   <p data-motion="copy">
-                    The Apple Wallet integration connects an iOS Shortcuts
-                    automation to the app’s import endpoint. After setup, a
-                    Wallet transaction can become a recorded expense with its
-                    merchant, category and tags already attached.
+                    After setup, a Wallet transaction can become a recorded
+                    expense with the merchant, category and tags already
+                    attached. An iOS Shortcut picks up the Wallet fields and
+                    posts them to the app’s import endpoint.
                   </p>
                   <p data-motion="copy">
-                    The workflow below explains the implementation. It uses
-                    example data; it is not a capture of the application.
+                    The workflow below is how the import works, drawn from the
+                    source. It uses example data; it is not a recording of the
+                    app.
                   </p>
                 </div>
               </div>
@@ -149,20 +151,20 @@ const paymentSteps = [
             </section>
 
             <section class="case-section" id="classification" data-motion-group>
-              <h2 data-motion="title">Keep the merchant. Add the meaning.</h2>
+              <h2 data-motion="title">Keep the merchant. Add the category.</h2>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  “Groceries” answers what the money was for. “Lidl Sofia”
-                  answers where it went. The import keeps both, so category
-                  totals do not erase the detail needed to understand spending.
+                  “Groceries” says what the money was for. “Lidl Sofia” says
+                  where it went. The import keeps both, so monthly totals do not
+                  wipe out the detail you need to understand a month of
+                  spending.
                 </p>
                 <div>
                   <p data-motion="copy">
                     Merchant rules suggest a category; an unrecognized merchant
                     falls back to other expenses. Amount parsing accepts comma
-                    decimals and currency labels from Shortcuts. These small
-                    accommodations make an external automation fit the product’s
-                    data model.
+                    decimals and currency labels from Shortcuts, so a payload
+                    that looks like “12,50 EUR” still lands as 12.50.
                   </p>
                 </div>
               </div>
@@ -198,7 +200,7 @@ const paymentSteps = [
                   </dl>
                 </div>
                 <figcaption>
-                  Interactive explanation of the implemented category rules.
+                  Interactive example of the category rules in the import.
                 </figcaption>
               </figure>
               <div class="finance-decision" data-motion-group>
@@ -206,17 +208,17 @@ const paymentSteps = [
                   A retry should not become a second expense.
                 </h3>
                 <p data-motion="copy">
-                  The import fingerprints the user, amount, normalized merchant
-                  and transaction minute. A database uniqueness rule catches a
-                  repeated payload and returns success without another row.
-                  Minute-level matching is a practical retry safeguard; it is
-                  not a bank-issued transaction identifier.
+                  The import fingerprints the user, the amount, the normalized
+                  merchant and the transaction minute. A uniqueness rule in the
+                  database catches a repeated payload and returns success
+                  without another row. Matching to the minute is a retry
+                  safeguard, not a bank-issued transaction identifier.
                 </p>
               </div>
             </section>
 
             <section class="case-section" id="family" data-motion-group>
-              <h2 data-motion="title">One household. A shared picture.</h2>
+              <h2 data-motion="title">One household, one ledger.</h2>
               <div
                 class="family-scope"
                 data-motion="detail"
@@ -241,31 +243,29 @@ const paymentSteps = [
               </div>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  Joining a family changes the working context. Members see the
-                  family’s transaction pool, and new manual entries and Wallet
-                  imports belong to that family. Each transaction retains its
-                  creator, keeping individual contributions visible.
+                  Joining a family changes whose records you see. Members look
+                  at the family’s transaction pool, and new manual entries and
+                  Wallet imports belong to that family. Each transaction still
+                  carries its creator, so individual contributions stay visible.
                 </p>
                 <div>
                   <p data-motion="copy">
-                    That boundary is enforced in server queries and transaction
-                    access checks. Solo users work with their own records.
-                    Family invitations check the recipient’s email and
-                    expiration before granting membership.
+                    That boundary is enforced in the server queries and in the
+                    access checks on each transaction. Solo users work with
+                    their own records. Family invitations check the recipient’s
+                    email and the expiry date before granting membership.
                   </p>
                   <p data-motion="copy">
-                    A return-to-app refresh picks up changes from another
-                    device. The design fits an everyday check-in without
-                    requiring a continuously open live dashboard.
+                    Coming back to the app refreshes the list, so a change from
+                    another phone shows up. It is a check-in, not a live
+                    dashboard that has to stay open.
                   </p>
                 </div>
               </div>
             </section>
 
             <section class="case-section" id="goals" data-motion-group>
-              <h2 data-motion="title">
-                Give the next contribution a destination.
-              </h2>
+              <h2 data-motion="title">Give the next euro a destination.</h2>
               <div
                 class="goal-horizons"
                 aria-label="Savings goal time horizons"
@@ -277,17 +277,17 @@ const paymentSteps = [
               </div>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  Shared goals organize saving by time horizon. Each goal has a
-                  balance, an optional target and a contribution history, making
-                  progress something the family can trace back to real entries.
+                  Shared goals group saving by how far away it is: under three
+                  years, three to ten, or ten and up. Each goal has a balance,
+                  an optional target and a contribution history, so progress
+                  traces back to actual entries.
                 </p>
                 <div>
                   <p data-motion="copy">
-                    Contributions record the member, amount and an optional
+                    Contributions record the member, the amount and an optional
                     note. If someone has not joined a family yet, the goals page
-                    explains the prerequisite and links directly to family
-                    setup. Even the empty state has a job: show the next useful
-                    action.
+                    says so and links to family setup. Even the empty state has
+                    a job: show the next useful action.
                   </p>
                 </div>
               </div>
@@ -297,8 +297,8 @@ const paymentSteps = [
               <div>
                 <h2 data-motion="title">Next on the reel: HLP Labs.</h2>
                 <p data-motion="copy">
-                  A technical catalog, connected knowledge and the systems
-                  behind the storefront.
+                  A Bulgarian shop for research peptides, with a reference
+                  library and the admin panel behind it.
                 </p>
               </div>
               <a
