@@ -15,6 +15,11 @@
   transform-origin: 50% 85%;
 }
 
+/* Pictures grow up from their base, the way a cel is set down on the stand. */
+[data-motion='cel'] {
+  transform-origin: 50% 80%;
+}
+
 [data-motion='title'] .motion-word {
   display: inline-block;
 }
@@ -32,9 +37,17 @@
   --loop-state: paused !important;
 }
 
-/* The controller gives the small seal its entrance follow-through. */
+/* The controller stamps the seal on from its centre once the picture lands. */
 .reel-stage[data-motion] > .reel-seal {
-  transform-origin: 35% 80%;
+  transform-origin: 50% 50%;
+}
+
+/* The hand slides in, holds its mark, and only then begins to offer the
+   envelope. The swing's own delay is the hold; pausing it during the entrance
+   keeps that delay from running early. */
+.contact-stage:is([data-motion-state='pending'], [data-motion-state='running'])
+  .contact-hand {
+  animation-play-state: paused;
 }
 
 .practice-beat[data-motion-group]::before {

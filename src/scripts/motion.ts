@@ -17,6 +17,7 @@ const order: Record<string, number> = {
   action: 2,
   detail: 3,
   cel: 3,
+  slide: 3,
   line: 3,
   stamp: 4,
 };
@@ -93,7 +94,18 @@ export function initMotion(signal: AbortSignal): () => void {
             cue.element.querySelectorAll<SVGPathElement>('.system-wire'),
           )
         : [];
-    const actors = wires.length ? wires : words.length ? words : [cue.element];
+    // A row of buttons hops in one after another instead of as a single slab.
+    const buttons =
+      cue.kind === 'action'
+        ? Array.from(cue.element.querySelectorAll<HTMLElement>('.button'))
+        : [];
+    const actors = wires.length
+      ? wires
+      : words.length
+        ? words
+        : buttons.length > 1
+          ? buttons
+          : [cue.element];
     const short = compact.matches;
     const side =
       cue.element.dataset.motionSide === 'right' ||
@@ -110,6 +122,7 @@ export function initMotion(signal: AbortSignal): () => void {
         index % 2 ? -side : side,
       );
       let stagger = words.length ? Math.min(index * (short ? 38 : 48), 240) : 0;
+      if (buttons.length > 1) stagger = index * (short ? 80 : 100);
       if (wires.length && actor instanceof SVGPathElement) {
         const length = actor.getTotalLength();
         performance.frames = [
@@ -138,40 +151,32 @@ export function initMotion(signal: AbortSignal): () => void {
       );
     });
 
-    // A separate, delayed seal catches up to the frame's landing and rebounds.
+    // The seal is stamped on once the picture has landed: one press, one rebound.
     const seal = cue.element.querySelector<HTMLElement>('.reel-seal');
     if (cue.kind === 'cel' && seal) {
       cue.animations.push(
         seal.animate(
           [
+            { opacity: 0, scale: '0.3 0.3', rotate: '-24deg', easing: ease },
             {
-              opacity: 0,
-              translate: '0px -36px',
-              scale: '0.7 1.2',
-              rotate: '-22deg',
-              easing: ease,
-            },
-            {
-              offset: 0.48,
+              offset: 0.55,
               opacity: 1,
-              translate: '0px 4px',
-              scale: '1.14 0.84',
-              rotate: '12deg',
+              scale: '1.12 1.12',
+              rotate: '5deg',
               easing: ease,
             },
             {
-              offset: 0.73,
+              offset: 0.8,
               opacity: 1,
-              translate: '0px -5px',
-              scale: '0.96 1.04',
-              rotate: '-5deg',
+              scale: '0.97 0.97',
+              rotate: '-1.5deg',
               easing: ease,
             },
-            { opacity: 1, translate: '0px 0px', scale: '1 1', rotate: '0deg' },
+            { opacity: 1, scale: '1 1', rotate: '0deg' },
           ],
           {
-            duration: short ? 560 : 720,
-            delay: delay + (short ? 300 : 410),
+            duration: short ? 460 : 560,
+            delay: delay + (short ? 280 : 340),
             fill: 'both',
           },
         ),
@@ -237,7 +242,7 @@ export function initMotion(signal: AbortSignal): () => void {
                     ? 440
                     : cue.group.classList.contains('system-map')
                       ? 120
-                      : cue.kind === 'cel'
+                      : cue.kind === 'cel' || cue.kind === 'slide'
                         ? 180
                         : 90;
         });

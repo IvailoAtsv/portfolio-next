@@ -10,7 +10,6 @@ export function performanceFor(
   baseAngle = 0,
   direction = 1,
 ): Performance {
-  const travel = compact ? 38 : 76;
   const rest = {
     opacity: 1,
     translate: '0px 0px',
@@ -44,12 +43,19 @@ export function performanceFor(
       ],
     };
 
+  // A button hops up from a crouch, stretches at the top, and lands with a
+  // small squash. One gesture, but a lively one.
   if (kind === 'action')
     return {
-      duration: compact ? 320 : 400,
+      duration: compact ? 480 : 560,
       frames: [
-        { ...pose(0, '0px 6px', '0.98 0.97', -0.6 * direction), opacity: 0 },
-        pose(0.68, '0px -1px', '1.008 1.008', 0.1 * direction),
+        { ...pose(0, '0px 20px', '0.88 0.78', -2.5 * direction), opacity: 0 },
+        {
+          ...pose(0.46, '0px -7px', '1.035 1.07', 1.4 * direction),
+          opacity: 1,
+        },
+        pose(0.7, '0px 2px', '1.025 0.955', -0.5 * direction),
+        pose(0.86, '0px -1px', '0.995 1.012', 0.15 * direction),
         { ...rest, offset: 1 },
       ],
     };
@@ -69,27 +75,50 @@ export function performanceFor(
       ],
     };
 
-  if (kind === 'cel') {
-    const side = direction;
+  // A picture is set down on the stand: it grows into place, overshoots a
+  // touch, and settles. No sideways travel, no tilt.
+  if (kind === 'cel')
     return {
-      duration: compact ? 620 : 780,
+      duration: compact ? 560 : 680,
       frames: [
-        { ...pose(0, `${-travel * side}px 0px`, '1 1'), opacity: 0 },
-        pose(0.66, `${4 * side}px 0px`, '1 1'),
-        pose(0.85, `${-1 * side}px 0px`, '1 1'),
+        { ...pose(0, '0px 22px', '0.9 0.9'), opacity: 0 },
+        { ...pose(0.44, '0px -4px', '1.03 1.03'), opacity: 1 },
+        pose(0.72, '0px 1px', '0.992 0.992'),
+        { ...rest, offset: 1 },
+      ],
+    };
+
+  // A prop enters from off-stage on its side, overshoots past its mark, and
+  // eases back onto it. The stage that holds it decides what happens next.
+  if (kind === 'slide') {
+    const from = -direction;
+    return {
+      duration: compact ? 820 : 960,
+      frames: [
+        { ...pose(0, `${72 * from}% 0px`, '1 1'), opacity: 0 },
+        { ...pose(0.18, `${52 * from}% 0px`, '1 1'), opacity: 1 },
+        pose(0.7, `${-2.4 * from}% 0px`, '1 1'),
+        pose(0.88, `${0.7 * from}% 0px`, '1 1'),
         { ...rest, offset: 1 },
       ],
     };
   }
 
+  // Chips, captions and facts pop a little rather than sliding in.
+  if (kind === 'detail')
+    return {
+      duration: compact ? 320 : 380,
+      frames: [
+        { ...pose(0, '0px 8px', '0.94 0.94'), opacity: 0 },
+        { ...pose(0.62, '0px -1px', '1.015 1.015'), opacity: 1 },
+        { ...rest, offset: 1 },
+      ],
+    };
+
   return {
     duration: compact ? 300 : 360,
     frames: [
-      {
-        opacity: 0,
-        translate: kind === 'detail' ? '-10px 0px' : '0px 14px',
-        easing: out,
-      },
+      { opacity: 0, translate: '0px 14px', easing: out },
       { opacity: 1, translate: '0px 0px' },
     ],
   };
