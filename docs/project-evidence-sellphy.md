@@ -25,7 +25,9 @@ User-supplied screenshots from 2026-09-03, encoded as WebP (quality 88) at nativ
 | `public/assets/projects/sellphy/ai-page-generator.webp` | Custom pages, Generate with AI modal (Flash/Pro, brief, catalog basis, mood)            |
 | `public/assets/projects/sellphy/ai-blog-assistant.webp` | New blog post with the AI post assistant panel (topic, notes and facts, propose a plan) |
 
-The two AI captures were supplied at 1715px and resized to 1024px wide before encoding.
+| `public/assets/projects/sellphy/command-search.webp` | Dashboard command search, porachki resolved to Поръчки (922px native) |
+
+The two AI captures were supplied at 1715px and resized to 1024px wide before encoding. The command search capture is 922px wide and was kept at native size.
 
 ## Author-supplied product claims
 
@@ -46,6 +48,7 @@ Added 2026-09-03 at the author's request for the case study copy. These are the 
 - Page Preview: `app/dashboard/e-commerce/page-preview/page.tsx` renders `SeoPageInspector`, which draws a Google snippet, Open Graph / Twitter cards, character rulers, and an audit table.
 - Product page: `app/dashboard/e-commerce/product-page` edits trust cards, gallery image fit, and quantity. `models/Shop.ts` `orderMode` is `order` or `request`; `requestLabels.preset` includes `request`, `inquiry`, `calculator`, `quote`, and `custom`. Live captures: DEMO apparel, Alcona (calculator CTA), Gymleco (dark theme).
 - AI flows (from the 2026-09-03 captures, not inspected in source): the custom pages screen has a Generate with AI modal with a Flash or Pro model choice, a free-text brief (2000 character limit) with title, URL and SEO filled automatically, an optional catalog basis (none, selected products, or a category) and four mood presets (editorial, typographic, narrative, catalog). The blog editor has an AI post assistant with a topic field, a notes-and-facts field described as what the AI must not invent, additional settings, and a propose-a-plan action; the panel subtitle reads plan, draft and editorial check, you decide what stays. The publishing panel handles status, category, slug, indexing and the featured image.
+- Command search (from the 2026-09-03 capture, not inspected in source): a palette over the dashboard with keyboard hints for arrows, Enter and Esc. Latin input (`porachki`) matches Bulgarian labels (Поръчки). Results are grouped by screen (Orders, Shop features, Analytics) and list sub-sections or individual settings under each, such as Order mode under Shop features and Orders and revenue under Analytics, with matched fragments highlighted.
 
 ## Verification boundary
 
