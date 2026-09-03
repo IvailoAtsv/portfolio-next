@@ -100,12 +100,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         '(prefers-reduced-motion: reduce)',
       ).matches;
       const gateMs = (token, fallback) => {
-        const parsed = Number.parseFloat(
-          getComputedStyle(document.documentElement)
-            .getPropertyValue(token)
-            .trim(),
-        );
-        return Number.isFinite(parsed) ? parsed : fallback;
+        const value = getComputedStyle(document.documentElement)
+          .getPropertyValue(token)
+          .trim()
+          .toLowerCase();
+        const parsed = Number.parseFloat(value);
+        if (!Number.isFinite(parsed) || parsed < 0) return fallback;
+        // Production CSS can shorten 720ms to .72s; timers always need ms.
+        if (value.endsWith('ms')) return parsed;
+        if (value.endsWith('s')) return parsed * 1000;
+        return fallback;
       };
       const revealItems = Array.from(
         document.querySelectorAll('[data-reveal]'),
