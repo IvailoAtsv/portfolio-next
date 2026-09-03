@@ -69,7 +69,7 @@ export const pages = {
   sellphy: {
     title: 'Sellphy - Shop platform | Ivaylo Atanassov',
     description:
-      'Sellphy is a shop platform with a six-step editor, product pages each shop can dress, and dashboard tours. Hosting cost dropped 83%; maintenance dropped 25+ hours a month.',
+      'Sellphy is a shop platform: a six-step editor, AI-drafted landing pages and blog posts, SEO tools, and generated legal pages. Shops launch 70% faster and hosting costs 83% less.',
     path: '/work/sellphy',
     image: '/og/sellphy.png',
     imageAlt:

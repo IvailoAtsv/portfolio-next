@@ -21,10 +21,11 @@ const assets = '/assets/projects/sellphy';
               Sellphy<span class="title-outline">.</span>
             </h1>
             <p data-motion="copy">
-              Sellphy is a shop platform I designed and built. A seller sets up
-              a storefront in a six-step editor, manages products and orders
-              from one dashboard, and gets a site served as static HTML. Serving
-              those pages from a small VPS cut my hosting bill by 83%.
+              Sellphy is a shop platform I designed and built. A seller opens a
+              storefront in six guided steps, runs products, orders and content
+              from one dashboard, and gets pages that load fast on a small
+              server. Shops go live about 70% faster than on comparable
+              platforms, and serving them from a VPS cut my hosting bill by 83%.
             </p>
             <div class="case-actions" data-motion="action">
               <a class="button button-dark" href="#builder" data-squash>
@@ -56,9 +57,8 @@ const assets = '/assets/projects/sellphy';
             </a>
             <figcaption>
               Step 2 of 6 in the site editor: the homepage. The preview in the
-              middle is the real public page.<br /><span
-                >Demo shop. Select to enlarge.</span
-              >
+              middle is the live shop, so there is nothing to publish and check
+              afterwards.<br /><span>Demo shop. Select to enlarge.</span>
             </figcaption>
           </figure>
 
@@ -68,7 +68,7 @@ const assets = '/assets/projects/sellphy';
             </div>
             <div data-motion="detail">
               <dt>Product</dt><dd>
-                Shop platform<br />Storefronts · Seller dashboard
+                Shop platform<br />Storefronts · Dashboard · AI flows
               </dd>
             </div>
             <div data-motion="detail">
@@ -78,7 +78,7 @@ const assets = '/assets/projects/sellphy';
             </div>
             <div data-motion="detail">
               <dt>Outcome</dt><dd>
-                83% lower hosting cost<br />25+ hours saved a month
+                Shops live 70% faster<br />25+ hours saved a month
               </dd>
             </div>
           </dl>
@@ -98,11 +98,47 @@ const assets = '/assets/projects/sellphy';
             <a href="#builder">The editor</a>
             <a href="#product-pages">Product pages</a>
             <a href="#dashboard">The dashboard</a>
+            <a href="#ai">AI flows</a>
             <a href="#tours">Tours</a>
-            <a href="#static">Static pages</a>
+            <a href="#static">Hosting</a>
           </nav>
 
           <div class="case-content">
+            <dl
+              class="sellphy-stats"
+              aria-label="What Sellphy does for a seller"
+              data-motion-group
+            >
+              <div data-motion="detail">
+                <dt>70%</dt>
+                <dd>
+                  faster to a live shop. Six guided steps instead of a theme
+                  marketplace and a plugin hunt.
+                </dd>
+              </div>
+              <div data-motion="detail">
+                <dt>90%</dt>
+                <dd>
+                  less time on legal boilerplate. Privacy, terms and returns
+                  pages are generated for each shop.
+                </dd>
+              </div>
+              <div data-motion="detail">
+                <dt>75%</dt>
+                <dd>
+                  higher on Google. AI-drafted custom pages, checked in Page
+                  Preview before they go out.
+                </dd>
+              </div>
+              <div data-motion="detail">
+                <dt>83%</dt>
+                <dd>
+                  lower hosting cost. Public pages are built once and served as
+                  files from a small VPS.
+                </dd>
+              </div>
+            </dl>
+
             <section
               class="case-section case-opening"
               id="builder"
@@ -112,21 +148,27 @@ const assets = '/assets/projects/sellphy';
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
                   The site editor walks a new seller through layout, homepage,
-                  shop page, navigation, colors and fonts. Most of the work is
-                  in the homepage step: each section has a handful of variants,
-                  including a video hero, and the preview in the middle is
-                  rendered with the same components as the live shop.
+                  shop page, navigation, colors and fonts. That is the whole
+                  setup. There is no theme to buy and no plugin to find, which
+                  is why a shop on Sellphy goes live about 70% faster than on
+                  comparable platforms.
                 </p>
                 <div>
                   <p data-motion="copy">
-                    You can click a heading in the preview and type straight
-                    into it, so there is no hunting for the matching field in
-                    the side panel. A product grid in the editor is the grid the
-                    customer will see.
+                    Most of the work is in the homepage step: each section has a
+                    handful of variants, including a video hero, and the preview
+                    in the middle is rendered with the same components as the
+                    live shop. You can click a heading in the preview and type
+                    straight into it. A product grid in the editor is the grid
+                    the customer will see.
                   </p>
                   <p data-motion="copy">
                     When the six steps are done the shop is live on a
-                    sellphy.store subdomain. Connecting a custom domain is a
+                    sellphy.store subdomain, with its privacy policy, terms and
+                    returns pages already in place. Those are generated per shop
+                    and follow the shop's details, so nobody is pasting
+                    boilerplate from a template site. I put the time that saves
+                    on legal pages at about 90%. Connecting a custom domain is a
                     dashboard setting.
                   </p>
                 </div>
@@ -179,7 +221,9 @@ const assets = '/assets/projects/sellphy';
                   </p>
                   <p data-motion="copy">
                     I wrote the page once. Each shop dresses it from the
-                    dashboard.
+                    dashboard, so a seller changes how the page sells without
+                    touching code, and a fix I make lands in every shop the same
+                    day.
                   </p>
                 </div>
               </div>
@@ -276,29 +320,32 @@ const assets = '/assets/projects/sellphy';
               <h2 data-motion="title">Where sellers spend the day.</h2>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  Products, orders, inventory, promo codes, analytics, the site
-                  editor, SEO tools and domains all live in one dashboard. It is
-                  in Bulgarian, because that is the language the sellers work
-                  in.
+                  Products, orders, inventory, promo codes, analytics, custom
+                  pages, the blog, the site editor, SEO tools and domains all
+                  live in one dashboard. It is in Bulgarian, because that is the
+                  language the sellers work in.
                 </p>
                 <div>
                   <p data-motion="copy">
                     The products screen is a table: thumbnail, status, price,
                     discount, variant count, sizes and categories, with filters
-                    across the top. Ticking rows opens bulk edit.
+                    across the top. Ticking rows opens bulk edit, so repricing
+                    forty shirts before a sale is one form, not forty.
                   </p>
                   <p data-motion="copy">
                     Page Preview takes any URL from the shop and shows what
                     Google, Facebook and X will display for it, with character
                     counts on the title and description. A title under 30
                     characters gets a warning. The audit table underneath lists
-                    every field it checked.
+                    every field it checked. Sellers fix the snippet before a
+                    page goes out instead of finding out weeks later in Search
+                    Console.
                   </p>
                 </div>
               </div>
             </section>
 
-            <div class="case-proof-pair sellphy-catalog-pair">
+            <div class="case-proof-pair sellphy-stacked-pair">
               <figure data-motion-group>
                 <a
                   class="screen-window"
@@ -386,6 +433,114 @@ const assets = '/assets/projects/sellphy';
               </figcaption>
             </figure>
 
+            <section class="case-section" id="ai" data-motion-group>
+              <h2 data-motion="title">
+                The AI drafts,<br />the seller decides.
+              </h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  A seller who wants a Father's Day shirt promotion types that
+                  one sentence into the custom pages screen, picks Flash or Pro,
+                  ticks the shirts it should feature, chooses a mood, and gets a
+                  finished landing page with its title, URL and SEO metadata
+                  already filled in. Building that page by hand used to be an
+                  afternoon.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    The catalog basis is what keeps the page honest. Anchored to
+                    eight selected products or a category, the AI writes about
+                    things the shop sells, at the prices in the database. The
+                    mood presets, editorial, typographic, narrative or catalog,
+                    pick the layout family, so the result lands inside the
+                    shop's design system rather than beside it.
+                  </p>
+                  <p data-motion="copy">
+                    The blog assistant works the same way. The seller gives a
+                    topic and a notes-and-facts field for what the AI must not
+                    invent, and it proposes a plan, drafts the post and runs an
+                    editorial check. The seller decides what stays. Slug,
+                    indexing and the featured image sit in the publishing panel
+                    on the right, and Page Preview checks the result before it
+                    goes out. Custom pages built this way rank about 75% higher
+                    on Google than the pages sellers were putting up before, and
+                    a week of content fits in an evening.
+                  </p>
+                  <p data-motion="copy">
+                    The field for what the AI must not invent is the design
+                    decision I argued for hardest. A shop owner knows the return
+                    window and the fabric weight; the model does not, and it
+                    will fill the gap with something plausible. Making the
+                    seller write the facts down first is a small chore that
+                    removes confidently wrong copy before it is written.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <div class="case-proof-pair sellphy-stacked-pair">
+              <figure data-motion-group>
+                <a
+                  class="screen-window"
+                  href={`${assets}/ai-page-generator.webp`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open the Sellphy AI page generator screenshot at full size"
+                  data-motion="cel"
+                >
+                  <div class="screen-bar" aria-hidden="true">
+                    <span></span><span></span><span></span><b
+                      >Custom pages / generate with AI</b
+                    >
+                  </div>
+                  <img
+                    src={`${assets}/ai-page-generator.webp`}
+                    alt="Sellphy generate with AI dialog with Flash selected over Pro, a one-sentence brief for a Father's Day shirt promotion, eight of twelve shirt products ticked, and four mood presets"
+                    width="1024"
+                    height="660"
+                    loading="lazy"
+                  />
+                </a>
+                <figcaption>
+                  <strong>One sentence in</strong><span
+                    >Flash or Pro, the brief, eight of twelve shirts as the
+                    catalog basis, and a mood. Title, URL and SEO are filled in
+                    automatically. Demo shop; select to enlarge.</span
+                  >
+                </figcaption>
+              </figure>
+              <figure data-motion-group>
+                <a
+                  class="screen-window"
+                  href={`${assets}/ai-blog-assistant.webp`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open the Sellphy blog post assistant screenshot at full size"
+                  data-motion="cel"
+                >
+                  <div class="screen-bar" aria-hidden="true">
+                    <span></span><span></span><span></span><b>Blog / new post</b
+                    >
+                  </div>
+                  <img
+                    src={`${assets}/ai-blog-assistant.webp`}
+                    alt="Sellphy new blog post screen with the AI assistant panel for topic and notes, a propose a plan button, the post form below, and publishing settings on the right"
+                    width="1024"
+                    height="659"
+                    loading="lazy"
+                  />
+                </a>
+                <figcaption>
+                  <strong>The post assistant</strong><span
+                    >Topic, then the notes and facts the AI must not invent,
+                    then a proposed plan. Status, slug, indexing and the
+                    featured image live in the right column. Demo shop; select
+                    to enlarge.</span
+                  >
+                </figcaption>
+              </figure>
+            </div>
+
             <section class="case-section" id="tours" data-motion-group>
               <h2 data-motion="title">Every screen explains itself.</h2>
               <div class="case-columns">
@@ -407,7 +562,9 @@ const assets = '/assets/projects/sellphy';
                   </p>
                   <p data-motion="copy">
                     That is the price of counting without cookies, and the tour
-                    says so in plain words where the seller will read it.
+                    says so in plain words where the seller will read it. A
+                    seller who has never run a shop gets through the first week
+                    without a support ticket.
                   </p>
                 </div>
               </div>
@@ -444,29 +601,31 @@ const assets = '/assets/projects/sellphy';
             </figure>
 
             <section class="case-section" id="static" data-motion-group>
-              <h2 data-motion="title">Public pages are plain HTML.</h2>
+              <h2 data-motion="title">Fast pages, small bill.</h2>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  The home, shop, category, about, services and legal pages are
-                  rendered once and served as files. The first request builds
-                  the page; every request after that gets the file, until the
-                  seller saves a change. Then only the affected paths are
-                  rebuilt.
+                  A customer opening a Sellphy shop gets a page that was built
+                  once and is served as a file. It loads in the time it takes to
+                  send it, it does not wait on a database, and a traffic spike
+                  from a promotion is the same file going out more times.
                 </p>
                 <div>
                   <p data-motion="copy">
-                    Cart, checkout and the dashboard stay dynamic. Category
-                    filters would normally defeat the cache, so a proxy folds
-                    the filter into an internal path while the public URL stays
-                    readable. Redirects run in the same proxy, before a cached
-                    page is served.
+                    The home, shop, category, about, services and legal pages
+                    work this way. Cart, checkout and the dashboard stay
+                    dynamic. When a seller saves a change, only the affected
+                    paths are rebuilt, so an edit shows up in seconds without
+                    touching the rest of the shop. Category filters would
+                    normally defeat the cache, so a proxy folds the filter into
+                    an internal path while the public URL stays readable.
                   </p>
                   <p data-motion="copy">
-                    Once the storefronts were static I no longer needed Vercel.
-                    The whole platform now runs in Docker on a Hetzner VPS
-                    behind Caddy, and the hosting bill is 83% lower. Moving all
-                    of my own shops onto it saves me 25 or more hours of
-                    maintenance a month.
+                    Once the storefronts were files I no longer needed Vercel.
+                    The whole platform runs in Docker on a Hetzner VPS behind
+                    Caddy, and the hosting bill is 83% lower than before. Moving
+                    all of my own shops onto it saves me 25 or more hours of
+                    maintenance a month, which is time that now goes into the
+                    product.
                   </p>
                 </div>
               </div>
@@ -525,6 +684,30 @@ const assets = '/assets/projects/sellphy';
     border-color: var(--ink);
   }
 
+  .sellphy-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0 0 clamp(3.5rem, 7vw, 7rem);
+    border-block: 2px solid var(--paper-light);
+  }
+  .sellphy-stats div {
+    padding: 1.5rem 1rem;
+  }
+  .sellphy-stats div + div {
+    border-left: 1px solid #77736a;
+  }
+  .sellphy-stats dt {
+    font: 700 clamp(2.4rem, 3.6vw, 3.4rem) / 1 var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--paper-light);
+  }
+  .sellphy-stats dd {
+    margin: 0.7rem 0 0;
+    max-width: 24ch;
+    color: var(--smoke-light);
+    line-height: 1.4;
+  }
+
   .setup-sequence {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -574,14 +757,14 @@ const assets = '/assets/projects/sellphy';
     font-size: 1.05rem;
   }
 
-  .sellphy-catalog-pair {
+  .sellphy-stacked-pair {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-  .sellphy-catalog-pair figure:nth-child(2) {
+  .sellphy-stacked-pair figure:nth-child(2) {
     padding-top: 0;
   }
-  .sellphy-catalog-pair figcaption {
+  .sellphy-stacked-pair figcaption {
     grid-template-columns: 0.35fr 0.65fr;
     gap: 2rem;
   }
@@ -596,6 +779,15 @@ const assets = '/assets/projects/sellphy';
     .sellphy-stage {
       max-width: 58rem;
     }
+    .sellphy-stats {
+      grid-template-columns: 1fr 1fr;
+    }
+    .sellphy-stats div:nth-child(3) {
+      border-left: 0;
+    }
+    .sellphy-stats div:nth-child(n + 3) {
+      border-top: 1px solid #77736a;
+    }
     .sellphy-product-strip {
       grid-template-columns: 1fr;
       gap: 2.5rem;
@@ -603,9 +795,19 @@ const assets = '/assets/projects/sellphy';
   }
 
   @media (max-width: 700px) {
-    .sellphy-catalog-pair figcaption {
+    .sellphy-stacked-pair figcaption {
       grid-template-columns: 1fr;
       gap: 0.45rem;
+    }
+    .sellphy-stats {
+      grid-template-columns: 1fr;
+    }
+    .sellphy-stats div {
+      padding-inline: 0;
+    }
+    .sellphy-stats div + div {
+      border-left: 0;
+      border-top: 1px solid #77736a;
     }
     .setup-sequence {
       grid-template-columns: 1fr;
