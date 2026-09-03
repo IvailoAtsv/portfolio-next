@@ -3,13 +3,19 @@ const into = 'cubic-bezier(0.55, 0, 0.85, 0.45)';
 
 export type Performance = { frames: Keyframe[]; duration: number };
 
-/** Anticipation, action, overshoot, recovery. Holds belong between gestures. */
+/**
+ * Anticipation, action, overshoot, recovery. Holds belong between gestures.
+ * `direction` is 1 when the actor enters from the left and -1 from the right;
+ * `start` is the signed distance in px that puts it fully off-screen.
+ */
 export function performanceFor(
   kind: string,
   compact: boolean,
   baseAngle = 0,
   direction = 1,
+  start = (compact ? -420 : -760) * direction,
 ): Performance {
+  const back = -Math.sign(start) || -direction;
   const rest = {
     opacity: 1,
     translate: '0px 0px',
@@ -43,19 +49,15 @@ export function performanceFor(
       ],
     };
 
-  // A button hops up from a crouch, stretches at the top, and lands with a
-  // small squash. One gesture, but a lively one.
+  // A button skids in from the edge of the screen leaning into its travel,
+  // slides a little past its mark with a brief squash, and settles back.
   if (kind === 'action')
     return {
-      duration: compact ? 480 : 560,
+      duration: compact ? 520 : 600,
       frames: [
-        { ...pose(0, '0px 20px', '0.88 0.78', -2.5 * direction), opacity: 0 },
-        {
-          ...pose(0.46, '0px -7px', '1.035 1.07', 1.4 * direction),
-          opacity: 1,
-        },
-        pose(0.7, '0px 2px', '1.025 0.955', -0.5 * direction),
-        pose(0.86, '0px -1px', '0.995 1.012', 0.15 * direction),
+        pose(0, `${start}px 0px`, '1 1', 3 * direction),
+        pose(0.66, `${12 * back}px 0px`, '1.035 0.965', -0.9 * direction),
+        pose(0.84, `${-3 * back}px 0px`, '0.995 1.006', 0.25 * direction),
         { ...rest, offset: 1 },
       ],
     };
@@ -75,18 +77,20 @@ export function performanceFor(
       ],
     };
 
-  // A picture is set down on the stand: it grows into place, overshoots a
-  // touch, and settles. No sideways travel, no tilt.
-  if (kind === 'cel')
+  // A picture is pushed in from off-stage on its nearest side, leaning into
+  // the move, slides just past its mark and eases back. No growing in place.
+  if (kind === 'cel') {
+    const over = compact ? 10 : 16;
     return {
-      duration: compact ? 560 : 680,
+      duration: compact ? 660 : 800,
       frames: [
-        { ...pose(0, '0px 22px', '0.9 0.9'), opacity: 0 },
-        { ...pose(0.44, '0px -4px', '1.03 1.03'), opacity: 1 },
-        pose(0.72, '0px 1px', '0.992 0.992'),
+        pose(0, `${start}px 0px`, '1 1', 2.2 * direction),
+        pose(0.7, `${over * back}px 0px`, '1 1', -0.6 * direction),
+        pose(0.87, `${-over * 0.25 * back}px 0px`, '1 1', 0.15 * direction),
         { ...rest, offset: 1 },
       ],
     };
+  }
 
   // A prop enters from off-stage on its side, overshoots past its mark, and
   // eases back onto it. The stage that holds it decides what happens next.

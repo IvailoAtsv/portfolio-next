@@ -23,6 +23,31 @@ const order: Record<string, number> = {
 };
 const ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
 
+/**
+ * Where an actor enters from and how far it must start out to be off-screen.
+ * It comes from the side it sits nearest; centred actors take the fallback.
+ * `direction` is 1 from the left, -1 from the right; `start` is signed px.
+ */
+const entranceFor = (
+  actor: Element,
+  side: string | undefined,
+  centredFromRight: boolean,
+) => {
+  const rect = actor.getBoundingClientRect();
+  const width = document.documentElement.clientWidth;
+  const centre = rect.left + rect.width / 2;
+  const fromRight = side
+    ? side === 'right'
+    : Math.abs(centre - width / 2) < width * 0.06
+      ? centredFromRight
+      : centre > width / 2;
+  const margin = 48;
+  return {
+    direction: fromRight ? -1 : 1,
+    start: fromRight ? width - rect.left + margin : -(rect.right + margin),
+  };
+};
+
 const prepareWords = (heading: Element) => {
   if (heading.querySelector('.motion-word')) return;
   const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
@@ -69,6 +94,7 @@ export function initMotion(signal: AbortSignal): () => void {
   );
   const liveLoops = new Set<Element>();
   const groupClocks = new Map<Element, number>();
+  let centredCels = 0;
   let ready = false;
   let frame = 0;
   let readyTimer = 0;
@@ -112,15 +138,28 @@ export function initMotion(signal: AbortSignal): () => void {
       cue.element.closest('.reel-project:nth-child(even)')
         ? -1
         : 1;
+    const travels = cue.kind === 'cel' || cue.kind === 'action';
+    let celDuration = 0;
 
     actors.forEach((actor, index) => {
       const angle = Number.parseFloat(getComputedStyle(actor).rotate) || 0;
+      // Pictures and buttons arrive from off-screen; a centred picture in a
+      // single column alternates sides down the page, buttons keep to the left.
+      const entrance = travels
+        ? entranceFor(
+            actor,
+            cue.element.dataset.motionSide,
+            cue.kind === 'cel' && centredCels++ % 2 === 1,
+          )
+        : undefined;
       const performance = performanceFor(
         cue.kind,
         short,
         angle,
-        index % 2 ? -side : side,
+        entrance ? entrance.direction : index % 2 ? -side : side,
+        entrance?.start,
       );
+      if (cue.kind === 'cel') celDuration = performance.duration;
       let stagger = words.length ? Math.min(index * (short ? 38 : 48), 240) : 0;
       if (buttons.length > 1) stagger = index * (short ? 80 : 100);
       if (wires.length && actor instanceof SVGPathElement) {
@@ -176,7 +215,7 @@ export function initMotion(signal: AbortSignal): () => void {
           ],
           {
             duration: short ? 460 : 560,
-            delay: delay + (short ? 280 : 340),
+            delay: delay + Math.round(celDuration * 0.62),
             fill: 'both',
           },
         ),
