@@ -1,0 +1,50 @@
+{
+  "source": "Keep Up production mascot sprites",
+  "sourceConfig": "src/lib/mascot-sprites.ts",
+  "states": {
+    "idle": {
+      "src": "/assets/projects/keep-up/mascot-idle.png",
+      "sheetWidth": 305,
+      "sheetHeight": 308,
+      "frameWidth": 61,
+      "frameHeight": 77,
+      "columns": 5,
+      "rows": 4,
+      "frameCount": 17,
+      "fps": 10
+    },
+    "thinking": {
+      "src": "/assets/projects/keep-up/mascot-thinking.png",
+      "sheetWidth": 315,
+      "sheetHeight": 324,
+      "frameWidth": 63,
+      "frameHeight": 81,
+      "columns": 5,
+      "rows": 4,
+      "frameCount": 17,
+      "fps": 10
+    },
+    "right": {
+      "src": "/assets/projects/keep-up/mascot-correct.png",
+      "sheetWidth": 330,
+      "sheetHeight": 270,
+      "frameWidth": 66,
+      "frameHeight": 90,
+      "columns": 5,
+      "rows": 3,
+      "frameCount": 14,
+      "fps": 10
+    },
+    "wrong": {
+      "src": "/assets/projects/keep-up/mascot-wrong.png",
+      "sheetWidth": 315,
+      "sheetHeight": 320,
+      "frameWidth": 63,
+      "frameHeight": 80,
+      "columns": 5,
+      "rows": 4,
+      "frameCount": 17,
+      "fps": 10
+    }
+  }
+}

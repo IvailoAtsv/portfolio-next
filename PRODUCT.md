@@ -47,10 +47,10 @@ Visitors are likely to arrive with limited time, form an initial judgment quickl
 
 - HLP Labs: live at `https://www.hlplabs.com` with source in `/Users/Ivajlo/Documents/GitHub/m-ecom`. The product includes a public research-oriented commerce experience, catalog, scientific resource library, encyclopedia, guides, calculator, and administrative systems.
 - Keep Up: live URL supplied as `https://sellphy.app/` with source in `/Users/Ivajlo/Documents/GitHub/keep-up`. It is a mobile-first, offline-capable learning PWA built around daily programming quizzes, spaced repetition, progress, and installable app behavior.
-- Sellphy: source in `/Users/Ivajlo/Documents/GitHub/Cu-store`. It is a multi-tenant platform for creating and operating online shops and public websites, with guided setup, commerce, content, SEO, analytics, and design controls.
+- Sellphy: source in `/Users/Ivajlo/Documents/GitHub/Cu-store`. It is a multi-tenant platform for creating and operating online shops and public websites, with guided setup, commerce, content, SEO, analytics, and design controls. Author-supplied outcomes: after making public shop pages statically generated and moving off Vercel onto a Hetzner VPS, hosting cost dropped 83%; after moving all of the author's shops onto Sellphy, maintenance work dropped by 25+ hours a month.
 - Finance Me: source in `/Users/Ivajlo/Documents/GitHub/finance-me`. It is a mobile-first family finance application with transactions, shared family access, goals, analytics, recurring activity, exports, and an Apple Wallet/iOS Shortcuts import flow.
 - Screenshots and screen recordings for Finance Me can be supplied later.
-- No testimonials, hiring outcomes, commercial performance numbers, or other quantitative impact evidence have been supplied. Future work must not invent them.
+- Author-supplied quantitative outcomes for Sellphy: an 83% hosting-cost drop after static generation and the Hetzner move, and 25+ hours of maintenance saved per month after moving all of the author's shops onto the platform. No testimonials, hiring outcomes, or other commercial performance numbers have been supplied. Future work must not invent them.
 
 ## Product Principles
 

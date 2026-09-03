@@ -1,0 +1,7 @@
+{
+  "tool": "ffmpeg crop + scale",
+  "createdAt": "2026-09-03T08:33:00.000Z",
+  "sourceImage": "assets/generated/hero-browser.webp",
+  "operation": "Cropped the landing hero illustration to the Open Graph 1200×630 frame, keeping the singing browser character on stage.",
+  "dimensions": { "width": 1200, "height": 630 }
+}

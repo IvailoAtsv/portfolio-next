@@ -1,0 +1,277 @@
+---
+import sprites from '../../public/assets/projects/keep-up/mascot-sprites.json';
+const states = [
+  {
+    id: 'idle',
+    label: 'Idle',
+    description:
+      'The home-screen pose. A tip sits in the bubble; the duck waits.',
+    sprite: sprites.states.idle,
+  },
+  {
+    id: 'right',
+    label: 'Correct',
+    description: 'Right answer. The loop plays while the explanation is up.',
+    sprite: sprites.states.right,
+  },
+  {
+    id: 'wrong',
+    label: 'Wrong',
+    description:
+      'Wrong answer. Same timing, different face, so you can still read.',
+    sprite: sprites.states.wrong,
+  },
+];
+const initial = states[0].sprite;
+---
+
+<mascot-showcase data-config={JSON.stringify(states)} data-motion="action">
+  <div class="character-stage">
+    <div
+      class="character-sprite"
+      role="img"
+      aria-label="Keep Up's pixel-art duck in its idle state"
+      style={`background-image:url(${initial.src}); background-size:${initial.columns * 100}% ${initial.rows * 100}%; width:${initial.frameWidth * 3}px; height:${initial.frameHeight * 3}px;`}
+    >
+    </div>
+    <button class="character-play" type="button" data-play
+      >Pause character</button
+    >
+  </div>
+  <div
+    class="character-controls"
+    role="group"
+    aria-label="Choose a mascot state"
+  >
+    {
+      states.map((state, index) => (
+        <button type="button" data-state={state.id} aria-pressed={index === 0}>
+          {state.label}
+        </button>
+      ))
+    }
+  </div>
+  <p class="character-description" data-description aria-live="polite">
+    {states[0].description}
+  </p>
+  <p class="character-origin">
+    The original production sprites, playing here at their native 10 frames per
+    second.
+  </p>
+</mascot-showcase>
+
+<style>
+  mascot-showcase {
+    display: block;
+    color: var(--ink);
+  }
+  .character-stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 350px;
+    background: #fff7d5;
+    border: 2px solid var(--ink);
+    border-radius: 36px 24px 30px 20px;
+  }
+  .character-sprite {
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    image-rendering: pixelated;
+  }
+  .character-play {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    padding: 0.55rem 0.75rem;
+    background: transparent;
+    border: 1px solid #857b5a;
+    border-radius: 99px;
+    color: var(--ink);
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .character-controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .character-controls button {
+    min-height: 50px;
+    padding: 0.7rem 0.25rem;
+    border: 2px solid var(--ink);
+    border-radius: 9px;
+    background: var(--paper-light);
+    color: var(--ink);
+    font: 550 1rem var(--font-display);
+    cursor: pointer;
+    transition: background 180ms ease;
+  }
+  .character-controls button[aria-pressed='true'] {
+    background: var(--yellow);
+  }
+  .character-controls button:hover {
+    background: #f6e6a7;
+  }
+  .character-controls button[aria-pressed='true']:hover {
+    background: var(--yellow);
+  }
+  button:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+  }
+  .character-play:focus-visible {
+    outline-color: var(--ink);
+  }
+  .character-description {
+    min-height: 3em;
+    margin-top: 1.2rem;
+    color: var(--paper-light);
+    font-size: 1.1rem;
+    line-height: 1.45;
+  }
+  .character-origin {
+    margin-top: 0.6rem;
+    color: var(--smoke-light);
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+  mascot-showcase:not(:defined) .character-controls,
+  mascot-showcase:not(:defined) .character-play {
+    display: none;
+  }
+  @media (max-width: 520px) {
+    .character-stage {
+      height: 320px;
+    }
+    .character-controls {
+      gap: 0.35rem;
+    }
+    .character-controls button {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<script>
+  type CharacterState = {
+    id: string;
+    label: string;
+    description: string;
+    sprite: {
+      src: string;
+      frameWidth: number;
+      frameHeight: number;
+      columns: number;
+      rows: number;
+      frameCount: number;
+      fps: number;
+    };
+  };
+  class MascotShowcase extends HTMLElement {
+    private stop?: () => void;
+    connectedCallback() {
+      this.stop?.();
+      const states: CharacterState[] = JSON.parse(this.dataset.config || '[]');
+      const sprite = this.querySelector<HTMLElement>('.character-sprite');
+      const play = this.querySelector<HTMLButtonElement>('[data-play]');
+      const description = this.querySelector<HTMLElement>('[data-description]');
+      if (!states.length || !sprite || !play || !description) return;
+      const controller = new AbortController();
+      const { signal } = controller;
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+      let current = states[0];
+      let playing = !reduced.matches;
+      let visible = false;
+      let frame = 0;
+      let raf = 0;
+      let last = 0;
+      const paint = () => {
+        const { columns, rows } = current.sprite;
+        const x = ((frame % columns) / Math.max(1, columns - 1)) * 100;
+        const y = (Math.floor(frame / columns) / Math.max(1, rows - 1)) * 100;
+        sprite.style.backgroundPosition = `${x}% ${y}%`;
+        sprite.dataset.frame = String(frame);
+      };
+      const tick = (time: number) => {
+        if (time - last >= 1000 / current.sprite.fps) {
+          frame = (frame + 1) % current.sprite.frameCount;
+          paint();
+          last = time;
+        }
+        raf = requestAnimationFrame(tick);
+      };
+      const sync = () => {
+        cancelAnimationFrame(raf);
+        play.textContent = playing ? 'Pause character' : 'Play character';
+        if (playing && visible && !document.hidden) {
+          last = performance.now();
+          raf = requestAnimationFrame(tick);
+        }
+      };
+      this.querySelectorAll<HTMLButtonElement>('[data-state]').forEach(
+        (button) => {
+          button.addEventListener(
+            'click',
+            () => {
+              current = states.find(
+                (state) => state.id === button.dataset.state,
+              )!;
+              const config = current.sprite;
+              sprite.style.backgroundImage = `url(${config.src})`;
+              sprite.style.backgroundSize = `${config.columns * 100}% ${config.rows * 100}%`;
+              sprite.style.width = `${config.frameWidth * 3}px`;
+              sprite.style.height = `${config.frameHeight * 3}px`;
+              sprite.setAttribute(
+                'aria-label',
+                `Keep Up's pixel-art duck in its ${current.label.toLowerCase()} state`,
+              );
+              description.textContent = current.description;
+              this.querySelectorAll('[data-state]').forEach((item) =>
+                item.setAttribute('aria-pressed', String(item === button)),
+              );
+              frame = 0;
+              paint();
+              sync();
+            },
+            { signal },
+          );
+        },
+      );
+      play.addEventListener(
+        'click',
+        () => {
+          playing = !playing;
+          sync();
+        },
+        { signal },
+      );
+      reduced.addEventListener(
+        'change',
+        () => {
+          playing = !reduced.matches;
+          sync();
+        },
+        { signal },
+      );
+      document.addEventListener('visibilitychange', sync, { signal });
+      const observer = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        sync();
+      });
+      observer.observe(this);
+      sync();
+      this.stop = () => {
+        controller.abort();
+        observer.disconnect();
+        cancelAnimationFrame(raf);
+      };
+    }
+    disconnectedCallback() {
+      this.stop?.();
+    }
+  }
+  if (!customElements.get('mascot-showcase'))
+    customElements.define('mascot-showcase', MascotShowcase);
+</script>

@@ -4,6 +4,8 @@ import StudioNav from '../components/StudioNav.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import FilmStatic from '../components/FilmStatic.astro';
 import CircleWords from '../components/CircleWords.astro';
+import { pages } from '../lib/site';
+import practiceConveyor from '../assets/practice-conveyor.webp';
 
 const projects = [
   {
@@ -11,8 +13,8 @@ const projects = [
     image: '/assets/generated/hlp-lab-scene-v2.webp',
     alt: 'A friendly vial character points at a microscope slide beside a laboratory specimen cabinet',
     description:
-      'A technical catalog made understandable for customers and manageable for the people running it.',
-    disciplines: ['Product UX', 'Full-stack', 'Operations'],
+      'An online shop for research products, with a scientific reference library for customers and tools for managing the catalog and orders.',
+    disciplines: ['Product design', 'Full-stack development', 'Admin tools'],
     tone: 'smoke',
     stamp: ['FIND', 'LEARN', 'OPERATE'],
     href: '/work/hlp-labs',
@@ -24,10 +26,11 @@ const projects = [
     image: '/assets/generated/keep-up-scene-v2.webp',
     alt: 'A smiling flashcard character runs along a track holding a daily calendar',
     description:
-      'An offline-capable learning PWA built around daily programming quizzes, spaced repetition, and visible progress.',
-    disciplines: ['Product UX', 'PWA engineering', 'Offline systems'],
+      'A daily programming quiz and learning paths on your phone. The app still works without a connection. A pixel duck reacts when you answer.',
+    disciplines: ['App design', 'Web app development', 'Offline support'],
     tone: 'yellow',
     stamp: ['LEARN', 'RECALL', 'REPEAT'],
+    href: '/work/keep-up',
     width: 1400,
     height: 1120,
   },
@@ -36,10 +39,11 @@ const projects = [
     image: '/assets/generated/sellphy-shop.webp',
     alt: 'A browser-window shopkeeper with a striped awning carefully seals a parcel at a packing table',
     description:
-      'A multi-tenant platform for creating and operating online shops, public websites, products, content, and orders.',
-    disciplines: ['Platform design', 'Full-stack', 'Commerce systems'],
+      'A shop platform. Public pages are statically generated. Each shop dresses the same product page. Every main dashboard screen has a tour.',
+    disciplines: ['Platform design', 'Full-stack development', 'E-commerce'],
     tone: 'red',
     stamp: ['BUILD', 'SELL', 'OPERATE'],
+    href: '/work/sellphy',
     width: 1400,
     height: 1120,
   },
@@ -48,10 +52,11 @@ const projects = [
     image: '/assets/generated/finance-me-savings.webp',
     alt: 'A wallet character puts a coin into a household savings jar beside an open budget ledger',
     description:
-      'A mobile-first family finance product for shared transactions, goals, recurring activity, analytics, and exports.',
-    disciplines: ['Mobile UX', 'PWA engineering', 'Data workflows'],
+      'An expense tracker for families, with shared savings goals and Apple Wallet imports through an iOS Shortcut.',
+    disciplines: ['App design', 'Web app development', 'Wallet imports'],
     tone: 'smoke',
     stamp: ['TRACK', 'PLAN', 'SHARE'],
+    href: '/work/finance-me',
     width: 1400,
     height: 1120,
   },
@@ -59,27 +64,27 @@ const projects = [
 
 const practiceBeats = [
   {
-    title: 'Shape the experience',
-    copy: 'Find the real problem, simplify the journey, and give the product a visual point of view.',
+    title: 'Start with the problem',
+    copy: 'I work out what people need to do, then sketch the screens and how they fit together.',
   },
   {
-    title: 'Build the system',
-    copy: 'Translate the experience into durable interfaces, data models, workflows, and operational tools.',
+    title: 'Design and build',
+    copy: 'I work on the interface and the code together. Trying things in a working app often shows me what needs to change.',
   },
   {
-    title: 'Ship the real thing',
-    copy: 'Test the edges, tune the details, and stay accountable to what people actually use.',
+    title: 'Get it ready to use',
+    copy: 'Before launch, I test the whole process, including what happens when something goes wrong. I keep refining it once people start using it.',
   },
 ];
 ---
 
-<BaseLayout>
+<BaseLayout page={pages.home}>
   <div class="site-shell">
     <StudioNav home />
 
     <main id="main-content">
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
+        <div class="hero-copy" data-motion-group>
           <h1 id="hero-title" class="hero-title">
             <span class="title-line">
               <span class="pop" style="--i: 0">I make</span>
@@ -90,11 +95,11 @@ const practiceBeats = [
               <span class="pop" style="--i: 3">sing.</span>
             </span>
           </h1>
-          <p class="fade-up" style="--i: 0">
+          <p data-motion="copy">
             I’m Ivaylo, a product-minded full-stack developer who designs the
             experience, builds the system, and stays until the real thing works.
           </p>
-          <div class="hero-actions fade-up" style="--i: 1">
+          <div class="hero-actions" data-motion="action">
             <a class="button button-dark" href="/work/hlp-labs" data-squash>
               See HLP Labs <ArrowIcon />
             </a>
@@ -216,14 +221,14 @@ const practiceBeats = [
       </div>
 
       <section class="work-section" id="work" aria-labelledby="work-title">
-        <div class="section-intro" data-reveal>
-          <h2 id="work-title">
-            <span class="title-line">The work,</span>
-            <span class="title-line title-outline">opened up.</span>
+        <div class="section-intro" data-motion-group>
+          <h2 id="work-title" data-motion="title">
+            <span class="title-line">A few things</span>
+            <span class="title-line title-outline">I've built.</span>
           </h2>
-          <p>
-            Real interfaces in front. Product decisions and systems behind them.
-            No mystery box, no tech-list theatre.
+          <p data-motion="copy">
+            Open a project to see how it works and read about the choices I made
+            while building it.
           </p>
         </div>
 
@@ -232,9 +237,9 @@ const practiceBeats = [
             projects.map((project, index) => (
               <article
                 class:list={['reel-project', `tone-${project.tone}`]}
-                data-reveal
+                data-motion-group
               >
-                <div class="reel-stage" data-loop>
+                <div class="reel-stage" data-motion="cel" data-loop>
                   <div class="reel-scene has-film">
                     <img
                       src={project.image}
@@ -265,16 +270,29 @@ const practiceBeats = [
                   </span>
                 </div>
                 <div class="reel-copy">
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
+                  <h3 data-motion="title">
+                    <a
+                      href={project.href}
+                      data-transition-label={project.title}
+                    >
+                      {project.title}
+                    </a>
+                  </h3>
+                  <p data-motion="copy">{project.description}</p>
                   <ul>
                     {project.disciplines.map((item) => (
-                      <li>{item}</li>
+                      <li data-motion="detail">{item}</li>
                     ))}
                   </ul>
-                  <span class="case-status">
-                    Case study in the cutting room
-                  </span>
+                  <a
+                    class="button button-light reel-case-link"
+                    href={project.href}
+                    data-transition-label={project.title}
+                    data-motion="action"
+                    data-squash
+                  >
+                    About {project.title} <ArrowIcon />
+                  </a>
                 </div>
               </article>
             ))
@@ -287,22 +305,22 @@ const practiceBeats = [
         id="practice"
         aria-labelledby="practice-title"
       >
-        <div class="practice-inner">
-          <h2 id="practice-title" data-reveal>
-            <span class="title-line">One practice.</span>
-            <span class="title-line title-outline">All the way through.</span>
+        <div class="practice-inner" data-motion-group>
+          <h2 id="practice-title" data-motion="title">
+            <span class="title-line">How I</span>
+            <span class="title-line title-outline">work.</span>
           </h2>
 
-          <figure class="practice-stage" data-reveal data-loop>
+          <figure class="practice-stage" data-motion="cel" data-loop>
             <div class="practice-frame has-film">
               <div class="film-strip film-strip-top" aria-hidden="true">
                 <span class="film-sprockets"></span>
               </div>
               <img
-                src="/assets/generated/practice-conveyor.webp"
+                src={practiceConveyor.src}
                 alt="One conveyor belt runs through three stations: a drafting table sketching a screen, a machine with a wrench tightening it, and a crate rolling into a delivery truck"
-                width="1536"
-                height="1024"
+                width={practiceConveyor.width}
+                height={practiceConveyor.height}
                 loading="lazy"
               />
               <FilmStatic />
@@ -314,10 +332,10 @@ const practiceBeats = [
 
           <ol class="practice-track">
             {
-              practiceBeats.map((beat, index) => (
-                <li class="practice-beat" data-reveal style={`--i: ${index}`}>
-                  <h3>{beat.title}</h3>
-                  <p>{beat.copy}</p>
+              practiceBeats.map((beat) => (
+                <li class="practice-beat" data-motion-group>
+                  <h3 data-motion="title">{beat.title}</h3>
+                  <p data-motion="copy">{beat.copy}</p>
                 </li>
               ))
             }
@@ -325,8 +343,18 @@ const practiceBeats = [
         </div>
       </section>
 
-      <section class="about-section" id="about" aria-labelledby="about-title">
-        <div class="about-portrait" data-reveal data-loop>
+      <section
+        class="about-section"
+        id="about"
+        aria-labelledby="about-title"
+        data-motion-group
+      >
+        <div
+          class="about-portrait"
+          data-motion="cel"
+          data-motion-order="4"
+          data-loop
+        >
           <div class="portrait-disc has-film">
             <img
               src="/assets/generated/different-hats-browser.webp"
@@ -346,63 +374,51 @@ const practiceBeats = [
             size={400}
           />
         </div>
-        <div class="about-copy" data-reveal>
-          <h2 id="about-title">
-            <span class="title-line">Different hats.</span>
-            <span class="title-line title-outline">Same head.</span>
+        <div class="about-copy">
+          <h2 id="about-title" data-motion="title">
+            <span class="title-line">A little</span>
+            <span class="title-line title-outline">about me.</span>
           </h2>
-          <p class="about-lede">
-            I work where product design and software engineering meet. That
-            means fewer handoffs, clearer decisions, and a stronger line from
-            the first sketch to the shipped system.
+          <p class="about-lede" data-motion="copy" data-motion-order="1">
+            I like being involved in both the design and the code. I might be
+            sketching a checkout one day and working on the database the next.
           </p>
-          <p>
-            I’m based in Bulgaria and currently work as a full-stack developer
-            at Vention, alongside independent product work. I care about useful
-            complexity: making sophisticated products feel direct without
-            pretending the hard parts are simple.
+          <p data-motion="copy" data-motion-order="2">
+            I'm based in Bulgaria and work as a full-stack developer at Vention.
+            I also build independent projects, including the ones above. I enjoy
+            working through tricky problems and making the result
+            straightforward to use.
           </p>
-          <div class="about-links">
-            <a
-              class="pill-link"
-              href="https://github.com/IvailoAtsv"
-              target="_blank"
-              rel="noreferrer">GitHub <ArrowIcon direction="external" /></a
-            >
-            <a
-              class="pill-link"
-              href="https://www.linkedin.com/in/ivaylo-atanasov-7aa413268"
-              target="_blank"
-              rel="noreferrer">LinkedIn <ArrowIcon direction="external" /></a
-            >
-          </div>
         </div>
       </section>
 
       <section
-        class="contact-section"
+        class="contact-section has-film"
         id="contact"
         aria-labelledby="contact-title"
+        data-motion-group
+        data-loop
       >
-        <div class="contact-copy" data-reveal>
-          <h2 id="contact-title">
-            <span class="title-line">Got a hard product</span>
-            <span class="title-line title-outline">worth making?</span>
+        <FilmStatic />
+        <div class="contact-copy">
+          <h2 id="contact-title" data-motion="title">
+            <span class="title-line">Want to</span>
+            <span class="title-line title-outline">work together?</span>
           </h2>
-          <p>
-            If you’re building a team that values product thinking and
-            engineering craft in the same person, I’d like to hear what you’re
-            working on.
+          <p data-motion="copy">
+            If you have a project in mind or a role that could be a good fit,
+            tell me a bit about it. I'd be happy to talk.
           </p>
           <a
-            class="button button-dark button-large"
+            class="button button-dark"
             href="mailto:ivailoatanassov@gmail.com"
+            data-motion="action"
             data-squash
           >
             ivailoatanassov@gmail.com <ArrowIcon />
           </a>
         </div>
-        <div class="contact-stage" data-reveal data-loop>
+        <div class="contact-stage" data-motion="cel" data-motion-side="right">
           <img
             class="contact-hand"
             src="/assets/generated/contact-hand.webp"
@@ -415,11 +431,13 @@ const practiceBeats = [
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" data-motion-group>
       <a
         class="studio-mark studio-mark-inverse"
         href="#top"
         aria-label="Back to the top"
+        data-motion="stamp"
+        data-motion-order="0"
         data-squash
       >
         <svg viewBox="0 0 58 58" aria-hidden="true"
@@ -433,10 +451,27 @@ const practiceBeats = [
         >
         <span><strong>IVAYLO</strong><small>DOES IT ALL</small></span>
       </a>
-      <p>
-        Designed and built in Bulgaria.<br />Astro, Tailwind, and a lot of ink.
+      <p data-motion="copy" data-motion-order="1">
+        Designed and built in Bulgaria.<br />Made with Astro and Tailwind.
       </p>
-      <p class="footer-signoff">That’s all, folks.</p>
+      <p class="footer-signoff" data-motion="copy" data-motion-order="2">
+        That’s all, folks.
+      </p>
     </footer>
   </div>
 </BaseLayout>
+
+<style>
+  .reel-case-link {
+    margin-top: 1.6rem;
+  }
+  .reel-copy h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .reel-copy h3 a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.15em;
+  }
+</style>

@@ -1,4 +1,5 @@
 import { initHeroNotes } from './hero-notes';
+import { initMotion } from './motion';
 
 let cleanupPage = () => {};
 
@@ -10,15 +11,17 @@ document.addEventListener('astro:page-load', () => {
   const controller = new AbortController();
   const { signal } = controller;
   const observers: IntersectionObserver[] = [];
+  const stopMotion = initMotion(signal);
   const stopHeroNotes = initHeroNotes(signal);
   cleanupPage = () => {
     controller.abort();
+    stopMotion();
     stopHeroNotes();
     observers.forEach((observer) => observer.disconnect());
   };
 
   const revealItems = document.querySelectorAll('[data-reveal]');
-  const loopItems = document.querySelectorAll('[data-loop]');
+  const loopItems = document.querySelectorAll('.hero-stage[data-loop]');
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     revealItems.forEach((item) => item.classList.add('is-visible'));
     loopItems.forEach((item) => item.classList.add('is-live'));

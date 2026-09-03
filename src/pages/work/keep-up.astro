@@ -1,0 +1,424 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StudioNav from '../../components/StudioNav.astro';
+import ArrowIcon from '../../components/ArrowIcon.astro';
+import ProjectVideo from '../../components/ProjectVideo.astro';
+import MascotShowcase from '../../components/MascotShowcase.astro';
+import { pages } from '../../lib/site';
+const media = '/assets/projects/keep-up';
+---
+
+<BaseLayout page={pages.keepUp}>
+  <div class="site-shell case-shell keepup-case">
+    <StudioNav />
+    <main id="main-content">
+      <article class="case-study">
+        <header class="case-hero keepup-hero" data-motion-group>
+          <div class="case-heading">
+            <a class="pill-link back-link" href="/#work"
+              ><ArrowIcon direction="left" /> Back to the reel</a
+            >
+            <h1 class="hero-title" data-motion="title">
+              <span class="title-line">Keep</span><span
+                class="title-line title-outline">Up.</span
+              >
+            </h1>
+            <p data-motion="copy">
+              Keep Up is a programming practice app I designed and built. You
+              pick a stack, answer a short quiz, and missed questions come back
+              later. It installs on a phone and stores progress on the device.
+            </p>
+            <div class="case-actions" data-motion="action">
+              <a
+                class="button button-dark"
+                href="https://sellphy.app"
+                target="_blank"
+                rel="noreferrer"
+                data-squash>Try Keep Up <ArrowIcon direction="external" /></a
+              >
+              <a class="button button-paper" href="#paths" data-squash
+                >Learning paths <ArrowIcon direction="down" /></a
+              >
+            </div>
+          </div>
+          <figure class="keepup-hero-phone" data-motion="cel">
+            <div class="phone-stage">
+              <div class="phone-shell">
+                <div class="phone-screen">
+                  <img
+                    src={`${media}/home.png`}
+                    alt="Keep Up home screen with streak stats, skill chips, learning paths, and the pixel-art duck beside a React tip"
+                    width="433"
+                    height="953"
+                    fetchpriority="high"
+                  />
+                </div>
+              </div>
+            </div>
+            <figcaption>
+              Home: streak, skills, paths, and the duck.<br /><span
+                >Live app capture</span
+              >
+            </figcaption>
+          </figure>
+          <dl class="case-meta">
+            <div data-motion="detail">
+              <dt>Role</dt><dd>Product design<br />Full-stack development</dd>
+            </div>
+            <div data-motion="detail">
+              <dt>Product</dt><dd>
+                Daily quiz<br />Learning paths · PWA
+              </dd>
+            </div>
+            <div data-motion="detail">
+              <dt>System</dt><dd>
+                Next.js · React · TypeScript<br />IndexedDB · MongoDB
+              </dd>
+            </div>
+            <div data-motion="detail">
+              <dt>Craft</dt><dd>
+                Pixel mascot<br />Path map · quiz motion
+              </dd>
+            </div>
+          </dl>
+        </header>
+
+        <div class="wave-divider case-wave" data-loop aria-hidden="true">
+          <svg viewBox="0 0 2880 96" preserveAspectRatio="none"
+            ><path
+              d="M0 51c80-42 160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0v80H0Z"
+            ></path></svg
+          >
+        </div>
+
+        <div class="case-body">
+          <nav class="case-nav" aria-label="Case study sections">
+            <span>On this reel</span><a href="#mascot">The duck</a><a
+              href="#paths">Learning paths</a
+            ><a href="#tap-code">Tap-to-build</a><a href="#progress">The +1</a
+            ><a href="#reviews">Reviews</a>
+          </nav>
+          <div class="case-content">
+            <section
+              class="case-section case-opening mascot-section"
+              id="mascot"
+              data-motion-group
+            >
+              <div class="mascot-story">
+                <h2 data-motion="title">Idle, correct, wrong.</h2>
+                <p class="case-lede" data-motion="copy">
+                  The duck is a pixel-art sprite sheet, wired to quiz state. It
+                  sits on the home screen with a tip. After you answer, it
+                  switches pose while the explanation is on screen.
+                </p>
+                <p data-motion="copy">
+                  Idle is the waiting pose. Correct and wrong are the two
+                  feedback loops. I copied the production sheets into this page
+                  and play them at their native 10 frames per second, nearest
+                  neighbor, so the edges stay hard.
+                </p>
+              </div>
+              <MascotShowcase />
+            </section>
+
+            <section
+              class="mobile-proof keepup-paths"
+              id="paths"
+              data-motion-group
+              data-loop
+            >
+              <div class="mobile-copy">
+                <h2 data-motion="title">Fifteen steps, then the next tier.</h2>
+                <p data-motion="copy">
+                  Skills on the home screen feed the daily quiz. Learning paths
+                  are a separate list: topics you are still learning, walked in
+                  order.
+                </p>
+                <p data-motion="copy">
+                  A path has four tiers: Easy, Medium, Hard, Expert. Each tier
+                  has fifteen steps. Finish Easy to unlock Medium. You cannot
+                  skip a node; later steps stay locked. A step is five short
+                  lessons, and each lesson ends with a question.
+                </p>
+                <p data-motion="copy">
+                  The screen here is CI/CD &amp; Deployment. Easy covers GitHub
+                  Actions, pipelines, and a green CI run. Later tiers go through
+                  Docker, a Hetzner deploy, rollback, and custom domains. Other
+                  published paths are Playwright, JavaScript, C#, and Agentic
+                  Engineering.
+                </p>
+              </div>
+              <figure class="keepup-path-phone">
+                <div class="phone-stage" data-motion="cel">
+                  <div class="phone-shell">
+                    <div class="phone-screen">
+                      <img
+                        src={`${media}/learn-path.png`}
+                        alt="Keep Up learning path for CI/CD and Deployment: four completed green star nodes, the next step open, later steps locked, Easy selected, 4 of 15"
+                        width="433"
+                        height="953"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <figcaption>
+                  CI/CD Easy, 4 of 15. Green stars are done; the lock is next.
+                </figcaption>
+              </figure>
+            </section>
+
+            <section
+              class="case-section interaction-feature"
+              id="tap-code"
+              data-motion-group
+            >
+              <figure class="interaction-film" data-motion="cel">
+                <div class="recording-shell">
+                  <ProjectVideo
+                    src={`${media}/tap-code.mp4`}
+                    poster={`${media}/tap-code-poster.webp`}
+                    label="Keep Up: tapping TypeScript code blocks into an answer and checking the completed declaration"
+                    width={900}
+                    height={1950}
+                  />
+                </div>
+                <figcaption>
+                  Four taps build a TypeScript line.<br /><span
+                    >App recording · 11 seconds</span
+                  >
+                </figcaption>
+              </figure>
+              <div class="interaction-story">
+                <h2 data-motion="title">Tap the tokens into place.</h2>
+                <p class="case-lede" data-motion="copy">
+                  Some questions ask you to assemble a line of code. Tap a token
+                  and it flies from the pool into the next empty slot.
+                </p>
+                <p data-motion="copy">
+                  In this clip the line is <code
+                    >let result: Array&lt;string&gt;</code
+                  >. The empty hole in the pool marks where the token came from,
+                  so the next tap still has a clear target.
+                </p>
+                <p data-motion="copy">
+                  The flight is short on purpose. Larger panel changes use their
+                  own timing, so a fast sequence of taps does not wait on the
+                  question transition.
+                </p>
+              </div>
+            </section>
+
+            <section
+              class="case-section interaction-feature progress-feature"
+              id="progress"
+              data-motion-group
+            >
+              <div class="interaction-story">
+                <h2 data-motion="title">The +1 flies into the count.</h2>
+                <p class="case-lede" data-motion="copy">
+                  After a correct answer, a +1 leaves the Continue button and
+                  flies into the daily counter. The counter ticks, then the next
+                  question arrives.
+                </p>
+                <p data-motion="copy">
+                  I timed the token flight, the counter bump, and the question
+                  change as one sequence. The explanation stays on screen until
+                  you choose to continue.
+                </p>
+              </div>
+              <figure class="interaction-film" data-motion="cel">
+                <div class="recording-shell">
+                  <ProjectVideo
+                    src={`${media}/progress-reward.mp4`}
+                    poster={`${media}/progress-reward-poster.webp`}
+                    label="Keep Up: the plus-one reward flies into the daily count before the next question appears"
+                    width={900}
+                    height={1950}
+                  />
+                </div>
+                <figcaption>
+                  One answer, then the count moves.<br /><span
+                    >App recording · 8 seconds</span
+                  >
+                </figcaption>
+              </figure>
+            </section>
+
+            <section class="case-section" id="reviews" data-motion-group>
+              <h2 data-motion="title">Missed questions come back.</h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  The quiz scheduler is SM-2 with three grades. A wrong answer
+                  is due tomorrow. A correct answer that needed retries is good.
+                  A first-try correct answer is easy and starts on a three-day
+                  interval.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    Due reviews are picked before unseen questions, and only
+                    from the skills you selected. That selection can run against
+                    IndexedDB, so a downloaded pool still works if the network
+                    drops. Sync to MongoDB happens in the background when a
+                    connection is back.
+                  </p>
+                  <p data-motion="copy">
+                    I have no retention study to cite. The next question is due,
+                    new, or locked behind a path step you have not reached yet.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section class="case-next" data-motion-group>
+              <div>
+                <h2 data-motion="title">
+                  Next up:<br /><span class="title-outline">Sellphy.</span>
+                </h2><p data-motion="copy">
+                  From a personal learning habit to the systems behind an online
+                  shop.
+                </p>
+              </div>
+              <a
+                class="button button-light"
+                href="/work/sellphy"
+                data-squash
+                data-motion="action">Explore Sellphy <ArrowIcon /></a
+              >
+            </section>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .keepup-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+    padding-top: 2rem;
+  }
+  .keepup-hero-phone {
+    justify-self: center;
+    width: min(100%, 22rem);
+  }
+  .keepup-hero-phone .phone-stage,
+  .keepup-path-phone .phone-stage {
+    min-height: 0;
+    padding: 1.35rem 1.1rem 1.6rem;
+  }
+  .keepup-hero-phone .phone-shell,
+  .keepup-path-phone .phone-shell {
+    width: min(18.75rem, 88%);
+  }
+  .keepup-hero-phone .phone-screen img,
+  .keepup-path-phone .phone-screen img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .keepup-hero-phone figcaption {
+    margin-top: 1.1rem;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .keepup-hero-phone figcaption span {
+    color: #55534c;
+    font-size: 0.9rem;
+  }
+  .keepup-hero .case-meta {
+    margin-top: 1rem;
+  }
+  .mascot-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(310px, 0.9fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+  }
+  .mascot-story > p,
+  .interaction-story > p {
+    margin-top: 1.5rem;
+    color: var(--smoke-light);
+    max-width: 60ch;
+  }
+  .mascot-story > .case-lede,
+  .interaction-story > .case-lede {
+    color: var(--paper-light);
+  }
+  .keepup-paths {
+    align-items: start;
+    overflow: visible;
+  }
+  .keepup-paths .mobile-copy p {
+    max-width: 38rem;
+  }
+  .keepup-path-phone {
+    justify-self: center;
+    width: min(100%, 22rem);
+  }
+  .keepup-path-phone figcaption {
+    margin-top: 0.85rem;
+    text-align: center;
+    color: var(--ink);
+    font: 500 1rem/1.4 var(--font-display);
+  }
+  .interaction-feature {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+  .progress-feature {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 0.8fr);
+  }
+  .recording-shell {
+    overflow: hidden;
+    border: 2px solid #77736a;
+    border-radius: 24px;
+    background: #fff7d5;
+  }
+  .interaction-film {
+    width: min(100%, 320px);
+    justify-self: center;
+  }
+  .interaction-film figcaption {
+    margin-top: 1rem;
+    color: var(--paper-light);
+    font: 500 1.05rem/1.4 var(--font-display);
+  }
+  .interaction-film figcaption span {
+    color: var(--smoke-light);
+    font: 400 0.9rem/1.5 var(--font-body);
+  }
+  code {
+    color: var(--paper-light);
+    font-size: 0.9em;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 1100px) {
+    .mascot-section {
+      grid-template-columns: 1fr;
+    }
+    .mascot-section :global(mascot-showcase) {
+      width: min(100%, 560px);
+    }
+  }
+  @media (max-width: 760px) {
+    .keepup-hero {
+      grid-template-columns: 1fr;
+    }
+    .keepup-hero-phone {
+      width: min(100%, 20rem);
+    }
+    .interaction-feature {
+      grid-template-columns: 1fr;
+    }
+    .interaction-story {
+      order: 0;
+    }
+    .interaction-film {
+      order: 1;
+    }
+  }
+</style>

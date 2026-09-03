@@ -1,0 +1,129 @@
+/* Content remains visible until the controller opts individual cues in. */
+[data-motion][data-motion-state='pending'] {
+  opacity: 0;
+}
+
+[data-motion][data-motion-state='pending']:focus-within {
+  opacity: 1;
+}
+
+[data-motion='title'],
+[data-motion='title'] .title-line,
+[data-motion='title'] .motion-word,
+[data-motion='action'],
+[data-motion='stamp'] {
+  transform-origin: 50% 85%;
+}
+
+[data-motion='title'] .motion-word {
+  display: inline-block;
+}
+
+/* The original hero loop remains under its original controller. */
+[data-loop]:not(.hero-stage) {
+  --loop-state: paused;
+}
+
+[data-loop]:not(.hero-stage).is-live {
+  --loop-state: running;
+}
+
+.motion-paused [data-loop]:not(.hero-stage) {
+  --loop-state: paused !important;
+}
+
+/* The controller gives the small seal its entrance follow-through. */
+.reel-stage[data-motion] > .reel-seal {
+  transform-origin: 35% 80%;
+}
+
+.practice-beat[data-motion-group]::before {
+  --connector-start: 0 1;
+  transform-origin: left center;
+}
+
+.practice-beat[data-motion-group]::after {
+  transform-origin: center;
+}
+
+.practice-beat[data-motion-group]:has(> [data-motion-state='pending'])::before {
+  scale: var(--connector-start);
+}
+
+.practice-beat[data-motion-group]:has(> [data-motion-state='pending'])::after {
+  scale: 0;
+}
+
+.practice-beat[data-motion-group]:has(> [data-motion-state='running'])::before {
+  animation: practice-connector 440ms var(--ease-out)
+    var(--motion-group-delay, 0ms) both;
+}
+
+.practice-beat[data-motion-group]:has(> [data-motion-state='running'])::after {
+  animation: practice-dot 460ms var(--ease-out)
+    calc(var(--motion-group-delay, 0ms) + 180ms) both;
+}
+
+.site-footer .footer-signoff[data-motion-state='running'] {
+  transform-origin: right bottom;
+}
+
+@keyframes practice-connector {
+  from {
+    scale: var(--connector-start);
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes practice-dot {
+  0% {
+    scale: 0;
+  }
+  62% {
+    scale: 1.28 0.9;
+  }
+  82% {
+    scale: 0.95 1.07;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .practice-beat[data-motion-group]::before {
+    --connector-start: 1 0;
+    transform-origin: center top;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-motion][data-motion-state] {
+    opacity: 1 !important;
+  }
+
+  [data-motion][data-loop] {
+    --loop-state: paused !important;
+  }
+
+  [data-motion] .motion-word,
+  .practice-beat[data-motion-group]::before,
+  .practice-beat[data-motion-group]::after {
+    animation: none !important;
+  }
+
+  .practice-beat[data-motion-group]::before,
+  .practice-beat[data-motion-group]::after {
+    scale: 1 !important;
+  }
+}
+
+@media print {
+  [data-motion],
+  [data-motion] .motion-word {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}

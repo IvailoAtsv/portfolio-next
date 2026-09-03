@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://ivaylo.dev/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://ivaylo.dev/og/home.png</image:loc>
+      <image:title>Ivaylo Atanassov - Product designer &amp; full-stack developer</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ivaylo.dev/work/hlp-labs</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ivaylo.dev/og/hlp-labs.png</image:loc>
+      <image:title>HLP Labs case study</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ivaylo.dev/work/keep-up</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://ivaylo.dev/og/keep-up.png</image:loc>
+      <image:title>Keep Up case study</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ivaylo.dev/work/sellphy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://ivaylo.dev/og/sellphy.png</image:loc>
+      <image:title>Sellphy case study</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ivaylo.dev/work/finance-me</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://ivaylo.dev/og/finance-me.png</image:loc>
+      <image:title>Finance Me case study</image:title>
+    </image:image>
+  </url>
+</urlset>

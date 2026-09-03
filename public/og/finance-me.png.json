@@ -1,0 +1,7 @@
+{
+  "tool": "ffmpeg crop + scale",
+  "createdAt": "2026-09-03T08:33:00.000Z",
+  "sourceImage": "assets/generated/finance-me-savings.webp",
+  "operation": "Cropped the Finance Me illustration to the Open Graph 1200×630 frame, keeping the wallet character, savings jar and ledger.",
+  "dimensions": { "width": 1200, "height": 630 }
+}

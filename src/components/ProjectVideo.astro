@@ -1,0 +1,143 @@
+---
+interface Props {
+  src: string;
+  poster: string;
+  label: string;
+  width: number;
+  height: number;
+  preview?: boolean;
+}
+const { src, poster, label, width, height, preview = true } = Astro.props;
+---
+
+<project-player data-preview={preview}>
+  <video
+    controls
+    muted
+    loop
+    playsinline
+    preload="none"
+    poster={poster}
+    width={width}
+    height={height}
+    aria-label={label}
+  >
+    <source src={src} type="video/mp4" />
+    <a href={src}>Watch {label}</a>
+  </video>
+  <p class="video-error" role="status" hidden>
+    Video could not load. <a href={src}>Open the recording</a>.
+  </p>
+</project-player>
+
+<style>
+  project-player {
+    display: block;
+    min-width: 0;
+  }
+  video {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #11110f;
+    border-radius: inherit;
+  }
+  .video-error {
+    padding: 0.75rem;
+    color: var(--paper-light);
+    background: var(--ink);
+  }
+  .video-error[hidden] {
+    display: none;
+  }
+  .video-error a {
+    text-decoration: underline;
+  }
+</style>
+
+<script>
+  class ProjectPlayer extends HTMLElement {
+    private stop?: () => void;
+    connectedCallback() {
+      this.stop?.();
+      const video = this.querySelector('video');
+      if (!video) return;
+      const controller = new AbortController();
+      const { signal } = controller;
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+      let visible = false;
+      let userPaused = false;
+      let automaticPause = false;
+      const pause = () => {
+        if (video.paused) return;
+        automaticPause = true;
+        video.pause();
+      };
+      const sync = () => {
+        if (!visible || document.hidden) {
+          pause();
+          return;
+        }
+        if (
+          this.dataset.preview === 'true' &&
+          !reduced.matches &&
+          !userPaused
+        ) {
+          video.muted = true;
+          void video.play().catch(() => {
+            /* Native controls remain usable. */
+          });
+        }
+      };
+      video.addEventListener(
+        'pause',
+        () => {
+          if (!automaticPause) userPaused = true;
+          automaticPause = false;
+        },
+        { signal },
+      );
+      video.addEventListener(
+        'play',
+        () => {
+          userPaused = false;
+        },
+        { signal },
+      );
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          visible = entry.isIntersecting;
+          sync();
+        },
+        { threshold: 0.15 },
+      );
+      observer.observe(video);
+      document.addEventListener('visibilitychange', sync, { signal });
+      reduced.addEventListener(
+        'change',
+        () => {
+          if (reduced.matches) pause();
+          else sync();
+        },
+        { signal },
+      );
+      const showError = () => {
+        this.querySelector<HTMLElement>('.video-error')!.hidden = false;
+      };
+      video.addEventListener('error', showError, { signal });
+      video
+        .querySelector('source')
+        ?.addEventListener('error', showError, { signal });
+      this.stop = () => {
+        observer.disconnect();
+        controller.abort();
+        video.pause();
+      };
+    }
+    disconnectedCallback() {
+      this.stop?.();
+    }
+  }
+  if (!customElements.get('project-player'))
+    customElements.define('project-player', ProjectPlayer);
+</script>

@@ -1,0 +1,608 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StudioNav from '../../components/StudioNav.astro';
+import ArrowIcon from '../../components/ArrowIcon.astro';
+import { pages } from '../../lib/site';
+
+const assets = '/assets/projects/sellphy';
+---
+
+<BaseLayout page={pages.sellphy}>
+  <div class="site-shell case-shell sellphy-case">
+    <StudioNav />
+    <main id="main-content">
+      <article class="case-study">
+        <header class="case-hero sellphy-hero" data-motion-group>
+          <div class="case-heading">
+            <a class="pill-link back-link" href="/#work">
+              <ArrowIcon direction="left" /> Back to the reel
+            </a>
+            <h1 class="hero-title" data-motion="title">
+              Sellphy<span class="title-outline">.</span>
+            </h1>
+            <p data-motion="copy">
+              Sellphy is a shop platform I designed and built. Public pages ship
+              as static HTML. That change, plus moving off Vercel, cut the
+              hosting bill by 83%.
+            </p>
+            <div class="case-actions" data-motion="action">
+              <a class="button button-dark" href="#static" data-squash>
+                Static storefronts <ArrowIcon direction="down" />
+              </a>
+            </div>
+          </div>
+
+          <figure class="sellphy-stage" data-motion="cel" data-motion-order="2">
+            <a
+              class="screen-window"
+              href={`${assets}/builder.webp`}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the Sellphy site builder screenshot at full size"
+            >
+              <div class="screen-bar" aria-hidden="true">
+                <span></span><span></span><span></span><b
+                  >Site editor / step 2 of 6</b
+                >
+              </div>
+              <img
+                src={`${assets}/builder.webp`}
+                alt="Sellphy site editor on step 2 of 6, with a live preview of a video homepage hero and layout variants in the right panel"
+                width="1024"
+                height="661"
+                fetchpriority="high"
+              />
+            </a>
+            <figcaption>
+              Step 2 is the homepage. The preview is the public page.<br /><span
+                >Product demo capture. Select to enlarge.</span
+              >
+            </figcaption>
+          </figure>
+
+          <dl class="case-meta">
+            <div data-motion="detail">
+              <dt>Role</dt><dd>Product design<br />Full-stack development</dd>
+            </div>
+            <div data-motion="detail">
+              <dt>Product</dt><dd>
+                Shop platform<br />Seller dashboard
+              </dd>
+            </div>
+            <div data-motion="detail">
+              <dt>System</dt><dd>Next.js · ISR<br />TypeScript · MongoDB</dd>
+            </div>
+            <div data-motion="detail">
+              <dt>Scope</dt><dd>
+                Static storefronts<br />Dashboard tours
+              </dd>
+            </div>
+          </dl>
+        </header>
+
+        <div class="wave-divider case-wave" data-loop aria-hidden="true">
+          <svg viewBox="0 0 2880 96" preserveAspectRatio="none"
+            ><path
+              d="M0 51c80-42 160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0s160 42 240 0v80H0Z"
+            ></path></svg
+          >
+        </div>
+
+        <div class="case-body">
+          <nav class="case-nav" aria-label="Case study sections">
+            <span>On this reel</span>
+            <a href="#static">Static pages</a>
+            <a href="#builder">The editor</a>
+            <a href="#product-pages">Product pages</a>
+            <a href="#tours">Tours</a>
+            <a href="#catalog">Catalog &amp; SEO</a>
+          </nav>
+
+          <div class="case-content">
+            <section
+              class="case-section case-opening"
+              id="static"
+              data-motion-group
+            >
+              <h2 data-motion="title">The catalog is a static file.</h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  Home, shop, category, about, and legal pages are force-static.
+                  The first request builds the HTML. Later requests get that
+                  file until a seller saves, then those paths and cache tags are
+                  rebuilt.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    Cart and checkout stay dynamic, because those need a live
+                    cart. Category filters would normally skip the cache, so the
+                    proxy encodes the filter into the path and leaves the public
+                    URL readable. Redirect rules run in the proxy before a
+                    cached page is served.
+                  </p>
+                  <p data-motion="copy">
+                    I used to run this on Vercel. After the pages were static, a
+                    Hetzner VPS behind Caddy was enough. Hosting cost dropped
+                    83%.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section class="case-section" id="builder" data-motion-group>
+              <h2 data-motion="title">Six steps, then a live homepage.</h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  The editor is layout, home, shop, navigation, colors, and
+                  fonts. Step two is the homepage. You pick a section variant,
+                  including a video hero, and the preview in the middle is the
+                  public page.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    Click a heading in the preview and type. You do not have to
+                    hunt for the matching field in the panel. The preview uses
+                    the same public components as the live shop, so a product
+                    grid in the editor is the grid the customer gets.
+                  </p>
+                </div>
+              </div>
+              <ol
+                class="setup-sequence"
+                aria-label="Site editor steps"
+                data-motion="detail"
+              >
+                <li>
+                  <strong>Layout</strong><span>Width, corners, spacing</span>
+                </li>
+                <li>
+                  <strong>Home</strong><span>Sections and variants</span>
+                </li>
+                <li>
+                  <strong>Shop</strong><span>Catalog page</span>
+                </li>
+                <li>
+                  <strong>Navigation</strong><span>Menu, footer, bar</span>
+                </li>
+                <li>
+                  <strong>Colors</strong><span>Palette, then custom</span>
+                </li>
+                <li>
+                  <strong>Fonts</strong><span>Heading and body pair</span>
+                </li>
+              </ol>
+            </section>
+
+            <section class="case-section" id="product-pages" data-motion-group>
+              <h2 data-motion="title">
+                One product page,<br />three shops.
+              </h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  Theme, gallery, trust cards, quantity, and the button label
+                  are shop settings. Variants can be size pills, color swatches,
+                  or a length dropdown. The checkout verb can be order, request,
+                  or calculator.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    DEMO sells shirts and the button says add to request. Alcona
+                    sells fence panels and the button says add to calculator.
+                    Gymleco is dark, with feature cards and a specs table. I
+                    wrote one product page and let each shop dress it.
+                  </p>
+                  <p data-motion="copy">
+                    I moved all of my shops onto Sellphy. That saved 25+ hours
+                    of maintenance a month.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <div class="sellphy-product-strip">
+              <figure data-motion-group>
+                <a
+                  class="screen-window"
+                  href={`${assets}/product-demo.webp`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open the DEMO product page screenshot at full size"
+                  data-motion="cel"
+                >
+                  <div class="screen-bar" aria-hidden="true">
+                    <span></span><span></span><span></span><b>DEMO / apparel</b>
+                  </div>
+                  <img
+                    src={`${assets}/product-demo.webp`}
+                    alt="DEMO shop product page for a white linen shirt with color and size choices, add to request, trust cards, and a specifications table"
+                    width="1024"
+                    height="710"
+                    loading="lazy"
+                  />
+                </a>
+                <figcaption>
+                  <strong>DEMO</strong><span
+                    >Sizes, colors, add to request. Demo shop; select to
+                    enlarge.</span
+                  >
+                </figcaption>
+              </figure>
+              <figure data-motion-group>
+                <a
+                  class="screen-window"
+                  href={`${assets}/product-alcona.webp`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open the Alcona product page screenshot at full size"
+                  data-motion="cel"
+                >
+                  <div class="screen-bar" aria-hidden="true">
+                    <span></span><span></span><span></span><b>Alcona / fences</b
+                    >
+                  </div>
+                  <img
+                    src={`${assets}/product-alcona.webp`}
+                    alt="Alcona Solutions product page for a WPC fence panel with color swatches, a length dropdown, and an add to calculator button"
+                    width="1024"
+                    height="690"
+                    loading="lazy"
+                  />
+                </a>
+                <figcaption>
+                  <strong>Alcona</strong><span
+                    >Color swatches, length, calculator. Select to enlarge.</span
+                  >
+                </figcaption>
+              </figure>
+              <figure data-motion-group>
+                <a
+                  class="screen-window"
+                  href={`${assets}/product-gymleco.webp`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open the Gymleco product page screenshot at full size"
+                  data-motion="cel"
+                >
+                  <div class="screen-bar" aria-hidden="true">
+                    <span></span><span></span><span></span><b
+                      >Gymleco / equipment</b
+                    >
+                  </div>
+                  <img
+                    src={`${assets}/product-gymleco.webp`}
+                    alt="Gymleco dark product page for an ISO lateral bench press with quantity, add to request, feature cards, and specifications"
+                    width="1024"
+                    height="681"
+                    loading="lazy"
+                  />
+                </a>
+                <figcaption>
+                  <strong>Gymleco</strong><span
+                    >Dark theme, feature cards, specs. Select to enlarge.</span
+                  >
+                </figcaption>
+              </figure>
+            </div>
+
+            <section class="case-section" id="tours" data-motion-group>
+              <h2 data-motion="title">The first visit starts a tour.</h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  I wrote a tour for each of the main dashboard screens. First
+                  open starts it. The question mark in the header starts it
+                  again. Completion is stored per shop.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    Analytics is ten steps. The capture is step four, on the
+                    visits chart. The tour also covers the privacy model: no
+                    cookies, and unique visitors reset at midnight UTC. A person
+                    who visits each day of a week counts as seven.
+                  </p>
+                  <p data-motion="copy">
+                    The same pattern is on products, orders, the site editor,
+                    SEO, domains, and inventory. Bulgarian copy, because that is
+                    the language the product ships in.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <figure class="case-screen" data-motion-group>
+              <a
+                class="screen-window"
+                href={`${assets}/analytics-tour.webp`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open the Sellphy analytics tour screenshot at full size"
+                data-motion="cel"
+              >
+                <div class="screen-bar" aria-hidden="true">
+                  <span></span><span></span><span></span><b
+                    >Analytics / tour step 4 of 10</b
+                  >
+                </div>
+                <img
+                  src={`${assets}/analytics-tour.webp`}
+                  alt="Sellphy analytics page with a guided tour popup on step 4 of 10, explaining the visits chart"
+                  width="1024"
+                  height="662"
+                  loading="lazy"
+                />
+              </a>
+              <figcaption>
+                <strong>Step 4, the visits chart</strong><span
+                  >The tour names both lines, then the rest of the page. Demo
+                  capture; select to enlarge.</span
+                >
+              </figcaption>
+            </figure>
+
+            <section class="case-section" id="catalog" data-motion-group>
+              <h2 data-motion="title">
+                See the Google result before you publish.
+              </h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  Daily work is a dense table and a preview of how the page will
+                  look in search. I kept both in Bulgarian, which is the
+                  language the sellers use.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    The catalog is a table: thumbnail, status, price, discount,
+                    variants, sizes. Filters sit on top. Checkboxes open bulk
+                    edit.
+                  </p>
+                  <p data-motion="copy">
+                    Page Preview fetches a store URL and draws the Google
+                    snippet and the Open Graph card. It counts title and
+                    description length. A title under 30 characters gets an
+                    attention flag. The numbers in the screenshot are the demo
+                    shop's current metadata.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <div class="case-proof-pair sellphy-catalog-pair">
+              <figure data-motion-group>
+                <a
+                  class="screen-window"
+                  href={`${assets}/products.webp`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open the Sellphy products screenshot at full size"
+                  data-motion="cel"
+                >
+                  <div class="screen-bar" aria-hidden="true">
+                    <span></span><span></span><span></span><b>Products</b>
+                  </div>
+                  <img
+                    src={`${assets}/products.webp`}
+                    alt="Sellphy products table with thumbnails, published status, euro prices, discounts, variant counts, and size pills"
+                    width="1024"
+                    height="658"
+                    loading="lazy"
+                  />
+                </a>
+                <figcaption>
+                  <strong>Scan the catalog</strong><span
+                    >Name, price, category, status, discount. Demo capture;
+                    select to enlarge.</span
+                  >
+                </figcaption>
+              </figure>
+              <figure data-motion-group>
+                <a
+                  class="screen-window"
+                  href={`${assets}/seo-preview.webp`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open the Sellphy page preview screenshot at full size"
+                  data-motion="cel"
+                >
+                  <div class="screen-bar" aria-hidden="true">
+                    <span></span><span></span><span></span><b>Page preview</b>
+                  </div>
+                  <img
+                    src={`${assets}/seo-preview.webp`}
+                    alt="Sellphy page preview tool showing a Google search snippet, Open Graph cards, and an audit table flagging a short title and description"
+                    width="1024"
+                    height="660"
+                    loading="lazy"
+                  />
+                </a>
+                <figcaption>
+                  <strong>Check the snippet</strong><span
+                    >Google, Open Graph, and a length audit on the same screen.
+                    Demo capture; select to enlarge.</span
+                  >
+                </figcaption>
+              </figure>
+            </div>
+
+            <figure class="case-screen" data-motion-group>
+              <a
+                class="screen-window"
+                href={`${assets}/analytics.webp`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open the Sellphy analytics dashboard screenshot at full size"
+                data-motion="cel"
+              >
+                <div class="screen-bar" aria-hidden="true">
+                  <span></span><span></span><span></span><b
+                    >Analytics / demo data</b
+                  >
+                </div>
+                <img
+                  src={`${assets}/analytics.webp`}
+                  alt="Sellphy analytics dashboard with page view, visitor, cart, and order totals above a visits chart and a top pages table"
+                  width="1024"
+                  height="659"
+                  loading="lazy"
+                />
+              </a>
+              <figcaption>
+                <strong>Traffic without a cookie banner</strong><span
+                  >Page views, unique visitors, add-to-carts, and orders. All
+                  figures shown are demonstration data.</span
+                >
+              </figcaption>
+            </figure>
+
+            <section class="case-next" data-motion-group>
+              <div>
+                <h2 data-motion="title">
+                  Next up:<br /><span class="title-outline">Finance Me.</span>
+                </h2>
+                <p data-motion="copy">
+                  A smaller screen, a shared household, and a different kind of
+                  daily decision.
+                </p>
+              </div>
+              <a
+                class="button button-light"
+                href="/work/finance-me"
+                data-squash
+                data-motion="action">View Finance Me <ArrowIcon /></a
+              >
+            </section>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .sellphy-hero {
+    grid-template-columns: minmax(19rem, 0.72fr) minmax(0, 1.28fr);
+  }
+
+  .sellphy-stage {
+    min-width: 0;
+  }
+  .sellphy-stage figcaption {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .sellphy-stage figcaption span {
+    display: block;
+    color: #55534c;
+  }
+  .sellphy-case .screen-window > img {
+    aspect-ratio: auto;
+    height: auto;
+    filter: none;
+  }
+  .sellphy-case .screen-window {
+    border-color: #77736a;
+  }
+  .sellphy-stage .screen-window {
+    border-color: var(--ink);
+  }
+
+  .setup-sequence {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 3rem;
+    padding: 0;
+    list-style: none;
+    border-block: 2px solid var(--paper-light);
+  }
+
+  .setup-sequence li {
+    padding: 1.5rem 1rem;
+  }
+  .setup-sequence li + li {
+    border-left: 1px solid #77736a;
+  }
+  .setup-sequence li:nth-child(4) {
+    border-left: 0;
+  }
+  .setup-sequence li:nth-child(n + 4) {
+    border-top: 1px solid #77736a;
+  }
+  .setup-sequence strong {
+    display: block;
+    font: 600 1.1rem var(--font-display);
+  }
+  .setup-sequence span {
+    display: block;
+    margin-top: 0.4rem;
+    color: var(--smoke-light);
+  }
+  .sellphy-product-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    padding: clamp(2rem, 5vw, 4rem) 0 clamp(4rem, 8vw, 8rem);
+    border-bottom: 1px solid #4a4943;
+  }
+  .sellphy-product-strip figcaption {
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.9rem 0.15rem 0;
+    color: var(--smoke-light);
+  }
+  .sellphy-product-strip figcaption strong {
+    color: var(--paper-light);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+  }
+
+  .sellphy-catalog-pair {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .sellphy-catalog-pair figure:nth-child(2) {
+    padding-top: 0;
+  }
+  .sellphy-catalog-pair figcaption {
+    grid-template-columns: 0.35fr 0.65fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 1100px) {
+    .sellphy-hero {
+      grid-template-columns: 1fr;
+    }
+    .sellphy-hero .case-meta {
+      margin-top: 0;
+    }
+    .sellphy-stage {
+      max-width: 58rem;
+    }
+    .sellphy-product-strip {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .sellphy-catalog-pair figcaption {
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+    }
+    .setup-sequence {
+      grid-template-columns: 1fr;
+    }
+    .setup-sequence li {
+      padding-inline: 0;
+    }
+    .setup-sequence li + li,
+    .setup-sequence li:nth-child(4) {
+      border-left: 0;
+    }
+    .setup-sequence li + li,
+    .setup-sequence li:nth-child(n + 4) {
+      border-top: 1px solid #77736a;
+    }
+    .sellphy-stage figcaption {
+      font-size: 0.95rem;
+    }
+  }
+</style>

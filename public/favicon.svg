@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 58" role="img" aria-label="Ivaylo Atanassov">
+  <path
+    fill="#11110f"
+    stroke="#11110f"
+    stroke-width="2"
+    d="M29 3C44 3 55 14 55 29S44 55 29 55 3 44 3 29 14 3 29 3Z"
+  />
+  <path
+    fill="#faf7ed"
+    stroke="#faf7ed"
+    stroke-width="2.4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="M18 21c3-4 7-2 7 3 0 4-2 7-5 7s-5-6-2-10Zm17-1c4-3 7 0 6 5 0 4-3 7-6 6-3-2-3-8 0-11Z"
+  />
+  <path
+    fill="none"
+    stroke="#faf7ed"
+    stroke-width="2.4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="M17 36c7 8 18 9 26-1"
+  />
+</svg>

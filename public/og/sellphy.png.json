@@ -1,0 +1,7 @@
+{
+  "tool": "ffmpeg crop + scale",
+  "createdAt": "2026-09-03T08:33:00.000Z",
+  "sourceImage": "assets/generated/sellphy-shop.webp",
+  "operation": "Cropped the Sellphy illustration to the Open Graph 1200×630 frame, keeping the storefront character sealing a parcel.",
+  "dimensions": { "width": 1200, "height": 630 }
+}

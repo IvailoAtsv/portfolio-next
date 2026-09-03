@@ -3,6 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import StudioNav from '../../components/StudioNav.astro';
 import ArrowIcon from '../../components/ArrowIcon.astro';
 import FilmStatic from '../../components/FilmStatic.astro';
+import ProjectVideo from '../../components/ProjectVideo.astro';
+import CircleWords from '../../components/CircleWords.astro';
+import { pages } from '../../lib/site';
 
 const systemNodes = [
   {
@@ -48,34 +51,26 @@ const hub = systemNodes[0];
 const spokes = systemNodes.slice(1);
 ---
 
-<BaseLayout
-  title="HLP Labs case study — Ivaylo Atanassov"
-  description="How I designed and built a connected research-commerce product spanning storefront, knowledge, AI assistance, and operations."
-  image="/assets/projects/hlp/storefront-live.png"
->
+<BaseLayout page={pages.hlpLabs}>
   <div class="site-shell case-shell">
     <StudioNav />
 
     <main id="main-content">
       <article class="case-study">
-        <header class="case-hero">
+        <header class="case-hero" data-motion-group>
           <div class="case-heading">
-            <a class="pill-link back-link fade-up" style="--i: 0" href="/#top">
+            <a class="pill-link back-link" href="/#work">
               <ArrowIcon direction="left" /> Back to the reel
             </a>
-            <h1 class="hero-title">
-              <span class="title-line"
-                ><span class="pop" style="--i: 0">HLP</span></span
-              >
-              <span class="title-line title-outline"
-                ><span class="pop" style="--i: 1">Labs.</span></span
-              >
+            <h1 class="hero-title" data-motion="title">
+              <span class="title-line">HLP</span>
+              <span class="title-line title-outline">Labs.</span>
             </h1>
-            <p class="fade-up" style="--i: 1">
-              A research-commerce system designed to make a technical catalog
-              understandable and daily operations manageable.
+            <p data-motion="copy">
+              A technical storefront, a scientific reference library, and the
+              tools to run both. Designed and built as one product.
             </p>
-            <div class="case-actions fade-up" style="--i: 2">
+            <div class="case-actions" data-motion="action">
               <a
                 class="button button-dark"
                 href="https://www.hlplabs.com"
@@ -85,14 +80,21 @@ const spokes = systemNodes.slice(1);
               >
                 Visit the live site <ArrowIcon direction="external" />
               </a>
+              <a
+                class="button button-paper"
+                href="#checkout-motion"
+                data-squash
+              >
+                Watch the checkout <ArrowIcon direction="down" />
+              </a>
             </div>
           </div>
 
           <div class="hero-stage case-stage" data-loop>
             <div class="hero-cel cel-enter has-film">
               <img
-                src="/assets/generated/hlp-lab-scene.webp"
-                alt="A friendly vial character points at a microscope slide beside a glass display of organized samples"
+                src="/assets/generated/hlp-lab-scene-v2.webp"
+                alt="A friendly vial character points at a microscope slide beside a laboratory specimen cabinet"
                 width="1400"
                 height="1000"
                 fetchpriority="high"
@@ -131,49 +133,133 @@ const spokes = systemNodes.slice(1);
         </div>
 
         <div class="case-body">
-          <nav class="case-nav" aria-label="Case study sections">
-            <span>On this reel</span>
-            <a href="#brief">The brief</a>
-            <a href="#storefront">Public product</a>
-            <a href="#mobile">Mobile</a>
-            <a href="#knowledge">Connected knowledge</a>
-            <a href="#operations">Operations</a>
-            <a href="#decisions">Decisions</a>
+          <nav
+            class="case-nav"
+            aria-label="Case study sections"
+            data-motion-group
+          >
+            <span data-motion="detail" data-motion-order="0">On this reel</span>
+            <a href="#brief" data-motion="detail">The brief</a>
+            <a href="#checkout-motion" data-motion="detail"
+              >Checkout in motion</a
+            >
+            <a href="#storefront" data-motion="detail">Public product</a>
+            <a href="#mobile" data-motion="detail">Mobile</a>
+            <a href="#knowledge" data-motion="detail">Connected knowledge</a>
+            <a href="#operations" data-motion="detail">Operations</a>
+            <a href="#decisions" data-motion="detail">Decisions</a>
           </nav>
 
           <div class="case-content">
-            <section class="case-section case-opening" id="brief" data-reveal>
-              <h2>A storefront was only the visible half.</h2>
+            <section
+              class="case-section case-opening"
+              id="brief"
+              data-motion-group
+            >
+              <h2 data-motion="title">
+                A storefront was only the visible half.
+              </h2>
               <div class="case-columns">
-                <p class="case-lede">
+                <p class="case-lede" data-motion="copy">
                   HLP Labs needed to sell a technical catalog without flattening
                   it into a conventional shop. Products, scientific context,
                   guidance, and internal operations had to behave like one
                   product.
                 </p>
                 <div>
-                  <p>
+                  <p data-motion="copy">
                     The work combined a public commerce experience with an
                     encyclopedia, guides, a calculator, an AI assistant, search,
                     account and order flows, and an administrative surface for
                     running the catalog and content.
                   </p>
-                  <p>
-                    My role covered the experience and the implementation. That
-                    changed the questions from “what should this screen look
-                    like?” to “what information must travel through the whole
-                    system so this remains clear and operable?”
+                  <p data-motion="copy">
+                    I designed the customer-facing screens and built the systems
+                    behind them. A product needs a clear specification on the
+                    storefront, editable content in the back office, and a
+                    consistent identity wherever it appears.
                   </p>
                 </div>
               </div>
             </section>
 
+            <section
+              class="checkout-showcase case-section"
+              id="checkout-motion"
+              data-motion-group
+            >
+              <div class="checkout-story">
+                <h2 data-motion="title">A delivery inside a button.</h2>
+                <p class="case-lede" data-motion="copy">
+                  The parcel slides into the truck. The doors close. The road
+                  starts moving, and the truck pulls away. All of it happens
+                  inside the checkout action.
+                </p>
+                <p data-motion="copy">
+                  I built this as a sequence of connected states: the same
+                  parcel moves from the idle button into the trailer, so every
+                  movement follows the one before it. The surrounding order
+                  stays still while the button becomes the scene.
+                </p>
+                <figure class="checkout-closeup">
+                  <ProjectVideo
+                    src="/assets/projects/hlp/checkout-detail.mp4"
+                    poster="/assets/projects/hlp/checkout-detail-poster.png"
+                    label="Close-up of the parcel loading into the checkout truck and driving away"
+                    width={244}
+                    height={60}
+                  />
+                  <figcaption>
+                    The checkout animation, enlarged from the recording.
+                  </figcaption>
+                </figure>
+                <p class="checkout-detail-note">
+                  The implementation also handles repeat taps, cleans up its
+                  timers, and uses a simpler confirmation state when reduced
+                  motion is requested.
+                </p>
+              </div>
+              <figure class="checkout-recording" data-loop>
+                <div class="checkout-phone">
+                  <ProjectVideo
+                    src="/assets/projects/hlp/checkout-motion.mp4"
+                    poster="/assets/projects/hlp/checkout-poster.png"
+                    label="HLP Labs checkout animation in the original mobile recording"
+                    width={288}
+                    height={636}
+                  />
+                </div>
+                <span class="reel-seal checkout-seal" aria-hidden="true">
+                  <CircleWords
+                    id="checkout-seal-ring"
+                    words={['PACK', 'SHIP', 'CONFIRM']}
+                    separator="·"
+                    radius={43}
+                    size={120}
+                  >
+                    <circle class="seal-disc" slot="back" cx="60" cy="60" r="58"
+                    ></circle>
+                    <circle class="seal-dot" cx="60" cy="60" r="5"></circle>
+                  </CircleWords>
+                </span>
+                <figcaption>
+                  Original mobile recording with a demo order. The animation
+                  lives in the bottom action bar.
+                </figcaption>
+              </figure>
+            </section>
+
             <figure
               class="case-screen case-screen-wide"
               id="storefront"
-              data-reveal
+              data-motion-group
             >
-              <div class="screen-window has-film" data-loop>
+              <div
+                class="screen-window has-film"
+                data-loop
+                data-motion="cel"
+                data-motion-order="0"
+              >
                 <div class="screen-bar" aria-hidden="true">
                   <span></span><span></span><span></span><b>Public storefront</b
                   >
@@ -191,7 +277,9 @@ const spokes = systemNodes.slice(1);
                 >
               </div>
               <figcaption>
-                <strong>The public product</strong><span
+                <strong data-motion="detail" data-motion-order="1"
+                  >The public product</strong
+                ><span data-motion="copy" data-motion-order="2"
                   >The current experience leads with research context, then
                   gives the catalog a clear path into products and supporting
                   knowledge.</span
@@ -199,23 +287,29 @@ const spokes = systemNodes.slice(1);
               </figcaption>
             </figure>
 
-            <section class="case-section" data-reveal>
-              <h2>Clarity before conversion.</h2>
+            <section class="case-section" data-motion-group>
+              <h2 data-motion="title">Clarity before conversion.</h2>
               <div class="decision-row">
-                <div data-reveal style="--i: 0">
-                  <strong>Start with intent</strong><p>
+                <div data-motion-group>
+                  <strong data-motion="title">Start with intent</strong><p
+                    data-motion="copy"
+                  >
                     Navigation separates shopping, learning, and support without
                     turning them into isolated destinations.
                   </p>
                 </div>
-                <div data-reveal style="--i: 1">
-                  <strong>Keep context nearby</strong><p>
+                <div data-motion-group>
+                  <strong data-motion="title">Keep context nearby</strong><p
+                    data-motion="copy"
+                  >
                     Technical products connect to educational material so the
                     next useful answer is part of the journey.
                   </p>
                 </div>
-                <div data-reveal style="--i: 2">
-                  <strong>Design the small screen</strong><p>
+                <div data-motion-group>
+                  <strong data-motion="title">Design the small screen</strong><p
+                    data-motion="copy"
+                  >
                     Discovery, reading, and product evaluation remain deliberate
                     on mobile instead of becoming a compressed desktop page.
                   </p>
@@ -224,8 +318,13 @@ const spokes = systemNodes.slice(1);
             </section>
 
             <div class="case-proof-pair">
-              <figure data-reveal style="--i: 0">
-                <div class="screen-window has-film" data-loop>
+              <figure data-motion-group>
+                <div
+                  class="screen-window has-film"
+                  data-loop
+                  data-motion="cel"
+                  data-motion-order="0"
+                >
                   <div class="screen-bar" aria-hidden="true">
                     <span></span><span></span><span></span><b>Product detail</b>
                   </div>
@@ -239,14 +338,21 @@ const spokes = systemNodes.slice(1);
                   <FilmStatic />
                 </div>
                 <figcaption>
-                  <strong>Technical detail, kept legible</strong><span
+                  <strong data-motion="detail" data-motion-order="1"
+                    >Technical detail, kept legible</strong
+                  ><span data-motion="copy" data-motion-order="2"
                     >Selection, evidence, product context, and the primary
                     action share one controlled hierarchy.</span
                   >
                 </figcaption>
               </figure>
-              <figure data-reveal style="--i: 1">
-                <div class="screen-window has-film" data-loop>
+              <figure data-motion-group>
+                <div
+                  class="screen-window has-film"
+                  data-loop
+                  data-motion="cel"
+                  data-motion-order="0"
+                >
                   <div class="screen-bar" aria-hidden="true">
                     <span></span><span></span><span></span><b>Resource hub</b>
                   </div>
@@ -260,7 +366,9 @@ const spokes = systemNodes.slice(1);
                   <FilmStatic />
                 </div>
                 <figcaption>
-                  <strong>Learning is part of the product</strong><span
+                  <strong data-motion="detail" data-motion-order="1"
+                    >Learning is part of the product</strong
+                  ><span data-motion="copy" data-motion-order="2"
                     >Reference material, articles, answers, and tools sit beside
                     the catalog instead of behind it.</span
                   >
@@ -268,31 +376,37 @@ const spokes = systemNodes.slice(1);
               </figure>
             </div>
 
-            <section class="mobile-proof" id="mobile" data-reveal data-loop>
+            <section
+              class="mobile-proof"
+              id="mobile"
+              data-motion-group
+              data-loop
+            >
               <div class="mobile-copy">
-                <h2>Mobile is a product surface, not a resize.</h2>
-                <p>
-                  Long scientific content, product controls, navigation, and
-                  assistance all compete for a narrow viewport. The hierarchy
-                  was tuned for thumb reach, reading rhythm, and decisive next
-                  actions.
+                <h2 data-motion="title">Keep the next action in reach.</h2>
+                <p data-motion="copy">
+                  The mobile landing page gives the headline and product image
+                  their own space, then places two clear actions underneath.
+                  Catalog navigation stays compact, leaving the narrow screen
+                  for the content people came to see.
                 </p>
               </div>
-              <div class="phone-stage">
-                <div class="phone-shell">
-                  <div class="phone-screen has-film">
-                    <img
-                      src="/assets/projects/hlp/mobile-live.png"
-                      alt="HLP Labs mobile landing screen with a compact header, headline, product vial, carousel dots, and two stacked actions"
-                      width="390"
-                      height="844"
-                      loading="lazy"
-                    />
-                    <FilmStatic />
+              <div class="phone-stage" data-motion="cel">
+                <div class="phone-cluster">
+                  <div class="phone-shell">
+                    <div class="phone-screen has-film">
+                      <img
+                        src="/assets/projects/hlp/mobile-live.png"
+                        alt="HLP Labs mobile landing screen with a compact header, headline, product vial, carousel dots, and two stacked actions"
+                        width="390"
+                        height="844"
+                        loading="lazy"
+                      />
+                      <FilmStatic />
+                      <div class="thumb-arc" aria-hidden="true"></div>
+                    </div>
+                    <span class="thumb-label" aria-hidden="true">Thumb reach</span>
                   </div>
-                </div>
-                <div class="thumb-zone" aria-hidden="true">
-                  <span>Thumb reach</span>
                 </div>
               </div>
             </section>
@@ -300,10 +414,10 @@ const spokes = systemNodes.slice(1);
             <section
               class="case-section knowledge-section"
               id="knowledge"
-              data-reveal
+              data-motion-group
             >
-              <h2>One connected knowledge system.</h2>
-              <p class="case-lede">
+              <h2 data-motion="title">One connected knowledge system.</h2>
+              <p class="case-lede" data-motion="copy">
                 The catalog is easier to use when products are not dead ends.
                 HLP Labs connects discovery with structured explanations,
                 practical guides, and calculation tools.
@@ -311,21 +425,28 @@ const spokes = systemNodes.slice(1);
               <div
                 class="system-map"
                 data-loop
+                data-motion-group
                 role="img"
                 aria-label="Diagram: the catalog sits at the center and connects to the encyclopedia, guides, calculator, and AI assistant"
               >
-                <svg viewBox="0 0 1000 500" aria-hidden="true">
+                <svg
+                  viewBox="0 0 1000 500"
+                  aria-hidden="true"
+                  data-motion="line"
+                  data-motion-order="1"
+                >
                   {
-                    spokes.map((node) => (
+                    spokes.map((node, index) => (
                       <path
                         class="system-wire"
+                        style={`--wire-order: ${index};`}
                         d={`M${hub.x} ${hub.y} C ${(hub.x + node.x) / 2} ${hub.y}, ${(hub.x + node.x) / 2} ${node.y}, ${node.x} ${node.y}`}
                       />
                     ))
                   }
                 </svg>
                 {
-                  systemNodes.map((node) => (
+                  systemNodes.map((node, index) => (
                     <div
                       class:list={[
                         'system-node',
@@ -333,6 +454,8 @@ const spokes = systemNodes.slice(1);
                         node.tone && `node-tone-${node.tone}`,
                       ]}
                       style={`--x: ${node.x / 10}%; --y: ${node.y / 5}%;`}
+                      data-motion="stamp"
+                      data-motion-order={index === 0 ? 0 : index + 1}
                     >
                       <span>{node.label}</span>
                       <small>{node.note}</small>
@@ -342,8 +465,13 @@ const spokes = systemNodes.slice(1);
               </div>
             </section>
 
-            <figure class="case-screen assistant-proof" data-reveal>
-              <div class="screen-window has-film" data-loop>
+            <figure class="case-screen assistant-proof" data-motion-group>
+              <div
+                class="screen-window has-film"
+                data-loop
+                data-motion="cel"
+                data-motion-order="0"
+              >
                 <div class="screen-bar" aria-hidden="true">
                   <span></span><span></span><span></span><b
                     >Contextual assistant</b
@@ -359,7 +487,9 @@ const spokes = systemNodes.slice(1);
                 <FilmStatic />
               </div>
               <figcaption>
-                <strong>Answers stay inside the product</strong><span
+                <strong data-motion="detail" data-motion-order="1"
+                  >Answers stay inside the product</strong
+                ><span data-motion="copy" data-motion-order="2"
                   >The assistant extends support and discovery without sending
                   visitors out of the experience to assemble context themselves.</span
                 >
@@ -369,17 +499,24 @@ const spokes = systemNodes.slice(1);
             <section
               class="case-section operations-section"
               id="operations"
-              data-reveal
+              data-motion-group
             >
-              <h2>The back office belongs in the design.</h2>
-              <p class="case-lede">
+              <h2 data-motion="title">
+                The back office belongs in the design.
+              </h2>
+              <p class="case-lede" data-motion="copy">
                 A polished storefront becomes fragile if the people behind it
                 cannot keep products, content, and orders accurate. The
                 administrative surface was treated as part of the same product
                 system.
               </p>
-              <div class="operations-frame">
-                <div class="screen-window has-film" data-loop>
+              <div class="operations-frame" data-motion-group>
+                <div
+                  class="screen-window has-film"
+                  data-loop
+                  data-motion="cel"
+                  data-motion-order="0"
+                >
                   <div class="screen-bar" aria-hidden="true">
                     <span></span><span></span><span></span><b>Administration</b>
                   </div>
@@ -392,17 +529,29 @@ const spokes = systemNodes.slice(1);
                   />
                   <FilmStatic />
                 </div>
-                <div class="admin-callout callout-a" data-reveal style="--i: 0">
+                <div
+                  class="admin-callout callout-a"
+                  data-motion="stamp"
+                  data-motion-order="1"
+                >
                   <span>Catalog</span><p>
                     Products and taxonomy in one operational model.
                   </p>
                 </div>
-                <div class="admin-callout callout-b" data-reveal style="--i: 1">
+                <div
+                  class="admin-callout callout-b"
+                  data-motion="stamp"
+                  data-motion-order="2"
+                >
                   <span>Content</span><p>
                     Scientific resources connect back to the public journey.
                   </p>
                 </div>
-                <div class="admin-callout callout-c" data-reveal style="--i: 2">
+                <div
+                  class="admin-callout callout-c"
+                  data-motion="stamp"
+                  data-motion-order="3"
+                >
                   <span>Orders</span><p>
                     Commerce activity stays visible to the team running it.
                   </p>
@@ -413,56 +562,65 @@ const spokes = systemNodes.slice(1);
             <section
               class="case-section decisions-section"
               id="decisions"
-              data-reveal
+              data-motion-group
             >
-              <h2>What the work demonstrates.</h2>
+              <h2 data-motion="title">The decisions that hold it together.</h2>
               <div class="decision-ledger">
-                <div data-reveal style="--i: 0">
-                  <strong>Design the relationships</strong><p>
-                    The main artifact is not any single page. It is the
-                    connection between catalog, knowledge, assistance, and
-                    operations.
+                <div data-motion-group>
+                  <strong data-motion="title">Design the relationships</strong
+                  ><p data-motion="copy">
+                    A technical catalog raises questions. The encyclopedia,
+                    guides, calculator, and assistant give those questions a
+                    place inside the product journey.
                   </p>
                 </div>
-                <div data-reveal style="--i: 1">
-                  <strong>Make complexity legible</strong><p>
-                    Technical subject matter needs hierarchy and context, not
-                    simply more copy or more controls.
+                <div data-motion-group>
+                  <strong data-motion="title">Make complexity legible</strong><p
+                    data-motion="copy"
+                  >
+                    Product pages separate the image, specification, variant
+                    selector, and purchase action. Visitors can scan the
+                    essentials before reading the supporting material.
                   </p>
                 </div>
-                <div data-reveal style="--i: 2">
-                  <strong>Own both sides of the promise</strong><p>
-                    The public experience and the systems behind it were shaped
-                    together, reducing the distance between intent and
-                    implementation.
+                <div data-motion-group>
+                  <strong data-motion="title">Make content maintainable</strong
+                  ><p data-motion="copy">
+                    Catalog and scientific content have their own editing
+                    surfaces. Maintaining the storefront is part of the product,
+                    alongside browsing it.
                   </p>
                 </div>
-                <div data-reveal style="--i: 3">
-                  <strong>Ship evidence, not claims</strong><p>
-                    The result is a live product with real customer, content,
-                    commerce, and administrative surfaces.
+                <div data-motion-group>
+                  <strong data-motion="title"
+                    >Put craft at the point of action</strong
+                  ><p data-motion="copy">
+                    The checkout sequence gives a routine confirmation its own
+                    character. Its timing, repeat-tap guard, and reduced motion
+                    behavior belong to the same implementation.
                   </p>
                 </div>
               </div>
             </section>
 
-            <section class="case-next" data-reveal>
+            <section class="case-next" data-motion-group>
               <div>
-                <h2>
-                  <span class="title-line">Need this mix</span>
-                  <span class="title-line title-outline">on your team?</span>
+                <h2 data-motion="title">
+                  <span class="title-line">Next up:</span>
+                  <span class="title-line title-outline">Keep Up.</span>
                 </h2>
-                <p>
-                  I work best on products where experience quality and technical
-                  depth both matter.
+                <p data-motion="copy">
+                  A learning app where animation helps every answer feel like
+                  progress.
                 </p>
               </div>
               <a
-                class="button button-light button-large"
-                href="/#top"
+                class="button button-light"
+                href="/work/keep-up"
                 data-squash
+                data-motion="action"
               >
-                Back to the reel <ArrowIcon />
+                Explore Keep Up <ArrowIcon />
               </a>
             </section>
           </div>
@@ -471,3 +629,71 @@ const spokes = systemNodes.slice(1);
     </main>
   </div>
 </BaseLayout>
+
+<style>
+  .checkout-showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 288px;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+  .checkout-story > p {
+    margin-top: 1.5rem;
+    color: var(--smoke-light);
+    max-width: 60ch;
+  }
+  .checkout-story > .case-lede {
+    color: var(--paper-light);
+  }
+  .checkout-closeup {
+    margin-top: 2.5rem;
+    padding: 1rem;
+    border: 1px solid #6b675e;
+    border-radius: 14px;
+    background: #0b1b19;
+  }
+  .checkout-closeup :global(video) {
+    border-radius: 8px;
+  }
+  .checkout-showcase figcaption {
+    margin-top: 0.85rem;
+    color: var(--smoke-light);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+  .checkout-recording {
+    position: relative;
+  }
+  .checkout-phone {
+    border: 2px solid #6b675e;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .checkout-seal {
+    top: -0.55rem;
+    right: -0.85rem;
+    width: 6.75rem;
+    transform: rotate(-8deg);
+  }
+  .checkout-story .checkout-detail-note {
+    font-size: 1rem;
+  }
+  @media (max-width: 1100px) {
+    .checkout-showcase {
+      grid-template-columns: minmax(0, 1fr) 250px;
+      gap: 2rem;
+    }
+  }
+  @media (max-width: 700px) {
+    .checkout-showcase {
+      grid-template-columns: 1fr;
+    }
+    .checkout-recording {
+      width: min(100%, 288px);
+      justify-self: center;
+    }
+    .checkout-seal {
+      right: -0.35rem;
+    }
+  }
+</style>

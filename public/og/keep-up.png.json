@@ -1,0 +1,7 @@
+{
+  "tool": "ffmpeg crop + scale",
+  "createdAt": "2026-09-03T08:33:00.000Z",
+  "sourceImage": "assets/generated/keep-up-scene-v2.webp",
+  "operation": "Cropped the Keep Up illustration to the Open Graph 1200×630 frame, keeping the running flashcard character on the track.",
+  "dimensions": { "width": 1200, "height": 630 }
+}

@@ -3,38 +3,123 @@ import fredokaLatin from '@fontsource-variable/fredoka/files/fredoka-latin-wght-
 import barlow500 from '@fontsource/barlow-condensed/files/barlow-condensed-latin-500-normal.woff2?url';
 import barlow700 from '@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2?url';
 import '../styles/global.css';
+import '../styles/motion.css';
 import { ClientRouter } from 'astro:transitions';
+import {
+  jsonLdGraph,
+  ogImage,
+  pages,
+  site,
+  type OgType,
+  type PageMeta,
+} from '../lib/site';
 
 interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
+  ogType?: OgType;
+  page?: PageMeta;
 }
 
-const {
-  title = 'Ivaylo Atanassov — Product designer & full-stack developer',
-  description = 'I design and build digital products from first interaction to production system.',
-  image = '/assets/generated/hero-browser.webp',
-} = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const fallback = pages.home;
+const page = Astro.props.page;
+const title = Astro.props.title ?? page?.title ?? fallback.title;
+const description =
+  Astro.props.description ?? page?.description ?? fallback.description;
+const image = Astro.props.image ?? page?.image ?? fallback.image;
+const imageAlt = Astro.props.imageAlt ?? page?.imageAlt ?? fallback.imageAlt;
+const ogType = Astro.props.ogType ?? page?.ogType ?? fallback.ogType;
+
+const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonical = new URL(pathname, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
+const metaPage: PageMeta = page ?? {
+  title,
+  description,
+  path: pathname,
+  image,
+  imageAlt,
+  ogType,
+};
+const structuredData = jsonLdGraph(metaPage, canonical, imageUrl);
 ---
 
 <!doctype html>
-<html lang="en" transition:animate="none">
+<html lang={site.locale} transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#11110f" />
+    <meta name="author" content={site.name} />
+    <meta name="creator" content={site.name} />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta
+      name="googlebot"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta name="theme-color" content={site.themeColor} />
+    <meta name="msapplication-TileColor" content={site.themeColor} />
     <meta name="color-scheme" content="light" />
+    <meta name="application-name" content={site.name} />
+    <meta name="apple-mobile-web-app-title" content="Ivaylo" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <link rel="canonical" href={canonical} />
-    <meta property="og:type" content="website" />
+    <link rel="alternate" hreflang="en" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <link rel="author" href={`mailto:${site.email}`} />
+    <link rel="me" href={`mailto:${site.email}`} />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link
+      rel="mask-icon"
+      href="/safari-pinned-tab.svg"
+      color={site.themeColor}
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={site.ogLocale} />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.site)} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <title>{title}</title>
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:secure_url" content={imageUrl} />
+    <meta property="og:image:type" content={ogImage.type} />
+    <meta property="og:image:width" content={String(ogImage.width)} />
+    <meta property="og:image:height" content={String(ogImage.height)} />
+    <meta property="og:image:alt" content={imageAlt} />
+    {
+      ogType === 'article' && (
+        <>
+          <meta property="article:author" content={site.name} />
+          <meta property="article:section" content="Work" />
+        </>
+      )
+    }
+
+    <meta name="twitter:card" content={site.twitterCard} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
+
     <ClientRouter fallback="swap" />
     <link
       rel="preload"
@@ -62,7 +147,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body id="top">
-    <!-- DIRECTION CONTRACT — THESIS: Refuse the generic portfolio grid; present shipped products as a performed animation reel where design and engineering share the same stage. OWN-WORLD: warm paper, confident ink, gray wash, object-led rubber-hose characters, theatrical poster staging, wavy frames, bold outlined lettering, a film-gate transition, and physical cel motion without hover zooms. STORY: a hiring visitor recognizes dual craft, opens the HLP Labs proof, then contacts Ivaylo. FIRST VIEWPORT: compact studio mark and pill nav; huge two-line promise left; animated maker scene right; concise copy, two actions, three proof seals, and a wavy curtain edge. FORM: rubber-hose challenger, seed b67eb7fd. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance -->
+    <!-- DIRECTION CONTRACT - THESIS: Refuse the generic portfolio grid; present shipped products as a performed animation reel where design and engineering share the same stage. OWN-WORLD: warm paper, confident ink, gray wash, object-led rubber-hose characters, theatrical poster staging, wavy frames, bold outlined lettering, a film-gate transition, and physical cel motion without hover zooms. STORY: a hiring visitor recognizes dual craft, opens the HLP Labs proof, then contacts Ivaylo. FIRST VIEWPORT: compact studio mark and pill nav; huge two-line promise left; animated maker scene right; concise copy, two actions, three proof seals, and a wavy curtain edge. FORM: rubber-hose challenger, seed b67eb7fd. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance -->
     <a class="skip-link" href="#main-content">Skip to the work</a>
 
     <div

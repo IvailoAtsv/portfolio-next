@@ -1,0 +1,7 @@
+{
+  "tool": "ffmpeg crop + scale",
+  "createdAt": "2026-09-03T08:33:00.000Z",
+  "sourceImage": "assets/generated/hlp-lab-scene-v2.webp",
+  "operation": "Cropped the HLP Labs illustration to the Open Graph 1200×630 frame, keeping the vial character, microscope and specimen cabinet.",
+  "dimensions": { "width": 1200, "height": 630 }
+}
