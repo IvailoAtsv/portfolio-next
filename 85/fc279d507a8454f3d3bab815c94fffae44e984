@@ -1,0 +1,123 @@
+.impeccable/surfaces/src-pages-work-keep-up-astro.md
+  s_691186bdcaf6d7::t_d2eb8cdc4b15ab 1-28
+docs/project-evidence-keep-up.md
+  s_e8d1d02c8f5d9a::t_d7651a6b08866f 1-76
+public/assets/projects/hlp/checkout-detail-poster.png.json
+  s_e8d1d02c8f5d9a::t_ab1787119fd46b 1-3
+public/assets/projects/hlp/checkout-poster.png.json
+  s_e8d1d02c8f5d9a::t_fe3cbb128bc7cd 1-3
+public/assets/projects/keep-up/mascot-correct.png.json
+  s_e8d1d02c8f5d9a::t_8e8ef5221fd492 1-3
+public/assets/projects/keep-up/mascot-idle.png.json
+  s_e8d1d02c8f5d9a::t_16977755eb8eaa 1-3
+public/assets/projects/keep-up/mascot-thinking.png.json
+  s_e8d1d02c8f5d9a::t_b6aedca74e3b9f 1-3
+public/assets/projects/keep-up/mascot-wrong.png.json
+  s_e8d1d02c8f5d9a::t_269c791d0763c8 1-3
+public/assets/projects/keep-up/progress-reward-poster.webp.json
+  s_e8d1d02c8f5d9a::t_47756bc09b58ca 1-3
+public/assets/projects/keep-up/quiz-feedback-poster.webp.json
+  s_e8d1d02c8f5d9a::t_61d452b75f7f5c 1-3
+public/assets/projects/keep-up/tap-code-poster.webp.json
+  s_e8d1d02c8f5d9a::t_21f22eded6303a 1-3
+public/assets/projects/sellphy/analytics-tour.webp.json
+  s_b5b83e9ba374ce::t_ef8fc487c15736 1-7
+public/assets/projects/sellphy/analytics.webp.json
+  s_b5b83e9ba374ce::t_7078edcfb45462 1-7
+public/assets/projects/sellphy/builder.webp.json
+  s_b5b83e9ba374ce::t_5b11cd6053aca4 1-7
+public/assets/projects/sellphy/catalog.webp.json
+  s_e8d1d02c8f5d9a::t_fe951bd4023ede 1-5
+public/assets/projects/sellphy/dashboard.webp.json
+  s_e8d1d02c8f5d9a::t_3eb5ce247c5e21 1-5
+public/assets/projects/sellphy/product-alcona.webp.json
+  s_b5b83e9ba374ce::t_2e114aac9a7bbc 1-7
+public/assets/projects/sellphy/product-demo.webp.json
+  s_b5b83e9ba374ce::t_907c487e716886 1-7
+public/assets/projects/sellphy/product-gymleco.webp.json
+  s_b5b83e9ba374ce::t_6eb1acb795c25d 1-7
+public/assets/projects/sellphy/products.webp.json
+  s_b5b83e9ba374ce::t_0c5f36ca972069 1-7
+public/assets/projects/sellphy/seo-preview.webp.json
+  s_b5b83e9ba374ce::t_0f43c8a8d444f8 1-7
+public/assets/projects/sellphy/site-preview.webp.json
+  s_e8d1d02c8f5d9a::t_3e7d49947b5b13 1-5
+public/assets/projects/sellphy/storefront-product.webp.json
+  s_e8d1d02c8f5d9a::t_b2b7b9e4b33337 1-5
+src/components/ProjectVideo.astro
+  s_e8d1d02c8f5d9a::t_ca30a66181b2bc 1-143
+src/scripts/motion-cues.ts
+  s_d4d14637a0ba21::t_5abce28184fb42 1-96
+src/scripts/page-interactions.ts
+  s_d4d14637a0ba21::t_4d390e2aee1866 2,14,18,24
+docs/project-evidence-finance.md
+  s_01e5017ed25768::t_3c6f2f4d4c34ce 1-27
+public/assets/projects/keep-up/mascot-sprites.json
+  s_3faf820d3b5197::t_ceb74810e51cb7 1-50
+src/components/StudioNav.astro
+  s_7e4ec19ded91bf::t_17d1b91d32754d 38,57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "85fc279d507a8454f3d3bab815c94fffae44e984",
+  "prompts": {},
+  "sessions": {
+    "s_01e5017ed25768": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0664b-015e-7c53-80b0-04e9c3ecbc39",
+        "model": "unknown"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_3faf820d3b5197": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0664a-92b4-7551-b300-c88007b03a27",
+        "model": "unknown"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_691186bdcaf6d7": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "f3e5674c-f2f6-45fd-ac53-7697c3cddd55",
+        "model": "grok-4.6"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_7e4ec19ded91bf": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0665f-ecbf-78a1-b1cb-c8f894e0da8e",
+        "model": "unknown"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_b5b83e9ba374ce": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "21bf3503-60a8-4b88-a5ac-1c8623d8b498",
+        "model": "grok-4.6"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_d4d14637a0ba21": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06645-dad3-7270-8057-0daa9a983b97",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_e8d1d02c8f5d9a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a06645-fae9-7e23-82ef-acdf7451a558",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    }
+  }
+}
