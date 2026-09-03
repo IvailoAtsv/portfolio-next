@@ -69,7 +69,9 @@ const spokes = systemNodes.slice(1);
             <p data-motion="copy">
               HLP Labs is a Bulgarian online shop for research peptides. I
               designed and built the storefront, the reference library that sits
-              beside it, and the admin panel the team uses to run both.
+              beside it, the admin panel the team runs both from, and the SEO
+              system that grew it. The day Google indexed the rewritten pages,
+              the site matched its previous month of organic reach in 24 hours.
             </p>
             <div class="case-actions" data-motion="action">
               <a
@@ -81,12 +83,8 @@ const spokes = systemNodes.slice(1);
               >
                 Visit the live site <ArrowIcon direction="external" />
               </a>
-              <a
-                class="button button-paper"
-                href="#checkout-motion"
-                data-squash
-              >
-                Watch the order button <ArrowIcon direction="down" />
+              <a class="button button-paper" href="#growth" data-squash>
+                How the traffic grew <ArrowIcon direction="down" />
               </a>
             </div>
           </div>
@@ -115,15 +113,15 @@ const spokes = systemNodes.slice(1);
             </div>
             <div data-reveal style="--i: 1">
               <dt>Product</dt><dd>
-                Online shop<br />Reference library · Admin
+                Online shop<br />Library · Admin · SEO system
               </dd>
             </div>
             <div data-reveal style="--i: 2">
               <dt>System</dt><dd>Next.js · React<br />TypeScript · MongoDB</dd>
             </div>
             <div data-reveal style="--i: 3">
-              <dt>Market</dt><dd>
-                Bulgarian-language shop<br />Ships across Europe
+              <dt>Outcome</dt><dd>
+                A month of reach in 24 hours<br />#1 for many peptide queries
               </dd>
             </div>
           </dl>
@@ -145,15 +143,52 @@ const spokes = systemNodes.slice(1);
           >
             <span data-motion="detail" data-motion-order="0">On this reel</span>
             <a href="#brief" data-motion="detail">What it is</a>
+            <a href="#growth" data-motion="detail">Growth</a>
             <a href="#storefront" data-motion="detail">The storefront</a>
             <a href="#mobile" data-motion="detail">On a phone</a>
             <a href="#checkout-motion" data-motion="detail">The order button</a>
             <a href="#knowledge" data-motion="detail">The library</a>
+            <a href="#instagram" data-motion="detail">Instagram</a>
             <a href="#operations" data-motion="detail">The admin panel</a>
             <a href="#decisions" data-motion="detail">Decisions</a>
           </nav>
 
           <div class="case-content">
+            <dl
+              class="hlp-stats"
+              aria-label="What the SEO and content systems did for HLP Labs"
+              data-motion-group
+            >
+              <div data-motion="detail">
+                <dt>24h</dt>
+                <dd>
+                  to match a full month of organic reach, counted from the day
+                  Google indexed the rewritten pages.
+                </dd>
+              </div>
+              <div data-motion="detail">
+                <dt>#1</dt>
+                <dd>
+                  for many peptide queries, above the largest shops in the
+                  Bulgarian market.
+                </dd>
+              </div>
+              <div data-motion="detail">
+                <dt>7</dt>
+                <dd>
+                  parts to the SEO system, from reading the studies to watching
+                  the rankings. All of it runs without a person.
+                </dd>
+              </div>
+              <div data-motion="detail">
+                <dt>0</dt>
+                <dd>
+                  unsourced claims on Instagram. Every finding on a slide stays
+                  linked to the study it came from.
+                </dd>
+              </div>
+            </dl>
+
             <section
               class="case-section case-opening"
               id="brief"
@@ -174,8 +209,10 @@ const spokes = systemNodes.slice(1);
                     encyclopedia, a blog of how-to guides, an FAQ, a dilution
                     calculator, an AI assistant, search, accounts and order
                     history. Behind it is an admin panel for the catalog and all
-                    of that content. Everything is in Bulgarian, because that is
-                    where the customers are.
+                    of that content, and two AI systems: one that keeps the
+                    pages ranking, one that turns studies into Instagram posts.
+                    Everything is in Bulgarian, because that is where the
+                    customers are.
                   </p>
                   <p data-motion="copy">
                     I designed the screens and built the system. That includes
@@ -186,6 +223,90 @@ const spokes = systemNodes.slice(1);
                   </p>
                 </div>
               </div>
+            </section>
+
+            <section
+              class="case-section growth-section"
+              id="growth"
+              data-motion-group
+            >
+              <h2 data-motion="title">A month of reach in a day.</h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  Before the rewrite, HLP Labs collected a month of organic
+                  visits in a month. The day Google indexed the new pages, it
+                  collected the same number in 24 hours. For many peptide
+                  queries the site now sits at position one, above the biggest
+                  shops in the Bulgarian market.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    The pages kept their shape. What changed is what is on them.
+                    Every product page now carries copy backed by the studies, a
+                    title and description written for the query people actually
+                    type, an FAQ, structured data with the live price and stock,
+                    and internal links to the encyclopedia entry and the guide
+                    that answer the next question.
+                  </p>
+                  <p data-motion="copy">
+                    None of that was done by hand. I built an SEO system in
+                    seven parts that does it, and it keeps going after the page
+                    is live: rankings, indexed pages and organic traffic are
+                    tracked, so a page that slips gets sent back through the
+                    loop.
+                  </p>
+                </div>
+              </div>
+              <ol
+                class="seo-pipeline"
+                aria-label="The seven parts of the SEO system"
+                data-motion="detail"
+              >
+                <li>
+                  <strong>Research and content</strong><span
+                    >Reads the studies and the existing product information,
+                    finds the topics nobody has covered, and rewrites product
+                    copy with evidence behind each claim.</span
+                  >
+                </li>
+                <li>
+                  <strong>Keywords</strong><span
+                    >Maps search terms to products and stops two pages from
+                    competing for the same term.</span
+                  >
+                </li>
+                <li>
+                  <strong>On-page</strong><span
+                    >Writes page titles, meta descriptions, headings, FAQs,
+                    image text and internal links.</span
+                  >
+                </li>
+                <li>
+                  <strong>Technical</strong><span
+                    >Manages canonical URLs, sitemap entries, indexability and
+                    server-rendered content, so Google reads the same page a
+                    customer does.</span
+                  >
+                </li>
+                <li>
+                  <strong>Structured data</strong><span
+                    >Generates Product, Offer or AggregateOffer schema with the
+                    correct price, currency, availability and variants.</span
+                  >
+                </li>
+                <li>
+                  <strong>Validation</strong><span
+                    >Checks the rendered HTML and the JSON-LD for errors before
+                    the page is submitted for reindexing.</span
+                  >
+                </li>
+                <li>
+                  <strong>Monitoring</strong><span
+                    >Tracks rankings, indexed pages and organic traffic, and
+                    flags weak pages so they can be updated again.</span
+                  >
+                </li>
+              </ol>
             </section>
 
             <figure
@@ -511,6 +632,64 @@ const spokes = systemNodes.slice(1);
             </figure>
 
             <section
+              class="case-section instagram-section"
+              id="instagram"
+              data-motion-group
+            >
+              <h2 data-motion="title">
+                A study goes in. A carousel comes out.
+              </h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  The same evidence feeds Instagram. The content flow takes
+                  scientific studies and product research as input, pulls out
+                  the findings worth sharing, and turns them into a carousel, a
+                  caption and a set of source notes.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    Each claim stays connected to the study it came from, all
+                    the way to the finished slide. For a shop whose customers
+                    read papers, that is the rule that makes the posts worth
+                    anything: nothing on a slide is unsourced, and the source
+                    notes say where each number came from.
+                  </p>
+                  <p data-motion="copy">
+                    The finished post is saved for review. Someone on the team
+                    reads it and decides whether it goes out. The AI does the
+                    reading and the drafting. It does not publish.
+                  </p>
+                </div>
+              </div>
+              <ol
+                class="content-flow"
+                aria-label="Instagram content flow"
+                data-motion="detail"
+              >
+                <li>
+                  <strong>Studies in</strong><span
+                    >Papers and product research, as published</span
+                  >
+                </li>
+                <li>
+                  <strong>Findings out</strong><span
+                    >Each one still tied to its source</span
+                  >
+                </li>
+                <li>
+                  <strong>Post drafted</strong><span
+                    >Carousel, caption and source notes</span
+                  >
+                </li>
+                <li>
+                  <strong>Held for review</strong><span
+                    >A person approves before it is published</span
+                  >
+                </li>
+              </ol>
+            </section>
+
+            <section
               class="case-section operations-section"
               id="operations"
               data-motion-group
@@ -579,7 +758,7 @@ const spokes = systemNodes.slice(1);
               id="decisions"
               data-motion-group
             >
-              <h2 data-motion="title">Four decisions I'd make again.</h2>
+              <h2 data-motion="title">Five decisions I'd make again.</h2>
               <div class="decision-ledger">
                 <div data-motion-group>
                   <strong data-motion="title"
@@ -617,6 +796,17 @@ const spokes = systemNodes.slice(1);
                     repeat taps, timer cleanup, a reduced-motion fallback.
                   </p>
                 </div>
+                <div data-motion-group>
+                  <strong data-motion="title"
+                    >Every claim keeps its source</strong
+                  ><p data-motion="copy">
+                    The SEO system rewrites product copy from studies and the
+                    Instagram flow builds slides from them. In both, a finding
+                    stays attached to the paper it came from, a page is
+                    validated before it is resubmitted to Google, and a post
+                    waits for a person before it goes out.
+                  </p>
+                </div>
               </div>
             </section>
 
@@ -648,6 +838,108 @@ const spokes = systemNodes.slice(1);
 </BaseLayout>
 
 <style>
+  .hlp-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0 0 clamp(3.5rem, 7vw, 7rem);
+    border-block: 2px solid var(--paper-light);
+  }
+  .hlp-stats div {
+    padding: 1.5rem 1rem;
+  }
+  .hlp-stats div + div {
+    border-left: 1px solid #77736a;
+  }
+  .hlp-stats dt {
+    font: 700 clamp(2.4rem, 3.6vw, 3.4rem) / 1 var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--paper-light);
+  }
+  .hlp-stats dd {
+    margin: 0.7rem 0 0;
+    max-width: 24ch;
+    color: var(--smoke-light);
+    line-height: 1.4;
+  }
+
+  .seo-pipeline {
+    counter-reset: seo-step;
+    margin: 3rem 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--paper-light);
+  }
+  .seo-pipeline li {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(11rem, 0.3fr) minmax(0, 1fr);
+    gap: 0 1.5rem;
+    align-items: baseline;
+    padding: 1.15rem 0;
+    border-bottom: 1px solid #77736a;
+    counter-increment: seo-step;
+  }
+  .seo-pipeline li::before {
+    content: counter(seo-step, decimal-leading-zero);
+    font: 700 1.05rem var(--font-display);
+    color: var(--smoke-light);
+    letter-spacing: 0.04em;
+  }
+  .seo-pipeline strong {
+    font: 600 1.1rem var(--font-display);
+    color: var(--paper-light);
+  }
+  .seo-pipeline span {
+    color: var(--smoke-light);
+    line-height: 1.45;
+  }
+
+  .content-flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 3rem 0 0;
+    padding: 0;
+    list-style: none;
+    border-block: 2px solid var(--paper-light);
+  }
+  .content-flow li {
+    position: relative;
+    padding: 1.5rem 1.75rem 1.5rem 1rem;
+  }
+  .content-flow li + li {
+    border-left: 1px solid #77736a;
+  }
+  .content-flow li + li::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -0.45rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-top: 2px solid var(--paper-light);
+    border-right: 2px solid var(--paper-light);
+    background: var(--ink);
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .content-flow strong {
+    display: block;
+    font: 600 1.1rem var(--font-display);
+    color: var(--paper-light);
+  }
+  .content-flow span {
+    display: block;
+    margin-top: 0.4rem;
+    color: var(--smoke-light);
+    line-height: 1.4;
+  }
+
+  .decisions-section .decision-ledger > div:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    min-height: 0;
+  }
+  .decisions-section .decision-ledger > div:last-child:nth-child(odd) p {
+    max-width: 68ch;
+  }
+
   .checkout-showcase {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 288px;
@@ -696,12 +988,50 @@ const spokes = systemNodes.slice(1);
     font-size: 1rem;
   }
   @media (max-width: 1100px) {
+    .hlp-stats,
+    .content-flow {
+      grid-template-columns: 1fr 1fr;
+    }
+    .hlp-stats div:nth-child(3),
+    .content-flow li:nth-child(3) {
+      border-left: 0;
+    }
+    .hlp-stats div:nth-child(n + 3),
+    .content-flow li:nth-child(n + 3) {
+      border-top: 1px solid #77736a;
+    }
+    .content-flow li:nth-child(3)::before {
+      display: none;
+    }
     .checkout-showcase {
       grid-template-columns: minmax(0, 1fr) 250px;
       gap: 2rem;
     }
   }
   @media (max-width: 700px) {
+    .hlp-stats,
+    .content-flow {
+      grid-template-columns: 1fr;
+    }
+    .hlp-stats div,
+    .content-flow li {
+      padding-inline: 0;
+    }
+    .hlp-stats div + div,
+    .content-flow li + li {
+      border-left: 0;
+      border-top: 1px solid #77736a;
+    }
+    .content-flow li + li::before {
+      display: none;
+    }
+    .seo-pipeline li {
+      grid-template-columns: 2.5rem minmax(0, 1fr);
+      row-gap: 0.35rem;
+    }
+    .seo-pipeline span {
+      grid-column: 2;
+    }
     .checkout-showcase {
       grid-template-columns: 1fr;
     }

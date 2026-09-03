@@ -47,7 +47,7 @@ export const pages = {
   hlpLabs: {
     title: 'HLP Labs - Research peptide shop | Ivaylo Atanassov',
     description:
-      'How I designed and built HLP Labs: a Bulgarian shop for research peptides, with a reference library, an AI assistant, and the admin panel that runs both.',
+      'How I designed and built HLP Labs: a Bulgarian research peptide shop with a reference library, an AI assistant, and a seven-part SEO system that matched a month of organic reach in 24 hours and ranks first for many queries.',
     path: '/work/hlp-labs',
     image: '/og/hlp-labs.png',
     imageAlt:
