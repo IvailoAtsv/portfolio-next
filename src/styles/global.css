@@ -383,7 +383,7 @@ ol {
   color: var(--ink);
   text-decoration: none;
   transform-origin: 35% 100%;
-  transition: transform 320ms var(--ease-out);
+  transition: transform 340ms var(--ease-snap);
 }
 
 .studio-mark:hover {
