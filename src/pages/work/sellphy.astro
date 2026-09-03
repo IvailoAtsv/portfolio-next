@@ -21,11 +21,12 @@ const assets = '/assets/projects/sellphy';
               Sellphy<span class="title-outline">.</span>
             </h1>
             <p data-motion="copy">
-              Sellphy is a shop platform I designed and built. A seller opens a
-              storefront in six guided steps, runs products, orders and content
-              from one dashboard, and gets pages that load fast on a small
-              server. Shops go live about 70% faster than on comparable
-              platforms, and serving them from a VPS cut my hosting bill by 83%.
+              Sellphy is a shop platform I designed and built. A seller enters
+              their company details, adds their products, walks through six
+              steps, and has a working shop with checkout, legal pages and a
+              domain. There is no agency in the middle and nothing to install.
+              Shops go live about 70% faster than on comparable platforms, and
+              serving them from a small VPS cut my hosting bill by 83%.
             </p>
             <div class="case-actions" data-motion="action">
               <a class="button button-dark" href="#builder" data-squash>
@@ -100,6 +101,7 @@ const assets = '/assets/projects/sellphy';
             <a href="#dashboard">The dashboard</a>
             <a href="#ai">AI flows</a>
             <a href="#tours">Tours</a>
+            <a href="#ux">Finding things</a>
             <a href="#static">Hosting</a>
           </nav>
 
@@ -147,20 +149,23 @@ const assets = '/assets/projects/sellphy';
               <h2 data-motion="title">A shop in six steps.</h2>
               <div class="case-columns">
                 <p class="case-lede" data-motion="copy">
-                  The site editor walks a new seller through layout, homepage,
-                  shop page, navigation, colors and fonts. That is the whole
-                  setup. There is no theme to buy and no plugin to find, which
-                  is why a shop on Sellphy goes live about 70% faster than on
-                  comparable platforms.
+                  Company details and products go in first. Then the site editor
+                  walks the seller through layout, homepage, shop page,
+                  navigation, colors and fonts, and that is the whole setup.
+                  There is no theme to buy and no plugin to find, which is why a
+                  shop on Sellphy goes live about 70% faster than on comparable
+                  platforms.
                 </p>
                 <div>
                   <p data-motion="copy">
                     Most of the work is in the homepage step: each section has a
-                    handful of variants, including a video hero, and the preview
-                    in the middle is rendered with the same components as the
-                    live shop. You can click a heading in the preview and type
-                    straight into it. A product grid in the editor is the grid
-                    the customer will see.
+                    handful of variants, including a video hero. The preview in
+                    the middle is rendered with the same components as the live
+                    shop, so the page a seller approves is the page the customer
+                    gets. You can click a heading in the preview and type
+                    straight into it instead of finding the matching field in
+                    the side panel. A product grid in the editor is the grid the
+                    customer will see.
                   </p>
                   <p data-motion="copy">
                     When the six steps are done the shop is live on a
@@ -323,7 +328,8 @@ const assets = '/assets/projects/sellphy';
                   Products, orders, inventory, promo codes, analytics, custom
                   pages, the blog, the site editor, SEO tools and domains all
                   live in one dashboard. It is in Bulgarian, because that is the
-                  language the sellers work in.
+                  language the sellers work in, and it assumes no training,
+                  because most sellers arrive with none.
                 </p>
                 <div>
                   <p data-motion="copy">
@@ -600,6 +606,71 @@ const assets = '/assets/projects/sellphy';
               </figcaption>
             </figure>
 
+            <section class="case-section" id="ux" data-motion-group>
+              <h2 data-motion="title">Nobody has to learn the menu.</h2>
+              <div class="case-columns">
+                <p class="case-lede" data-motion="copy">
+                  One shortcut opens search from any dashboard screen. A seller
+                  types what they are after and gets the exact place it lives:
+                  the order mode toggle inside Shop features, the orders and
+                  revenue block inside Analytics, the order list itself. Enter
+                  opens it. Nobody has to remember which menu a setting is
+                  under.
+                </p>
+                <div>
+                  <p data-motion="copy">
+                    Bulgarian sellers often have the keyboard in Latin mode, so
+                    the search reads both alphabets. In the capture the seller
+                    typed porachki and the results are for Поръчки, orders, with
+                    the matched letters marked. Each hit lists its sub-sections,
+                    so the seller lands on the part of the page they wanted
+                    rather than the top of it.
+                  </p>
+                  <p data-motion="copy">
+                    I made the same trade everywhere in the dashboard: fewer
+                    clicks and less to remember. A tour explains a screen once,
+                    and after that search means nobody has to keep a map of the
+                    menu in their head. The site editor lets you type into the
+                    page instead of finding the field for it. The products table
+                    lets you tick rows and edit them together. A seller with a
+                    shop to run notices those things before they notice a
+                    feature list.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <figure class="case-screen sellphy-search-screen" data-motion-group>
+              <a
+                class="screen-window"
+                href={`${assets}/command-search.webp`}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open the Sellphy dashboard search screenshot at full size"
+                data-motion="cel"
+              >
+                <div class="screen-bar" aria-hidden="true">
+                  <span></span><span></span><span></span><b
+                    >Dashboard / search</b
+                  >
+                </div>
+                <img
+                  src={`${assets}/command-search.webp`}
+                  alt="Sellphy dashboard search with porachki typed in Latin letters, showing Bulgarian results for orders grouped under Orders, Shop features and Analytics with matched letters highlighted"
+                  width="922"
+                  height="661"
+                  loading="lazy"
+                />
+              </a>
+              <figcaption>
+                <strong>Latin in, Cyrillic out</strong><span
+                  >porachki, typed in Latin letters, matched against the
+                  Bulgarian labels for orders. Each hit lists its sub-sections,
+                  and Enter opens the top one. Demo shop; select to enlarge.</span
+                >
+              </figcaption>
+            </figure>
+
             <section class="case-section" id="static" data-motion-group>
               <h2 data-motion="title">Fast pages, small bill.</h2>
               <div class="case-columns">
@@ -755,6 +826,10 @@ const assets = '/assets/projects/sellphy';
     color: var(--paper-light);
     font-family: var(--font-display);
     font-size: 1.05rem;
+  }
+
+  .sellphy-search-screen .screen-window {
+    max-width: 57.75rem;
   }
 
   .sellphy-stacked-pair {
