@@ -46,17 +46,25 @@ const openGate = async (signal: AbortSignal) => {
   gate.dataset.state = 'open';
 };
 
+const gateAnimations = () => {
+  try {
+    return gate.getAnimations({ subtree: true });
+  } catch {
+    return typeof gate.getAnimations === 'function' ? gate.getAnimations() : [];
+  }
+};
+
 const coverPage = async (signal: AbortSignal) => {
   if (reducedMotion.matches) return;
   // Read the real CSS transitions, including reversals of a partial opening.
   // This starts alongside the fetch and never delays its start.
   await afterPaint();
   if (signal.aborted) return;
-  await Promise.allSettled(
-    gate
-      .getAnimations({ subtree: true })
-      .map((animation) => animation.finished),
-  );
+  const closeMs = gateMs('--gate-close', 420);
+  await Promise.race([
+    Promise.allSettled(gateAnimations().map((animation) => animation.finished)),
+    wait(closeMs + 80, signal),
+  ]);
   if (signal.aborted) return;
   await wait(gateMs('--gate-hold-nav', 160), signal);
 };
@@ -84,9 +92,10 @@ document.addEventListener('astro:before-preparation', (event) => {
     },
     { once: true },
   );
-  title.textContent =
+  title.textContent = (
     event.sourceElement?.getAttribute('data-transition-label') ||
-    (event.to.pathname.includes('/work/') ? 'The case file' : 'The main reel');
+    (event.to.pathname.includes('/work/') ? 'The case file' : 'The main reel')
+  ).toLocaleUpperCase('en-US');
   gate.dataset.state = 'closed';
 
   const load = event.loader;
@@ -124,4 +133,7 @@ reducedMotion.addEventListener('change', () => {
   if (reducedMotion.matches) void openGate(run.signal);
 });
 
-void firstEntrance();
+void firstEntrance().catch(() => {
+  document.body.classList.add('is-ready');
+  gate.dataset.state = 'open';
+});
