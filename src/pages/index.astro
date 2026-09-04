@@ -321,19 +321,13 @@ const practiceBeats = [
         </div>
       </section>
 
-      <div
-        class="practice-scroll-track"
-        data-practice-track
-        style={`--practice-steps: ${practiceBeats.length}`}
+      <section
+        class="practice-section"
+        id="practice"
+        aria-labelledby="practice-title"
+        data-practice-reel
       >
-        <section
-          class="practice-section"
-          id="practice"
-          aria-labelledby="practice-title"
-          data-practice-reel
-          data-reel-mode="free"
-        >
-        <div class="practice-pin" data-motion-group>
+        <div class="practice-inner" data-motion-group>
           <div class="practice-heading">
             <h2 id="practice-title" data-motion="title">
               <span class="title-line">How I </span><span
@@ -346,7 +340,13 @@ const practiceBeats = [
             <div class="practice-stock">
               <div class="practice-perfs practice-perfs-top" aria-hidden="true">
               </div>
-              <div class="practice-viewport">
+              <div
+                class="practice-viewport"
+                role="group"
+                aria-roledescription="film reel"
+                aria-label="Four steps of how I work. Scroll sideways or use the arrows."
+                tabindex="0"
+              >
                 <div class="practice-frames">
                   {
                     practiceBeats.map((beat, index) => (
@@ -380,6 +380,35 @@ const practiceBeats = [
               >
               </div>
             </div>
+
+            <div class="practice-controls">
+              <button
+                class="practice-arrow practice-arrow-prev"
+                type="button"
+                aria-label="Previous step"
+                aria-disabled="true"
+                data-reel-prev
+                data-squash
+              >
+                <ArrowIcon direction="left" />
+              </button>
+              <span
+                class="practice-counter"
+                data-reel-counter
+                aria-hidden="true"
+              >
+                01 / {String(practiceBeats.length).padStart(2, '0')}
+              </span>
+              <button
+                class="practice-arrow practice-arrow-next"
+                type="button"
+                aria-label="Next step"
+                data-reel-next
+                data-squash
+              >
+                <ArrowIcon />
+              </button>
+            </div>
           </div>
 
           <ol class="practice-captions">
@@ -401,8 +430,7 @@ const practiceBeats = [
             }
           </ol>
         </div>
-        </section>
-      </div>
+      </section>
 
       <section
         class="about-section"

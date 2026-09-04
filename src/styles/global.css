@@ -1425,7 +1425,9 @@ a:hover .arrow-icon {
 }
 
 /* ---------------------------------------------------------------------------
-   Practice — a 35mm reel through a studio projector gate
+   Practice — a 35mm reel the visitor winds by hand
+   A plain horizontal scroller with snap points and two arrow controls. Nothing
+   here is sticky or fixed, so Safari never samples it for its bar colors.
    ------------------------------------------------------------------------- */
 
 .practice-section {
@@ -1438,48 +1440,16 @@ a:hover .arrow-icon {
   position: relative;
   border-top: 3px solid var(--ink);
   border-bottom: 3px solid var(--ink);
-  /* This wrapper is sticky and full-height while the reel plays, so Safari
-     would sample its color for the bars. The yellow is painted by
-     .practice-pin, which fills it, so the wrapper itself stays transparent. */
-  background: transparent;
-}
-
-.pin-spacer:has(> .practice-section) {
   background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
 }
 
-.practice-scroll-track:has([data-reel-mode='scroll']) {
-  --practice-scroll-step: 58dvh;
-  height: calc(
-    100dvh + (var(--practice-steps, 4) - 1) * var(--practice-scroll-step)
-  );
-  background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
-}
-
-.practice-section[data-reel-mode='scroll'] {
-  position: sticky;
-  top: 0;
-  display: flex;
-  min-height: 100dvh;
-  touch-action: pan-y;
-}
-
-.practice-pin {
+.practice-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 0.35rem;
   width: 100%;
-  padding: 1.15rem 0 1.85rem;
-  /* Painted as a flat gradient on purpose: this sits inside the sticky reel
-     wrapper and Safari 26 reads background-color (never background-image)
-     from sticky content to tint its bars. Same yellow, invisible to Safari. */
-  background-color: transparent;
-  background-image: linear-gradient(
-    color-mix(in srgb, var(--yellow) 62%, var(--paper-light)),
-    color-mix(in srgb, var(--yellow) 62%, var(--paper-light))
-  );
+  padding: clamp(2.75rem, 5.5vw, 4.5rem) 0 clamp(2.5rem, 4vw, 3.5rem);
 }
 
 .practice-heading {
@@ -1515,6 +1485,7 @@ a:hover .arrow-icon {
 }
 
 .practice-stock {
+  position: relative;
   display: grid;
   grid-template-rows: var(--perf-size) auto var(--perf-size);
   width: 100%;
@@ -1525,25 +1496,11 @@ a:hover .arrow-icon {
     0 18px 36px rgba(17, 17, 15, 0.28);
 }
 
-.practice-perfs {
-  background-color: var(--ink);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='16' viewBox='0 0 36 16'%3E%3Crect x='6' y='4' width='16' height='8' rx='1.6' fill='%23faf7ed'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
-  background-position: var(--sprocket, 0px) center;
-  background-size: 2.25rem 100%;
-}
-
-.practice-viewport {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  background: var(--ink);
-  container-type: inline-size;
-}
-
-.practice-section[data-reel-mode='scroll'] .practice-viewport::before {
+/* Projector-gate shading over the picture row. It lives on the stock, not
+   inside the scroller, so it stays put while the film moves underneath. */
+.practice-stock::after {
   position: absolute;
-  inset: 0;
+  inset: var(--perf-size) 0;
   z-index: 2;
   pointer-events: none;
   background: linear-gradient(
@@ -1558,16 +1515,42 @@ a:hover .arrow-icon {
   content: '';
 }
 
+.practice-perfs {
+  background-color: var(--ink);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='16' viewBox='0 0 36 16'%3E%3Crect x='6' y='4' width='16' height='8' rx='1.6' fill='%23faf7ed'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: var(--sprocket, 0px) center;
+  background-size: 2.25rem 100%;
+}
+
+.practice-viewport {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  background: var(--ink);
+  container-type: inline-size;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.practice-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.practice-viewport:focus-visible {
+  outline-offset: -3px;
+}
+
 .practice-frames {
   display: flex;
   align-items: stretch;
   gap: var(--tape-gap);
   width: max-content;
+  /* Lets the first and last cel park in the centre of the gate. */
+  padding-inline: max(0px, calc(50cqw - (var(--cel-width) + 1.43rem) / 2));
   background: var(--ink);
-}
-
-.practice-section.is-rolling .practice-frames {
-  will-change: transform;
 }
 
 .practice-cel {
@@ -1577,6 +1560,8 @@ a:hover .arrow-icon {
   gap: 0.28rem;
   margin: 0;
   align-items: stretch;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
 }
 
 .practice-edge {
@@ -1608,13 +1593,124 @@ a:hover .arrow-icon {
   object-position: center;
 }
 
+/* Winding controls: a row under the film on compact screens, and a pair of
+   round pill buttons sitting in the dark gutters of the gate on wide ones. */
+.practice-controls {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.js .practice-controls {
+  display: flex;
+}
+
+.practice-arrow {
+  display: inline-grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper-light);
+  color: var(--ink);
+  box-shadow: 0 7px 16px rgba(17, 17, 15, 0.2);
+  cursor: pointer;
+  transition:
+    background 200ms ease,
+    color 200ms ease,
+    opacity 200ms ease,
+    transform 340ms var(--ease-snap);
+}
+
+.practice-arrow .arrow-icon {
+  width: 1.35rem;
+  transform: rotate(var(--arrow-rotate, 0deg));
+}
+
+.practice-arrow:hover {
+  background: var(--ink);
+  color: var(--paper-light);
+  transform: translateY(-3px);
+}
+
+.practice-arrow.is-pressed {
+  transform: translateY(1px) scale(0.94);
+  transition-duration: 120ms;
+}
+
+.practice-arrow[aria-disabled='true'] {
+  opacity: 0.38;
+  cursor: default;
+  box-shadow: none;
+}
+
+.practice-arrow[aria-disabled='true']:hover {
+  background: var(--paper-light);
+  color: var(--ink);
+  transform: none;
+}
+
+.practice-counter {
+  min-width: 4.5ch;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+@media (min-width: 1025px) {
+  .js .practice-controls {
+    display: contents;
+  }
+
+  .practice-counter {
+    display: none;
+  }
+
+  .practice-arrow {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .practice-arrow:hover {
+    transform: translateY(calc(-50% - 3px));
+  }
+
+  .practice-arrow.is-pressed {
+    transform: translateY(calc(-50% + 1px)) scale(0.94);
+  }
+
+  .practice-arrow[aria-disabled='true']:hover {
+    transform: translateY(-50%);
+  }
+
+  .practice-arrow-prev {
+    left: clamp(0.9rem, 3vw, 3rem);
+  }
+
+  .practice-arrow-next {
+    right: clamp(0.9rem, 3vw, 3rem);
+  }
+}
+
+/* Captions: every step is listed without JS; with JS only the framed step is
+   shown and the copy slides in from the side the film came from. */
 .practice-captions {
   list-style: none;
   position: relative;
+  display: grid;
+  gap: 1.15rem;
   width: min(34rem, calc(100% - 2rem));
-  min-height: 5.6rem;
   margin: 0;
-  padding: 2.15rem 0.5rem 2.6rem;
+  padding: 1.9rem 0.5rem 0;
   text-align: center;
 }
 
@@ -1623,26 +1719,26 @@ a:hover .arrow-icon {
   justify-items: center;
 }
 
-.practice-section[data-reel-mode='scroll'] .practice-captions {
-  display: grid;
+.js .practice-captions {
+  gap: 0;
+  min-height: 6.4rem;
   overflow: hidden;
 }
 
-.practice-section[data-reel-mode='scroll'] .practice-captions li {
+.js .practice-captions li {
   grid-area: 1 / 1;
   pointer-events: none;
   opacity: 0;
 }
 
-.practice-section[data-reel-mode='scroll'] .practice-captions li.is-current {
+.js .practice-captions li.is-current {
   pointer-events: auto;
   opacity: 1;
-  animation: none;
+  animation: practice-caption-in 420ms var(--ease-out) both;
 }
 
-.practice-section[data-reel-mode='scroll'] .practice-captions li.is-leaving {
-  animation: none;
-  opacity: 0;
+.js .practice-captions li.is-leaving {
+  animation: practice-caption-out 280ms var(--ease-out) both;
 }
 
 .practice-section[data-reel-dir='-1'] {
@@ -1686,56 +1782,6 @@ a:hover .arrow-icon {
   font-size: 1.1rem;
   line-height: 1.32;
   text-wrap: pretty;
-}
-
-.practice-section[data-reel-mode='scroll'] .practice-frames {
-  padding-inline: max(0px, calc(50cqw - (var(--cel-width) + 1.43rem) / 2));
-}
-
-.practice-section[data-reel-mode='free'] .practice-viewport {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-color: var(--ink) var(--yellow);
-}
-
-.practice-section[data-reel-mode='free'] .practice-frames {
-  transform: none;
-  padding-inline: max(0px, calc(50cqw - (var(--cel-width) + 1.43rem) / 2));
-}
-
-.practice-section[data-reel-mode='free'] .practice-cel {
-  scroll-snap-align: center;
-}
-
-.practice-section[data-reel-mode='free'] .practice-aperture {
-  filter: none;
-  opacity: 1;
-}
-
-.practice-section[data-reel-mode='free'] .practice-viewport::before {
-  content: none;
-}
-
-.practice-section[data-reel-mode='free'] .practice-captions {
-  display: grid;
-  gap: 1.15rem;
-  min-height: 0;
-}
-
-@media (max-height: 740px) {
-  .practice-section {
-    --cel-width: min(28rem, 60vw);
-  }
-
-  .practice-section h2 {
-    font-size: clamp(2.6rem, 8vh, 4.4rem);
-  }
-
-  .practice-pin {
-    gap: 0.55rem;
-    padding: 0.9rem 0 1rem;
-  }
 }
 
 /* ---------------------------------------------------------------------------

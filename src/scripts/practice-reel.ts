@@ -1,44 +1,41 @@
 const clamp = (min: number, max: number, value: number) =>
   Math.min(max, Math.max(min, value));
 
-const lerp = (from: number, to: number, amount: number) =>
-  from + (to - from) * amount;
+const pad = (value: number) => String(value).padStart(2, '0');
 
-const FRAME_SMOOTH = 0.2;
-const SNAP_IDLE_MS = 90;
-const SNAP_THRESHOLD = 0.035;
-
+/**
+ * The practice reel is a native horizontal scroller with snap points. This
+ * only keeps the caption, counter, arrow state and sprocket holes in step with
+ * wherever the visitor has wound the film to.
+ */
 export function initPracticeReel(signal: AbortSignal): () => void {
-  const track = document.querySelector<HTMLElement>('[data-practice-track]');
   const section = document.querySelector<HTMLElement>('[data-practice-reel]');
-  if (!track || !section) return () => {};
+  if (!section) return () => {};
 
   const viewport = section.querySelector<HTMLElement>('.practice-viewport');
-  const frames = section.querySelector<HTMLElement>('.practice-frames');
   const cels = Array.from(
     section.querySelectorAll<HTMLElement>('.practice-cel'),
   );
   const captions = Array.from(
     section.querySelectorAll<HTMLElement>('.practice-captions li'),
   );
+  const prev = section.querySelector<HTMLButtonElement>('[data-reel-prev]');
+  const next = section.querySelector<HTMLButtonElement>('[data-reel-next]');
+  const counter = section.querySelector<HTMLElement>('[data-reel-counter]');
 
-  if (!viewport || !frames || cels.length === 0) return () => {};
+  if (!viewport || cels.length === 0) return () => {};
 
   const lastIndex = cels.length - 1;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   let active = -1;
-  let shifts: number[] = [];
-  let scrollAbort: AbortController | null = null;
-  let loopId = 0;
-  let snapTimer = 0;
-  let settleTimer = 0;
-  let snapping = false;
-  let currentX = 0;
+  let frame = 0;
 
-  const setCaption = (index: number) => {
+  const setActive = (index: number) => {
     if (index === active) return;
     const previous = active;
     section.dataset.reelDir = index >= previous ? '1' : '-1';
     active = index;
+
     captions.forEach((caption, i) => {
       caption.classList.remove('is-current', 'is-leaving');
       caption.removeAttribute('aria-current');
@@ -48,172 +45,86 @@ export function initPracticeReel(signal: AbortSignal): () => void {
         caption.setAttribute('aria-current', 'step');
       }
     });
+    cels.forEach((cel, i) => cel.classList.toggle('is-current', i === index));
+
+    if (counter)
+      counter.textContent = `${pad(index + 1)} / ${pad(cels.length)}`;
+    prev?.setAttribute('aria-disabled', String(index === 0));
+    next?.setAttribute('aria-disabled', String(index === lastIndex));
+  };
+
+  // The cel whose centre is nearest the middle of the gate.
+  const nearestIndex = () => {
+    const gate = viewport.scrollLeft + viewport.clientWidth / 2;
+    let best = 0;
+    let bestDistance = Infinity;
     cels.forEach((cel, i) => {
-      cel.classList.toggle('is-current', i === index);
-    });
-  };
-
-  const xAtProgress = (progress: number) => {
-    if (lastIndex === 0) return shifts[0] ?? 0;
-    const scaled = progress * lastIndex;
-    const index = Math.min(lastIndex - 1, Math.floor(scaled));
-    const fraction = scaled - index;
-    return lerp(shifts[index] ?? 0, shifts[index + 1] ?? 0, fraction);
-  };
-
-  const scrollable = () => Math.max(0, track.offsetHeight - window.innerHeight);
-
-  const progressInTrack = () => {
-    const range = scrollable();
-    if (range <= 0) return 0;
-    return clamp(0, 1, -track.getBoundingClientRect().top / range);
-  };
-
-  const measure = () => {
-    frames.style.transform = 'translate3d(0px, 0, 0)';
-    const view = viewport.getBoundingClientRect();
-    const trackBox = frames.getBoundingClientRect();
-    const gate = view.width / 2;
-    shifts = cels.map((cel) => {
-      const box = cel.getBoundingClientRect();
-      const local = box.left - trackBox.left + box.width / 2;
-      return gate - local;
-    });
-    currentX = xAtProgress(progressInTrack());
-    applyVisual(currentX, progressInTrack());
-  };
-
-  const frameProgress = (index: number) =>
-    lastIndex === 0 ? 0 : index / lastIndex;
-
-  const scrollYForProgress = (progress: number) =>
-    track.offsetTop + progress * scrollable();
-
-  const inReel = () => {
-    const progress = progressInTrack();
-    return progress > 0.001 && progress < 0.999;
-  };
-
-  const applyVisual = (x: number, progress: number) => {
-    frames.style.transform = `translate3d(${x}px, 0, 0)`;
-    section.style.setProperty('--sprocket', `${x}px`);
-    setCaption(Math.min(lastIndex, Math.round(progress * lastIndex)));
-    section.classList.toggle(
-      'is-rolling',
-      inReel() && Math.abs(x - xAtProgress(progress)) > 0.75,
-    );
-    section.classList.toggle('is-snapping', snapping);
-  };
-
-  const snapToFrame = (index: number) => {
-    const target = frameProgress(index);
-    const current = progressInTrack();
-    if (Math.abs(current - target) < SNAP_THRESHOLD) return;
-
-    snapping = true;
-    section.classList.add('is-snapping');
-    window.scrollTo({
-      top: scrollYForProgress(target),
-      behavior: 'smooth',
-    });
-
-    window.clearTimeout(settleTimer);
-    settleTimer = window.setTimeout(() => {
-      snapping = false;
-      section.classList.remove('is-snapping');
-    }, 420);
-  };
-
-  const queueSnap = () => {
-    if (snapping || !inReel()) return;
-    window.clearTimeout(snapTimer);
-    snapTimer = window.setTimeout(() => {
-      if (snapping || !inReel()) return;
-      const progress = progressInTrack();
-      const frame = Math.min(lastIndex, Math.round(progress * lastIndex));
-      snapToFrame(frame);
-    }, SNAP_IDLE_MS);
-  };
-
-  const tick = () => {
-    const progress = progressInTrack();
-    const targetX = xAtProgress(progress);
-    const blend = snapping ? 0.34 : FRAME_SMOOTH;
-    currentX = lerp(currentX, targetX, blend);
-
-    if (!snapping && Math.abs(currentX - targetX) < 0.45) {
-      currentX = targetX;
-    }
-
-    applyVisual(currentX, progress);
-    loopId = requestAnimationFrame(tick);
-  };
-
-  const onScroll = () => queueSnap();
-
-  const onResize = () => {
-    measure();
-    queueSnap();
-  };
-
-  const enableScrollMode = () => {
-    scrollAbort?.abort();
-    scrollAbort = new AbortController();
-    const scrollSignal = scrollAbort.signal;
-    section.dataset.reelMode = 'scroll';
-    measure();
-    loopId = requestAnimationFrame(tick);
-    window.addEventListener('scroll', onScroll, {
-      passive: true,
-      signal: scrollSignal,
-    });
-    window.addEventListener('resize', onResize, { signal: scrollSignal });
-    const images = Array.from(section.querySelectorAll('img'));
-    images.forEach((image) => {
-      if (!image.complete) {
-        image.addEventListener('load', onResize, { signal: scrollSignal });
+      const distance = Math.abs(cel.offsetLeft + cel.offsetWidth / 2 - gate);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        best = i;
       }
     });
+    return best;
   };
 
-  const enableFreeMode = () => {
-    scrollAbort?.abort();
-    scrollAbort = null;
-    window.clearTimeout(snapTimer);
-    window.clearTimeout(settleTimer);
-    cancelAnimationFrame(loopId);
-    snapping = false;
-    section.dataset.reelMode = 'free';
-    section.classList.remove('is-rolling', 'is-snapping');
-    frames.style.removeProperty('transform');
-    section.style.removeProperty('--sprocket');
-    setCaption(0);
+  const sync = () => {
+    frame = 0;
+    section.style.setProperty('--sprocket', `${-viewport.scrollLeft}px`);
+    setActive(nearestIndex());
   };
 
-  const mm = window.matchMedia('(prefers-reduced-motion: no-preference)');
-  const syncMode = () => {
-    if (mm.matches) enableScrollMode();
-    else enableFreeMode();
+  const onScroll = () => {
+    if (!frame) frame = requestAnimationFrame(sync);
   };
 
-  syncMode();
-  mm.addEventListener('change', syncMode, { signal });
+  const scrollToIndex = (index: number) => {
+    const cel = cels[clamp(0, lastIndex, index)];
+    if (!cel) return;
+    viewport.scrollTo({
+      left: cel.offsetLeft - (viewport.clientWidth - cel.offsetWidth) / 2,
+      behavior: reduced.matches ? 'auto' : 'smooth',
+    });
+  };
+
+  const step = (delta: number) => {
+    const target = active + delta;
+    if (target < 0 || target > lastIndex) return;
+    scrollToIndex(target);
+  };
+
+  prev?.addEventListener('click', () => step(-1), { signal });
+  next?.addEventListener('click', () => step(1), { signal });
+
+  viewport.addEventListener(
+    'keydown',
+    (event) => {
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        step(1);
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        step(-1);
+      }
+    },
+    { signal },
+  );
+
+  viewport.addEventListener('scroll', onScroll, { passive: true, signal });
+  window.addEventListener('resize', onScroll, { signal });
+
+  sync();
 
   return () => {
-    scrollAbort?.abort();
-    window.clearTimeout(snapTimer);
-    window.clearTimeout(settleTimer);
-    cancelAnimationFrame(loopId);
-    frames.style.removeProperty('transform');
+    cancelAnimationFrame(frame);
+    frame = 0;
     section.style.removeProperty('--sprocket');
-    section.classList.remove('is-rolling', 'is-snapping');
-    section.dataset.reelMode = 'free';
+    delete section.dataset.reelDir;
     active = -1;
     cels.forEach((cel) => cel.classList.remove('is-current'));
     captions.forEach((caption) => {
       caption.classList.remove('is-current', 'is-leaving');
       caption.removeAttribute('aria-current');
     });
-    setCaption(0);
   };
 }
