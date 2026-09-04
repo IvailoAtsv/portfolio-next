@@ -89,7 +89,6 @@
 
 html {
   scroll-padding-top: 7rem;
-  overflow-x: clip;
   background: var(--ink);
 }
 
@@ -1534,6 +1533,8 @@ a:hover .arrow-icon {
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
 }
 
 .practice-viewport::-webkit-scrollbar {
@@ -1562,7 +1563,6 @@ a:hover .arrow-icon {
   margin: 0;
   align-items: stretch;
   scroll-snap-align: center;
-  scroll-snap-stop: always;
 }
 
 .practice-edge {
@@ -1583,6 +1583,10 @@ a:hover .arrow-icon {
   border-radius: 3px;
   background: var(--paper-light);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--paper-light) 22%, var(--ink));
+}
+
+.practice-cel:not(.is-current) .film-static {
+  display: none;
 }
 
 .practice-aperture img {
