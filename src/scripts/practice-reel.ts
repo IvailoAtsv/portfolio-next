@@ -1,19 +1,17 @@
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+const clamp = (min: number, max: number, value: number) =>
+  Math.min(max, Math.max(min, value));
 
-gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.config({ ignoreMobileResize: true });
+const lerp = (from: number, to: number, amount: number) =>
+  from + (to - from) * amount;
 
-const readX = (el: HTMLElement) => {
-  const raw = gsap.getProperty(el, 'x');
-  if (typeof raw === 'number' && Number.isFinite(raw)) return raw;
-  const parsed = parseFloat(String(raw));
-  return Number.isFinite(parsed) ? parsed : 0;
-};
+const FRAME_SMOOTH = 0.2;
+const SNAP_IDLE_MS = 90;
+const SNAP_THRESHOLD = 0.035;
 
 export function initPracticeReel(signal: AbortSignal): () => void {
+  const track = document.querySelector<HTMLElement>('[data-practice-track]');
   const section = document.querySelector<HTMLElement>('[data-practice-reel]');
-  if (!section) return () => {};
+  if (!track || !section) return () => {};
 
   const viewport = section.querySelector<HTMLElement>('.practice-viewport');
   const frames = section.querySelector<HTMLElement>('.practice-frames');
@@ -29,6 +27,12 @@ export function initPracticeReel(signal: AbortSignal): () => void {
   const lastIndex = cels.length - 1;
   let active = -1;
   let shifts: number[] = [];
+  let scrollAbort: AbortController | null = null;
+  let loopId = 0;
+  let snapTimer = 0;
+  let settleTimer = 0;
+  let snapping = false;
+  let currentX = 0;
 
   const setCaption = (index: number) => {
     if (index === active) return;
@@ -49,94 +53,167 @@ export function initPracticeReel(signal: AbortSignal): () => void {
     });
   };
 
+  const xAtProgress = (progress: number) => {
+    if (lastIndex === 0) return shifts[0] ?? 0;
+    const scaled = progress * lastIndex;
+    const index = Math.min(lastIndex - 1, Math.floor(scaled));
+    const fraction = scaled - index;
+    return lerp(shifts[index] ?? 0, shifts[index + 1] ?? 0, fraction);
+  };
+
+  const scrollable = () => Math.max(0, track.offsetHeight - window.innerHeight);
+
+  const progressInTrack = () => {
+    const range = scrollable();
+    if (range <= 0) return 0;
+    return clamp(0, 1, -track.getBoundingClientRect().top / range);
+  };
+
   const measure = () => {
+    frames.style.transform = 'translate3d(0px, 0, 0)';
     const view = viewport.getBoundingClientRect();
-    const track = frames.getBoundingClientRect();
+    const trackBox = frames.getBoundingClientRect();
     const gate = view.width / 2;
     shifts = cels.map((cel) => {
       const box = cel.getBoundingClientRect();
-      const local = box.left - track.left + box.width / 2;
+      const local = box.left - trackBox.left + box.width / 2;
       return gate - local;
+    });
+    currentX = xAtProgress(progressInTrack());
+    applyVisual(currentX, progressInTrack());
+  };
+
+  const frameProgress = (index: number) =>
+    lastIndex === 0 ? 0 : index / lastIndex;
+
+  const scrollYForProgress = (progress: number) =>
+    track.offsetTop + progress * scrollable();
+
+  const inReel = () => {
+    const progress = progressInTrack();
+    return progress > 0.001 && progress < 0.999;
+  };
+
+  const applyVisual = (x: number, progress: number) => {
+    frames.style.transform = `translate3d(${x}px, 0, 0)`;
+    section.style.setProperty('--sprocket', `${x}px`);
+    setCaption(Math.min(lastIndex, Math.round(progress * lastIndex)));
+    section.classList.toggle(
+      'is-rolling',
+      inReel() && Math.abs(x - xAtProgress(progress)) > 0.75,
+    );
+    section.classList.toggle('is-snapping', snapping);
+  };
+
+  const snapToFrame = (index: number) => {
+    const target = frameProgress(index);
+    const current = progressInTrack();
+    if (Math.abs(current - target) < SNAP_THRESHOLD) return;
+
+    snapping = true;
+    section.classList.add('is-snapping');
+    window.scrollTo({
+      top: scrollYForProgress(target),
+      behavior: 'smooth',
+    });
+
+    window.clearTimeout(settleTimer);
+    settleTimer = window.setTimeout(() => {
+      snapping = false;
+      section.classList.remove('is-snapping');
+    }, 420);
+  };
+
+  const queueSnap = () => {
+    if (snapping || !inReel()) return;
+    window.clearTimeout(snapTimer);
+    snapTimer = window.setTimeout(() => {
+      if (snapping || !inReel()) return;
+      const progress = progressInTrack();
+      const frame = Math.min(lastIndex, Math.round(progress * lastIndex));
+      snapToFrame(frame);
+    }, SNAP_IDLE_MS);
+  };
+
+  const tick = () => {
+    const progress = progressInTrack();
+    const targetX = xAtProgress(progress);
+    const blend = snapping ? 0.34 : FRAME_SMOOTH;
+    currentX = lerp(currentX, targetX, blend);
+
+    if (!snapping && Math.abs(currentX - targetX) < 0.45) {
+      currentX = targetX;
+    }
+
+    applyVisual(currentX, progress);
+    loopId = requestAnimationFrame(tick);
+  };
+
+  const onScroll = () => queueSnap();
+
+  const onResize = () => {
+    measure();
+    queueSnap();
+  };
+
+  const enableScrollMode = () => {
+    scrollAbort?.abort();
+    scrollAbort = new AbortController();
+    const scrollSignal = scrollAbort.signal;
+    section.dataset.reelMode = 'scroll';
+    measure();
+    loopId = requestAnimationFrame(tick);
+    window.addEventListener('scroll', onScroll, {
+      passive: true,
+      signal: scrollSignal,
+    });
+    window.addEventListener('resize', onResize, { signal: scrollSignal });
+    const images = Array.from(section.querySelectorAll('img'));
+    images.forEach((image) => {
+      if (!image.complete) {
+        image.addEventListener('load', onResize, { signal: scrollSignal });
+      }
     });
   };
 
-  const mm = gsap.matchMedia();
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
-    section.dataset.reelMode = 'pinned';
-    measure();
-    gsap.set(frames, { x: shifts[0] ?? 0, force3D: true });
-    setCaption(0);
-
-    const tween = gsap.fromTo(
-      frames,
-      { x: () => shifts[0] ?? 0 },
-      {
-        x: () => shifts[lastIndex] ?? 0,
-        ease: 'none',
-        force3D: true,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: () =>
-            `+=${Math.round(Math.abs((shifts[lastIndex] ?? 0) - (shifts[0] ?? 0)))}`,
-          pin: true,
-          pinType: 'fixed',
-          scrub: true,
-          snap:
-            lastIndex > 0
-              ? {
-                  snapTo: 1 / lastIndex,
-                  duration: 0.28,
-                  delay: 0.06,
-                  ease: 'power2.out',
-                }
-              : undefined,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onRefreshInit: measure,
-          onUpdate: (self) => {
-            section.style.setProperty('--sprocket', `${readX(frames)}px`);
-            setCaption(Math.round(self.progress * lastIndex));
-            section.classList.toggle('is-rolling', self.isActive);
-          },
-          onToggle: (self) => {
-            section.classList.toggle('is-rolling', self.isActive);
-          },
-        },
-      },
-    );
-
-    const refresh = () => ScrollTrigger.refresh();
-    const images = Array.from(section.querySelectorAll('img'));
-    images.forEach((image) => {
-      if (!image.complete) image.addEventListener('load', refresh);
-    });
-
-    return () => {
-      images.forEach((image) => image.removeEventListener('load', refresh));
-      tween.scrollTrigger?.kill();
-      tween.kill();
-      gsap.set(frames, { clearProps: 'transform' });
-      section.style.removeProperty('--sprocket');
-      section.classList.remove('is-rolling');
-      section.dataset.reelMode = 'free';
-      active = -1;
-      cels.forEach((cel) => cel.classList.remove('is-current'));
-      captions.forEach((caption) => {
-        caption.classList.remove('is-current', 'is-leaving');
-        caption.removeAttribute('aria-current');
-      });
-      setCaption(0);
-    };
-  });
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const enableFreeMode = () => {
+    scrollAbort?.abort();
+    scrollAbort = null;
+    window.clearTimeout(snapTimer);
+    window.clearTimeout(settleTimer);
+    cancelAnimationFrame(loopId);
+    snapping = false;
     section.dataset.reelMode = 'free';
+    section.classList.remove('is-rolling', 'is-snapping');
+    frames.style.removeProperty('transform');
+    section.style.removeProperty('--sprocket');
     setCaption(0);
-  }
+  };
 
-  const revert = () => mm.revert();
-  signal.addEventListener('abort', revert, { once: true });
+  const mm = window.matchMedia('(prefers-reduced-motion: no-preference)');
+  const syncMode = () => {
+    if (mm.matches) enableScrollMode();
+    else enableFreeMode();
+  };
 
-  return revert;
+  syncMode();
+  mm.addEventListener('change', syncMode, { signal });
+
+  return () => {
+    scrollAbort?.abort();
+    window.clearTimeout(snapTimer);
+    window.clearTimeout(settleTimer);
+    cancelAnimationFrame(loopId);
+    frames.style.removeProperty('transform');
+    section.style.removeProperty('--sprocket');
+    section.classList.remove('is-rolling', 'is-snapping');
+    section.dataset.reelMode = 'free';
+    active = -1;
+    cels.forEach((cel) => cel.classList.remove('is-current'));
+    captions.forEach((caption) => {
+      caption.classList.remove('is-current', 'is-leaving');
+      caption.removeAttribute('aria-current');
+    });
+    setCaption(0);
+  };
 }

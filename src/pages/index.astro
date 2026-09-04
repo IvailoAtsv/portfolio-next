@@ -321,22 +321,25 @@ const practiceBeats = [
         </div>
       </section>
 
-      <section
-        class="practice-section"
-        id="practice"
-        aria-labelledby="practice-title"
-        data-practice-reel
-        data-reel-mode="free"
+      <div
+        class="practice-scroll-track"
+        data-practice-track
+        style={`--practice-steps: ${practiceBeats.length}`}
       >
+        <section
+          class="practice-section"
+          id="practice"
+          aria-labelledby="practice-title"
+          data-practice-reel
+          data-reel-mode="free"
+        >
         <div class="practice-pin" data-motion-group>
           <div class="practice-heading">
             <h2 id="practice-title" data-motion="title">
-              <span class="title-line">How I</span>
-              <span class="title-line title-outline">work.</span>
+              <span class="title-line">How I </span><span
+                class="title-line title-outline">work.</span
+              >
             </h2>
-            <p class="practice-intro" data-motion="copy" data-motion-order="1">
-              From the first question to the work that comes after launch.
-            </p>
           </div>
 
           <div class="practice-projector" data-loop>
@@ -398,7 +401,8 @@ const practiceBeats = [
             }
           </ol>
         </div>
-      </section>
+        </section>
+      </div>
 
       <section
         class="about-section"
@@ -507,13 +511,11 @@ const practiceBeats = [
       </section>
     </main>
 
-    <footer class="site-footer" data-motion-group>
+    <footer class="site-footer">
       <a
-        class="studio-mark studio-mark-inverse"
+        class="studio-mark"
         href="#top"
         aria-label="Back to the top"
-        data-motion="stamp"
-        data-motion-order="0"
         data-squash
       >
         <svg viewBox="0 0 58 58" aria-hidden="true"
@@ -527,12 +529,8 @@ const practiceBeats = [
         >
         <span><strong>IVAYLO</strong><small>DOES IT ALL</small></span>
       </a>
-      <p data-motion="copy" data-motion-order="1">
-        Designed and built in Bulgaria.<br />Made with Astro and Tailwind.
-      </p>
-      <p class="footer-signoff" data-motion="copy" data-motion-order="2">
-        That’s all, folks.
-      </p>
+      <p>Built with Astro and a lot of ink.</p>
+      <p class="footer-signoff">That’s all, folks.</p>
     </footer>
   </div>
 </BaseLayout>

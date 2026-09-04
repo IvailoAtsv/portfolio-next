@@ -1424,7 +1424,17 @@ a:hover .arrow-icon {
   background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
 }
 
-.practice-section[data-reel-mode='pinned'] {
+.practice-scroll-track:has([data-reel-mode='scroll']) {
+  --practice-scroll-step: 58dvh;
+  height: calc(
+    100dvh + (var(--practice-steps, 4) - 1) * var(--practice-scroll-step)
+  );
+  background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
+}
+
+.practice-section[data-reel-mode='scroll'] {
+  position: sticky;
+  top: 0;
   display: flex;
   min-height: 100dvh;
   touch-action: pan-y;
@@ -1447,9 +1457,15 @@ a:hover .arrow-icon {
 }
 
 .practice-section h2 {
-  max-width: 16ch;
+  max-width: none;
   margin: 0 auto;
+  padding-bottom: clamp(1.5rem, 3vw, 2.15rem);
+  letter-spacing: -0.03em;
   text-align: center;
+}
+
+.practice-section h2 .title-line {
+  display: inline;
 }
 
 .practice-intro {
@@ -1494,7 +1510,7 @@ a:hover .arrow-icon {
   container-type: inline-size;
 }
 
-.practice-section[data-reel-mode='pinned'] .practice-viewport::before {
+.practice-section[data-reel-mode='scroll'] .practice-viewport::before {
   position: absolute;
   inset: 0;
   z-index: 2;
@@ -1576,25 +1592,26 @@ a:hover .arrow-icon {
   justify-items: center;
 }
 
-.practice-section[data-reel-mode='pinned'] .practice-captions {
+.practice-section[data-reel-mode='scroll'] .practice-captions {
   display: grid;
   overflow: hidden;
 }
 
-.practice-section[data-reel-mode='pinned'] .practice-captions li {
+.practice-section[data-reel-mode='scroll'] .practice-captions li {
   grid-area: 1 / 1;
   pointer-events: none;
   opacity: 0;
 }
 
-.practice-section[data-reel-mode='pinned'] .practice-captions li.is-current {
+.practice-section[data-reel-mode='scroll'] .practice-captions li.is-current {
   pointer-events: auto;
   opacity: 1;
-  animation: practice-caption-in 420ms var(--ease-out) both;
+  animation: none;
 }
 
-.practice-section[data-reel-mode='pinned'] .practice-captions li.is-leaving {
-  animation: practice-caption-out 280ms var(--ease-out) both;
+.practice-section[data-reel-mode='scroll'] .practice-captions li.is-leaving {
+  animation: none;
+  opacity: 0;
 }
 
 .practice-section[data-reel-dir='-1'] {
@@ -1638,6 +1655,10 @@ a:hover .arrow-icon {
   font-size: 1.1rem;
   line-height: 1.32;
   text-wrap: pretty;
+}
+
+.practice-section[data-reel-mode='scroll'] .practice-frames {
+  padding-inline: max(0px, calc(50cqw - (var(--cel-width) + 1.43rem) / 2));
 }
 
 .practice-section[data-reel-mode='free'] .practice-viewport {
@@ -1900,6 +1921,9 @@ a:hover .arrow-icon {
   align-items: center;
   gap: 2rem;
   padding: 2rem clamp(1rem, 4vw, 4.5rem);
+}
+
+.case-footer {
   background: var(--ink);
   color: var(--paper-light);
 }
@@ -1907,29 +1931,22 @@ a:hover .arrow-icon {
 .site-footer {
   overflow: clip;
   border-radius: 0 0 28px 28px;
+  background: var(--red-field);
+  color: var(--ink);
+  padding-top: clamp(3.75rem, 7vw, 5.5rem);
 }
 
-.studio-mark-inverse {
+.site-footer :focus-visible {
+  outline-color: var(--ink);
+}
+
+.site-footer ::selection {
+  background: var(--ink);
   color: var(--paper-light);
 }
 
-.studio-mark-inverse .mark-disc {
-  fill: var(--paper-light);
-  stroke: var(--paper-light);
-}
-
-.studio-mark-inverse .mark-eye,
-.studio-mark-inverse .mark-smile {
-  fill: var(--ink);
-  stroke: var(--ink);
-}
-
-.studio-mark-inverse .mark-smile {
-  fill: none;
-}
-
 .site-footer p {
-  color: var(--smoke-light);
+  color: var(--ink);
   font-size: 0.95rem;
   line-height: 1.3;
   text-align: center;
@@ -1937,7 +1954,7 @@ a:hover .arrow-icon {
 
 .site-footer .footer-signoff {
   justify-self: end;
-  color: var(--paper-light);
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 1.05rem;
   font-weight: 700;
@@ -3003,11 +3020,17 @@ a:hover .arrow-icon {
   }
 
   .site-footer {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 0.85rem;
   }
 
-  .site-footer > p:not(.footer-signoff) {
-    display: none;
+  .site-footer p {
+    text-align: left;
+  }
+
+  .site-footer .footer-signoff {
+    justify-self: start;
   }
 
   /* The landing hero reorders its stage; the case hero keeps scene before meta. */
@@ -3267,10 +3290,6 @@ a:hover .arrow-icon {
 
   .site-footer {
     grid-template-columns: 1fr;
-  }
-
-  .site-footer .footer-signoff {
-    display: none;
   }
 
   .case-hero {

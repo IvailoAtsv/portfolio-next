@@ -70,7 +70,7 @@
     animation: none !important;
   }
 
-  .practice-section[data-reel-mode='pinned'] .practice-captions li.is-current {
+  .practice-section[data-reel-mode='scroll'] .practice-captions li.is-current {
     opacity: 1;
   }
 }
