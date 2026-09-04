@@ -12,7 +12,6 @@ const { src, poster, label, width, height, preview = true } = Astro.props;
 
 <project-player data-preview={preview}>
   <video
-    controls
     muted
     loop
     playsinline
@@ -25,6 +24,8 @@ const { src, poster, label, width, height, preview = true } = Astro.props;
     <source src={src} type="video/mp4" />
     <a href={src}>Watch {label}</a>
   </video>
+  <button type="button" class="preview-toggle" aria-label="Play recording"
+  ></button>
   <p class="video-error" role="status" hidden>
     Video could not load. <a href={src}>Open the recording</a>.
   </p>
@@ -32,6 +33,7 @@ const { src, poster, label, width, height, preview = true } = Astro.props;
 
 <style>
   project-player {
+    position: relative;
     display: block;
     min-width: 0;
   }
@@ -41,6 +43,35 @@ const { src, poster, label, width, height, preview = true } = Astro.props;
     height: auto;
     background: #11110f;
     border-radius: inherit;
+  }
+  video::-webkit-media-controls,
+  video::-webkit-media-controls-enclosure,
+  video::-webkit-media-controls-panel,
+  video::-webkit-media-controls-start-playback-button,
+  video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+    appearance: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .preview-toggle {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    cursor: pointer;
+  }
+  .preview-toggle:focus {
+    outline: none;
+  }
+  .preview-toggle:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: -3px;
+    box-shadow: inset 0 0 0 6px #11110f;
   }
   .video-error {
     padding: 0.75rem;
@@ -61,13 +92,49 @@ const { src, poster, label, width, height, preview = true } = Astro.props;
     connectedCallback() {
       this.stop?.();
       const video = this.querySelector('video');
+      const toggle = this.querySelector<HTMLButtonElement>('.preview-toggle');
       if (!video) return;
+      const safari = video as HTMLVideoElement & {
+        webkitDisplayingFullscreen?: boolean;
+        webkitExitFullscreen?: () => void;
+        webkitPresentationMode?: string;
+        webkitSetPresentationMode?: (mode: 'inline') => void;
+      };
+      video.controls = false;
+      video.defaultMuted = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.disablePictureInPicture = true;
+      video.disableRemotePlayback = true;
+      video.setAttribute('webkit-playsinline', '');
+      video.setAttribute('x-webkit-airplay', 'deny');
+      video.setAttribute(
+        'controlslist',
+        'nofullscreen nodownload noremoteplayback noplaybackrate',
+      );
       const controller = new AbortController();
       const { signal } = controller;
       const reduced = matchMedia('(prefers-reduced-motion: reduce)');
       let visible = false;
       let userPaused = false;
       let automaticPause = false;
+      const labelToggle = () => {
+        toggle?.setAttribute(
+          'aria-label',
+          video.paused ? 'Play recording' : 'Pause recording',
+        );
+      };
+      const keepInline = () => {
+        if (
+          safari.webkitPresentationMode &&
+          safari.webkitPresentationMode !== 'inline'
+        ) {
+          safari.webkitSetPresentationMode?.('inline');
+        }
+        if (safari.webkitDisplayingFullscreen) {
+          safari.webkitExitFullscreen?.();
+        }
+      };
       const pause = () => {
         if (video.paused) return;
         automaticPause = true;
@@ -84,8 +151,9 @@ const { src, poster, label, width, height, preview = true } = Astro.props;
           !userPaused
         ) {
           video.muted = true;
+          video.controls = false;
           void video.play().catch(() => {
-            /* Native controls remain usable. */
+            labelToggle();
           });
         }
       };
@@ -94,6 +162,7 @@ const { src, poster, label, width, height, preview = true } = Astro.props;
         () => {
           if (!automaticPause) userPaused = true;
           automaticPause = false;
+          labelToggle();
         },
         { signal },
       );
@@ -101,6 +170,40 @@ const { src, poster, label, width, height, preview = true } = Astro.props;
         'play',
         () => {
           userPaused = false;
+          video.controls = false;
+          keepInline();
+          labelToggle();
+        },
+        { signal },
+      );
+      toggle?.addEventListener(
+        'click',
+        () => {
+          if (video.paused) {
+            video.muted = true;
+            video.controls = false;
+            void video.play();
+          } else {
+            video.pause();
+          }
+        },
+        { signal },
+      );
+      video.addEventListener(
+        'webkitbeginfullscreen',
+        (event) => {
+          event.preventDefault();
+          keepInline();
+        },
+        { signal },
+      );
+      video.addEventListener('webkitpresentationmodechanged', keepInline, {
+        signal,
+      });
+      video.addEventListener(
+        'enterpictureinpicture',
+        () => {
+          void document.exitPictureInPicture();
         },
         { signal },
       );
@@ -123,11 +226,13 @@ const { src, poster, label, width, height, preview = true } = Astro.props;
       );
       const showError = () => {
         this.querySelector<HTMLElement>('.video-error')!.hidden = false;
+        if (toggle) toggle.hidden = true;
       };
       video.addEventListener('error', showError, { signal });
       video
         .querySelector('source')
         ?.addEventListener('error', showError, { signal });
+      labelToggle();
       this.stop = () => {
         observer.disconnect();
         controller.abort();

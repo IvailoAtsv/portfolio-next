@@ -5,7 +5,10 @@ import ArrowIcon from '../components/ArrowIcon.astro';
 import FilmStatic from '../components/FilmStatic.astro';
 import CircleWords from '../components/CircleWords.astro';
 import { pages } from '../lib/site';
-import practiceConveyor from '../assets/practice-conveyor.webp';
+import practiceDiscovery from '../assets/practice-discovery.webp';
+import practiceDesignBuild from '../assets/practice-design-build.webp';
+import practiceTestIterate from '../assets/practice-test-iterate.webp';
+import practiceMaintainImprove from '../assets/practice-maintain-improve.webp';
 
 const projects = [
   {
@@ -16,7 +19,7 @@ const projects = [
       'A Bulgarian shop for research peptides, with a reference library for customers and an admin panel for the catalog, articles and orders.',
     disciplines: ['Product design', 'Full-stack development', 'Admin tools'],
     tone: 'smoke',
-    stamp: ['FIND', 'LEARN', 'OPERATE'],
+    stamp: ['KNOW', 'DISCOVER', 'ORDER'],
     href: '/work/hlp-labs',
     width: 1400,
     height: 1000,
@@ -29,7 +32,7 @@ const projects = [
       'A daily programming quiz and learning paths on your phone. The app still works without a connection. A pixel-art duck reacts when you answer.',
     disciplines: ['App design', 'Web app development', 'Offline support'],
     tone: 'yellow',
-    stamp: ['LEARN', 'RECALL', 'REPEAT'],
+    stamp: ['QUIZ', 'LEARN', 'KEEP UP'],
     href: '/work/keep-up',
     width: 1400,
     height: 1120,
@@ -42,7 +45,7 @@ const projects = [
       'A shop platform. Public pages are static HTML. Each shop dresses the same product page. Every main dashboard screen has a tour.',
     disciplines: ['Platform design', 'Full-stack development', 'E-commerce'],
     tone: 'red',
-    stamp: ['BUILD', 'SELL', 'OPERATE'],
+    stamp: ['BUILD', 'SELL', 'MANAGE'],
     href: '/work/sellphy',
     width: 1400,
     height: 1120,
@@ -55,7 +58,7 @@ const projects = [
       'A family expense tracker, with shared savings goals and Apple Pay imports through an iOS Shortcut.',
     disciplines: ['App design', 'Web app development', 'Wallet imports'],
     tone: 'smoke',
-    stamp: ['TRACK', 'PLAN', 'SHARE'],
+    stamp: ['SPEND', 'TRACK', 'SHARE'],
     href: '/work/finance-me',
     width: 1400,
     height: 1120,
@@ -64,16 +67,32 @@ const projects = [
 
 const practiceBeats = [
   {
-    title: 'Start with the problem',
-    copy: 'I work out what people need to do, then sketch the screens and how they fit together.',
+    step: '01',
+    title: 'Find the real problem',
+    copy: 'I clarify who it is for, what they need to do, and what is getting in their way.',
+    image: practiceDiscovery,
+    alt: 'A happy browser-window character uses a magnifying glass to inspect the crowded middle step in a simple digital user journey',
   },
   {
+    step: '02',
     title: 'Design and build',
-    copy: 'I work on the interface and the code together. Trying things in a working app often shows me what needs to change.',
+    copy: 'I shape the experience and the system together, turning early ideas into working software.',
+    image: practiceDesignBuild,
+    alt: 'A happy browser-window character uses a stylus to arrange a clean digital product interface on a tablet',
   },
   {
-    title: 'Get it ready to use',
-    copy: 'Before launch, I test the whole process, including what happens when something goes wrong. I keep refining it once people start using it.',
+    step: '03',
+    title: 'Test, fix, repeat',
+    copy: 'I test the full journey, fix what breaks or feels unclear, and keep iterating until it holds up.',
+    image: practiceTestIterate,
+    alt: 'A happy browser-window character tests the same interface on a phone and a larger display',
+  },
+  {
+    step: '04',
+    title: 'Maintain and improve',
+    copy: 'After launch, I keep it reliable, solve the issues that surface, and improve it as needs change.',
+    image: practiceMaintainImprove,
+    alt: 'A happy browser-window character adds a new card to a healthy live product dashboard',
   },
 ];
 ---
@@ -306,38 +325,74 @@ const practiceBeats = [
         class="practice-section"
         id="practice"
         aria-labelledby="practice-title"
+        data-practice-reel
+        data-reel-mode="free"
       >
-        <div class="practice-inner" data-motion-group>
-          <h2 id="practice-title" data-motion="title">
-            <span class="title-line">How I</span>
-            <span class="title-line title-outline">work.</span>
-          </h2>
+        <div class="practice-pin" data-motion-group>
+          <div class="practice-heading">
+            <h2 id="practice-title" data-motion="title">
+              <span class="title-line">How I</span>
+              <span class="title-line title-outline">work.</span>
+            </h2>
+            <p class="practice-intro" data-motion="copy" data-motion-order="1">
+              From the first question to the work that comes after launch.
+            </p>
+          </div>
 
-          <figure class="practice-stage" data-motion="cel" data-loop>
-            <div class="practice-frame has-film">
-              <div class="film-strip film-strip-top" aria-hidden="true">
-                <span class="film-sprockets"></span>
+          <div class="practice-projector" data-loop>
+            <div class="practice-stock">
+              <div class="practice-perfs practice-perfs-top" aria-hidden="true">
               </div>
-              <img
-                src={practiceConveyor.src}
-                alt="One conveyor belt runs through three stations: a drafting table sketching a screen, a machine with a wrench tightening it, and a crate rolling into a delivery truck"
-                width={practiceConveyor.width}
-                height={practiceConveyor.height}
-                loading="lazy"
-              />
-              <FilmStatic />
-              <div class="film-strip film-strip-bottom" aria-hidden="true">
-                <span class="film-sprockets"></span>
+              <div class="practice-viewport">
+                <div class="practice-frames">
+                  {
+                    practiceBeats.map((beat, index) => (
+                      <figure
+                        class:list={[
+                          'practice-cel',
+                          index === 0 && 'is-current',
+                        ]}
+                        data-step={beat.step}
+                      >
+                        <span class="practice-edge">{beat.step}</span>
+                        <div class="practice-aperture has-film">
+                          <img
+                            src={beat.image.src}
+                            alt={beat.alt}
+                            width={beat.image.width}
+                            height={beat.image.height}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <FilmStatic />
+                        </div>
+                      </figure>
+                    ))
+                  }
+                </div>
+              </div>
+              <div
+                class="practice-perfs practice-perfs-bottom"
+                aria-hidden="true"
+              >
               </div>
             </div>
-          </figure>
+          </div>
 
-          <ol class="practice-track">
+          <ol class="practice-captions">
             {
-              practiceBeats.map((beat) => (
-                <li class="practice-beat" data-motion-group>
-                  <h3 data-motion="title">{beat.title}</h3>
-                  <p data-motion="copy">{beat.copy}</p>
+              practiceBeats.map((beat, index) => (
+                <li
+                  class:list={[index === 0 && 'is-current']}
+                  aria-current={index === 0 ? 'step' : undefined}
+                >
+                  <div class="practice-beat-heading">
+                    <span class="practice-number" aria-hidden="true">
+                      {beat.step}
+                    </span>
+                    <h3>{beat.title}</h3>
+                  </div>
+                  <p>{beat.copy}</p>
                 </li>
               ))
             }
@@ -370,27 +425,46 @@ const practiceBeats = [
           <CircleWords
             id="name-curve"
             class="portrait-ring"
-            words={['DESIGNER', 'DEVELOPER', 'MAKER']}
-            repeats={2}
+            words={[
+              'DESIGN',
+              'ARCHITECTURE',
+              'ENGINEERING',
+              'SEO',
+              'MAINTENANCE',
+            ]}
             radius={172}
             size={400}
           />
         </div>
         <div class="about-copy">
           <h2 id="about-title" data-motion="title">
-            <span class="title-line">A little</span>
+            <span class="title-line">A little bit</span>
             <span class="title-line title-outline">about me.</span>
           </h2>
           <p class="about-lede" data-motion="copy" data-motion-order="1">
-            I like being involved in both the design and the code. I might be
-            sketching a checkout one day and working on the database the next.
+            I like being involved from the idea all the way through launch. I
+            start with the customer problem. Building is the easy part. Fitting
+            it to how people actually work is where I shine.
           </p>
-          <p data-motion="copy" data-motion-order="2">
-            I'm based in Bulgaria and work as a full-stack developer at Vention.
-            I also build independent projects, including the ones above. I enjoy
-            working through tricky problems and making the result
-            straightforward to use.
-          </p>
+          <ul
+            class="about-tally"
+            aria-label="Experience"
+            data-motion="detail"
+            data-motion-order="2"
+          >
+            <li>
+              <strong>10+</strong>
+              <span>projects</span>
+            </li>
+            <li>
+              <strong>4+</strong>
+              <span>YOE</span>
+            </li>
+            <li>
+              <strong>AI</strong>
+              <span>enabled</span>
+            </li>
+          </ul>
         </div>
       </section>
 

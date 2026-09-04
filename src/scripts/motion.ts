@@ -138,7 +138,8 @@ export function initMotion(signal: AbortSignal): () => void {
       cue.element.closest('.reel-project:nth-child(even)')
         ? -1
         : 1;
-    const travels = cue.kind === 'cel' || cue.kind === 'action';
+    const travels =
+      cue.kind === 'cel' || cue.kind === 'action' || cue.kind === 'slide';
     let celDuration = 0;
 
     actors.forEach((actor, index) => {
@@ -160,8 +161,8 @@ export function initMotion(signal: AbortSignal): () => void {
         entrance?.start,
       );
       if (cue.kind === 'cel') celDuration = performance.duration;
-      let stagger = words.length ? Math.min(index * (short ? 38 : 48), 240) : 0;
-      if (buttons.length > 1) stagger = index * (short ? 80 : 100);
+      let stagger = words.length ? Math.min(index * (short ? 24 : 30), 140) : 0;
+      if (buttons.length > 1) stagger = index * (short ? 44 : 56);
       if (wires.length && actor instanceof SVGPathElement) {
         const length = actor.getTotalLength();
         performance.frames = [
@@ -177,8 +178,8 @@ export function initMotion(signal: AbortSignal): () => void {
             opacity: 1,
           },
         ];
-        performance.duration = 380;
-        stagger = index * 120;
+        performance.duration = 280;
+        stagger = index * 64;
       }
       cue.animations.push(
         actor.animate(performance.frames, {
@@ -214,12 +215,21 @@ export function initMotion(signal: AbortSignal): () => void {
             { opacity: 1, scale: '1 1', rotate: '0deg' },
           ],
           {
-            duration: short ? 460 : 560,
-            delay: delay + Math.round(celDuration * 0.62),
+            duration: short ? 400 : 480,
+            delay: delay + Math.round(celDuration * 0.42),
             fill: 'both',
           },
         ),
       );
+    }
+
+    if (
+      cue.kind === 'slide' &&
+      cue.element.classList.contains('contact-stage')
+    ) {
+      window.setTimeout(() => {
+        if (!signal.aborted) cue.element.classList.add('is-wobbling');
+      }, delay + 50);
     }
 
     void Promise.allSettled(
@@ -253,37 +263,38 @@ export function initMotion(signal: AbortSignal): () => void {
       const siblingIndex = siblings ? Array.from(siblings).indexOf(group) : 0;
       if (
         group.matches(
-          '.practice-beat, .decision-row > div, .decision-ledger > div',
+          '.decision-row > div, .decision-ledger > div',
         )
       ) {
-        cursor += Math.min(siblingIndex, 3) * 130;
+        cursor += Math.min(siblingIndex, 3) * 64;
       }
-      cursor = Math.min(cursor, now + 900);
+      cursor = Math.min(cursor, now + 420);
       if (group instanceof HTMLElement)
         group.style.setProperty('--motion-group-delay', `${cursor - now}ms`);
       batch
         .sort((a, b) => a.order - b.order)
         .forEach((cue) => {
-          // Preserve each title/copy pair even when a nested scene joins late.
+          // The next cue starts while this one is still settling, so a scene
+          // reads as one beat instead of a queue of isolated pops.
           play(cue, cursor - now);
           const wordCount = cue.element.querySelectorAll('.motion-word').length;
           const titleLead =
-            (compact.matches ? 480 : 570) +
-            Math.min(Math.max(0, wordCount - 1) * 32, 170);
+            (compact.matches ? 210 : 260) +
+            Math.min(Math.max(0, wordCount - 1) * 20, 80);
           cursor +=
             cue.kind === 'title'
               ? titleLead
               : cue.kind === 'copy'
-                ? 210
+                ? 90
                 : cue.kind === 'line'
-                  ? 380
+                  ? 180
                   : cue.element.classList.contains('node-catalog')
-                    ? 440
+                    ? 200
                     : cue.group.classList.contains('system-map')
-                      ? 120
+                      ? 56
                       : cue.kind === 'cel' || cue.kind === 'slide'
-                        ? 180
-                        : 90;
+                        ? 70
+                        : 48;
         });
       groupClocks.set(group, cursor);
     });
@@ -336,7 +347,7 @@ export function initMotion(signal: AbortSignal): () => void {
       });
       queue();
     },
-    { threshold: 0, rootMargin: '0px 0px -4% 0px' },
+    { threshold: 0, rootMargin: '0px 0px -15% 0px' },
   );
   const loopObserver = new IntersectionObserver(
     (entries) => {
@@ -358,17 +369,31 @@ export function initMotion(signal: AbortSignal): () => void {
   });
   loops.forEach((loop) => loopObserver.observe(loop));
 
-  // Follow the existing gate without changing any hero choreography or timing.
+  // Start the scene while the shutters are still parting, not after they park.
+  const cssMs = (token: string, fallback: number) => {
+    const value = getComputedStyle(document.documentElement)
+      .getPropertyValue(token)
+      .trim()
+      .toLowerCase();
+    const parsed = Number.parseFloat(value);
+    if (!Number.isFinite(parsed) || parsed < 0) return fallback;
+    if (value.endsWith('ms')) return parsed;
+    if (value.endsWith('s')) return parsed * 1000;
+    return fallback;
+  };
   const awaitGate = () => {
     if (ready || readyTimer || !document.body.classList.contains('is-ready'))
       return;
+    const gateReady = Math.round(
+      cssMs('--gate-open-delay', 120) + cssMs('--gate-open', 620) * 0.28,
+    );
     readyTimer = window.setTimeout(
       () => {
         ready = true;
         syncLoops();
         queue();
       },
-      reduced.matches ? 0 : 740,
+      reduced.matches ? 0 : gateReady,
     );
   };
   const gateObserver = new MutationObserver(awaitGate);

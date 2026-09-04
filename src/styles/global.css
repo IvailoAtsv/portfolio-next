@@ -88,7 +88,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 7rem;
   background: var(--ink);
 }
@@ -96,7 +95,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--ink);
   color: var(--ink);
   font-family: var(--font-body);
@@ -188,7 +187,7 @@ ol {
   z-index: 1;
   width: min(100% - 12px, 1800px);
   margin: 6px auto;
-  overflow: clip;
+  overflow: visible;
   border: var(--line) solid var(--ink);
   border-radius: 30px;
   background: var(--paper);
@@ -373,6 +372,8 @@ ol {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  overflow: clip;
+  border-radius: 28px 28px 0 0;
   padding: clamp(1rem, 2vw, 1.65rem) clamp(1rem, 4vw, 4.5rem);
 }
 
@@ -1346,11 +1347,16 @@ a:hover .arrow-icon {
   letter-spacing: 0;
 }
 
+.reel-seal [data-circle-sep] {
+  fill: var(--ink);
+}
+
 .tone-red .seal-disc {
   fill: var(--red);
 }
 
 .tone-red .reel-seal text,
+.tone-red .reel-seal [data-circle-sep],
 .tone-red .seal-dot {
   fill: var(--paper-light);
 }
@@ -1398,19 +1404,46 @@ a:hover .arrow-icon {
 }
 
 /* ---------------------------------------------------------------------------
-   Practice
+   Practice — a 35mm reel through a studio projector gate
    ------------------------------------------------------------------------- */
 
 .practice-section {
-  padding: clamp(2.75rem, 5.5vw, 4.5rem) clamp(1rem, 4vw, 4.5rem);
+  --cel-width: min(34rem, 64vw);
+  --perf-size: 1.15rem;
+  --tape-gap: 0.55rem;
+  --caption-from: 1.4rem;
+  --caption-out: -1rem;
+  --sprocket: 0px;
+  position: relative;
   border-top: 3px solid var(--ink);
   border-bottom: 3px solid var(--ink);
-  background: var(--yellow);
+  background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
 }
 
-.practice-inner {
-  max-width: 72rem;
-  margin: 0 auto;
+.pin-spacer:has(> .practice-section) {
+  background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
+}
+
+.practice-section[data-reel-mode='pinned'] {
+  display: flex;
+  min-height: 100dvh;
+  touch-action: pan-y;
+}
+
+.practice-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 1.15rem 0 1.85rem;
+  background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
+}
+
+.practice-heading {
+  width: 100%;
+  padding-inline: clamp(1rem, 4vw, 4.5rem);
 }
 
 .practice-section h2 {
@@ -1419,126 +1452,238 @@ a:hover .arrow-icon {
   text-align: center;
 }
 
-.practice-stage {
-  position: relative;
-  width: min(100%, 54rem, calc(40vh * 16 / 9));
-  margin: clamp(1.35rem, 2.2vw, 2rem) auto 0;
-  border-radius: 22px 30px 24px 32px;
-  box-shadow: var(--shadow-soft);
+.practice-intro {
+  max-width: 34rem;
+  margin: 0.55rem auto 0;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.3;
+  text-align: center;
+  text-wrap: balance;
 }
 
-/* Clip and image live on a promoted frame so the shadow is not re-rasterized. */
-.practice-frame {
+.practice-projector {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+}
+
+.practice-stock {
+  display: grid;
+  grid-template-rows: var(--perf-size) auto var(--perf-size);
+  width: 100%;
+  border-block: 2px solid color-mix(in srgb, var(--paper-light) 18%, var(--ink));
+  background: var(--ink);
+  box-shadow:
+    0 1px 0 rgba(250, 247, 237, 0.14) inset,
+    0 18px 36px rgba(17, 17, 15, 0.28);
+}
+
+.practice-perfs {
+  background-color: var(--ink);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='16' viewBox='0 0 36 16'%3E%3Crect x='6' y='4' width='16' height='8' rx='1.6' fill='%23faf7ed'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: var(--sprocket, 0px) center;
+  background-size: 2.25rem 100%;
+}
+
+.practice-viewport {
   position: relative;
   overflow: hidden;
-  border: 2px solid var(--ink);
-  border-radius: inherit;
+  width: 100%;
+  background: var(--ink);
+  container-type: inline-size;
+}
+
+.practice-section[data-reel-mode='pinned'] .practice-viewport::before {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgb(17 17 15 / 0.7) 0%,
+    rgb(17 17 15 / 0.42) calc(50% - var(--cel-width) / 2 - 1.15rem),
+    transparent calc(50% - var(--cel-width) / 2 + 0.35rem),
+    transparent calc(50% + var(--cel-width) / 2 - 0.35rem),
+    rgb(17 17 15 / 0.42) calc(50% + var(--cel-width) / 2 + 1.15rem),
+    rgb(17 17 15 / 0.7) 100%
+  );
+  content: '';
+}
+
+.practice-frames {
+  display: flex;
+  align-items: stretch;
+  gap: var(--tape-gap);
+  width: max-content;
+  background: var(--ink);
+}
+
+.practice-section.is-rolling .practice-frames {
+  will-change: transform;
+}
+
+.practice-cel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15rem var(--cel-width);
+  gap: 0.28rem;
+  margin: 0;
+  align-items: stretch;
+}
+
+.practice-edge {
+  align-self: center;
+  color: color-mix(in srgb, var(--paper-light) 78%, var(--ink));
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-orientation: mixed;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.practice-aperture {
+  overflow: hidden;
+  border-radius: 3px;
   background: var(--paper-light);
-  transform: translateZ(0);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--paper-light) 22%, var(--ink));
 }
 
-.practice-frame > .film-static {
-  z-index: 1;
-  top: 1.3rem;
-  bottom: 1.3rem;
-}
-
-.practice-stage img {
+.practice-aperture img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  object-position: center 58%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+  object-position: center;
 }
 
-.film-strip {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  left: 0;
-  height: 1.3rem;
-  overflow: hidden;
-  contain: paint;
-  isolation: isolate;
-  background-color: var(--ink);
-  transform: translateZ(0);
-}
-
-/* Transform the whole strip; do not animate SVG tiles (they re-paint).
-   Sprockets match the film-gate: short rectangles with a slight corner. */
-.film-sprockets {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -2.6rem;
-  width: calc(100% + 2.6rem);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='21' viewBox='0 0 42 21'%3E%3Crect x='15' y='6.5' width='12' height='8' rx='1.15' fill='%23faf7ed'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
-  background-position: 0 center;
-  background-size: 2.6rem 1.3rem;
-  transform: translate3d(0, 0, 0);
-  animation: strip-roll 1.6s linear infinite;
-  animation-play-state: var(--loop-state, running);
-}
-
-.film-strip-top {
-  top: 0;
-}
-
-.film-strip-bottom {
-  bottom: 0;
-}
-
-.practice-track {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem 2rem;
-  margin-top: 1.6rem;
-}
-
-.practice-beat {
+.practice-captions {
+  list-style: none;
   position: relative;
-  padding-top: 1.9rem;
+  width: min(34rem, calc(100% - 2rem));
+  min-height: 5.6rem;
+  margin: 0;
+  padding: 2.15rem 0.5rem 2.6rem;
   text-align: center;
 }
 
-.practice-beat::before {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 1.6rem;
-  content: '';
-  background: var(--ink);
-  transform: translateX(-50%);
+.practice-captions li {
+  display: grid;
+  justify-items: center;
 }
 
-.practice-beat::after {
-  position: absolute;
-  top: 1.3rem;
-  left: 50%;
-  width: 0.7rem;
-  height: 0.7rem;
-  content: '';
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  background: var(--paper-light);
-  transform: translateX(-50%);
+.practice-section[data-reel-mode='pinned'] .practice-captions {
+  display: grid;
+  overflow: hidden;
 }
 
-.practice-beat h3 {
+.practice-section[data-reel-mode='pinned'] .practice-captions li {
+  grid-area: 1 / 1;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.practice-section[data-reel-mode='pinned'] .practice-captions li.is-current {
+  pointer-events: auto;
+  opacity: 1;
+  animation: practice-caption-in 420ms var(--ease-out) both;
+}
+
+.practice-section[data-reel-mode='pinned'] .practice-captions li.is-leaving {
+  animation: practice-caption-out 280ms var(--ease-out) both;
+}
+
+.practice-section[data-reel-dir='-1'] {
+  --caption-from: -1.4rem;
+  --caption-out: 1rem;
+}
+
+.practice-section[data-reel-dir='1'] {
+  --caption-from: 1.4rem;
+  --caption-out: -1rem;
+}
+
+.practice-beat-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.practice-number {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.5vw, 2.15rem);
+  font-size: clamp(1.45rem, 2.1vw, 1.9rem);
+  font-variant-numeric: tabular-nums;
   font-weight: 700;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   line-height: 1;
 }
 
-.practice-beat p {
-  max-width: 24rem;
-  margin: 0.75rem auto 0;
-  font-size: 1.15rem;
-  line-height: 1.4;
+.practice-captions h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.practice-captions p {
+  max-width: 28rem;
+  margin: 0.4rem 0 0;
+  font-size: 1.1rem;
+  line-height: 1.32;
+  text-wrap: pretty;
+}
+
+.practice-section[data-reel-mode='free'] .practice-viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: var(--ink) var(--yellow);
+}
+
+.practice-section[data-reel-mode='free'] .practice-frames {
+  transform: none;
+  padding-inline: max(0px, calc(50cqw - (var(--cel-width) + 1.43rem) / 2));
+}
+
+.practice-section[data-reel-mode='free'] .practice-cel {
+  scroll-snap-align: center;
+}
+
+.practice-section[data-reel-mode='free'] .practice-aperture {
+  filter: none;
+  opacity: 1;
+}
+
+.practice-section[data-reel-mode='free'] .practice-viewport::before {
+  content: none;
+}
+
+.practice-section[data-reel-mode='free'] .practice-captions {
+  display: grid;
+  gap: 1.15rem;
+  min-height: 0;
+}
+
+@media (max-height: 740px) {
+  .practice-section {
+    --cel-width: min(28rem, 60vw);
+  }
+
+  .practice-section h2 {
+    font-size: clamp(2.6rem, 8vh, 4.4rem);
+  }
+
+  .practice-pin {
+    gap: 0.55rem;
+    padding: 0.9rem 0 1rem;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -1598,21 +1743,49 @@ a:hover .arrow-icon {
   letter-spacing: 0;
 }
 
+.portrait-ring [data-circle-sep] {
+  fill: var(--ink);
+}
+
 .about-copy {
   max-width: 50rem;
 }
 
 .about-copy .about-lede {
   margin-top: 2rem;
-  font-size: clamp(1.35rem, 2vw, 1.8rem);
-  line-height: 1.35;
+  font-size: clamp(1.28rem, 1.7vw, 1.55rem);
+  line-height: 1.32;
 }
 
-.about-copy > p:not(.about-lede) {
-  max-width: 65ch;
-  margin-top: 1.3rem;
+.about-tally {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 1.5rem;
+  margin-top: 1.85rem;
+  padding-top: 1.15rem;
+  border-top: 2px solid var(--ink);
+}
+
+.about-tally li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.38rem;
+}
+
+.about-tally strong {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.about-tally span {
   color: var(--ink-soft);
-  font-size: 1.18rem;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
 .about-links {
@@ -1628,12 +1801,12 @@ a:hover .arrow-icon {
 
 .contact-section {
   --contact-inline: clamp(1rem, 7vw, 8rem);
-  /* Elbow in the asset: terminus of the black sleeve, ~93% x / 96% y. */
+  /* Elbow: rounded stub at the right end of the sleeve, measured on the asset. */
   --hand-size: clamp(36rem, 46vw, 52rem);
-  --hand-elbow-x: 93%;
-  --hand-elbow-y: 96%;
+  --hand-elbow-x: 96.4%;
+  --hand-elbow-y: 87%;
   --hand-rot-a: -13deg;
-  --hand-rot-b: 15deg;
+  --hand-rot-b: -4deg;
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(22rem, 0.95fr);
@@ -1704,17 +1877,15 @@ a:hover .arrow-icon {
 
 .contact-hand {
   position: absolute;
-  /* Plant the elbow on the bottom-right corner; only the sleeve end clips. */
-  right: calc(var(--hand-size) * -0.07);
-  bottom: calc(var(--hand-size) * -0.03);
+  /* Keep the sleeve end on the right; sit the glove in the red, above the footer. */
+  right: calc(var(--hand-size) * -0.11);
+  bottom: 0;
   width: var(--hand-size);
   max-width: none;
   margin: 0;
   transform: rotate(var(--hand-rot-a));
   transform-origin: var(--hand-elbow-x) var(--hand-elbow-y);
-  /* The delay is the beat the hand holds after arriving, before it offers. */
-  animation: hand-swing 2.7s cubic-bezier(0.37, 0, 0.63, 1) 620ms infinite
-    alternate;
+  animation: hand-swing 2.3s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
   animation-play-state: var(--loop-state, running);
 }
 
@@ -1731,6 +1902,11 @@ a:hover .arrow-icon {
   padding: 2rem clamp(1rem, 4vw, 4.5rem);
   background: var(--ink);
   color: var(--paper-light);
+}
+
+.site-footer {
+  overflow: clip;
+  border-radius: 0 0 28px 28px;
 }
 
 .studio-mark-inverse {
@@ -1782,7 +1958,6 @@ a:hover .arrow-icon {
 
 /* Promote movers only while they are on screen so layers do not leak. */
 .js [data-loop].is-live .film-static::before,
-.js [data-loop].is-live .film-sprockets,
 .js [data-loop].is-live .portrait-ring,
 .js [data-loop].is-live .contact-hand,
 .js [data-loop].is-live .reel-seal svg,
@@ -1796,9 +1971,9 @@ a:hover .arrow-icon {
 }
 
 .js body.is-ready .pop {
-  animation: word-pop 640ms var(--ease-snap) both;
+  animation: word-pop 560ms var(--ease-snap) both;
   animation-delay: calc(
-    var(--gate-open-delay) + var(--gate-open) * 0.72 + var(--i, 0) * 110ms
+    var(--gate-open-delay) + var(--gate-open) * 0.28 + var(--i, 0) * 70ms
   );
 }
 
@@ -1808,9 +1983,9 @@ a:hover .arrow-icon {
 }
 
 .js body.is-ready .fade-up {
-  animation: fade-up 620ms var(--ease-out) both;
+  animation: fade-up 520ms var(--ease-out) both;
   animation-delay: calc(
-    var(--gate-open-delay) + var(--gate-open) + 180ms + var(--i, 0) * 110ms
+    var(--gate-open-delay) + var(--gate-open) * 0.48 + var(--i, 0) * 70ms
   );
 }
 
@@ -1821,8 +1996,8 @@ a:hover .arrow-icon {
 }
 
 .js body.is-ready .cel-enter {
-  animation: cel-enter 840ms linear
-    calc(var(--gate-open-delay) + var(--gate-open) * 0.6) both;
+  animation: cel-enter 720ms linear
+    calc(var(--gate-open-delay) + var(--gate-open) * 0.28) both;
 }
 
 .js .stage-sign {
@@ -1830,17 +2005,17 @@ a:hover .arrow-icon {
 }
 
 .js body.is-ready .stage-sign {
-  animation: sign-drop 700ms var(--ease-snap)
-    calc(var(--gate-open-delay) + var(--gate-open) + 560ms) both;
+  animation: sign-drop 560ms var(--ease-snap)
+    calc(var(--gate-open-delay) + var(--gate-open) * 0.55 + 180ms) both;
 }
 
 .js [data-reveal] {
   opacity: 0;
   transform: translateY(28px) rotate(-0.6deg);
   transition:
-    opacity 480ms var(--ease-out),
-    transform 560ms var(--ease-out);
-  transition-delay: calc(var(--i, 0) * 90ms);
+    opacity 400ms var(--ease-out),
+    transform 460ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 50ms);
 }
 
 .js [data-reveal].is-visible {
@@ -2530,9 +2705,25 @@ a:hover .arrow-icon {
   }
 }
 
-@keyframes strip-roll {
+@keyframes practice-caption-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--caption-from));
+  }
   to {
-    transform: translate3d(2.6rem, 0, 0);
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes practice-caption-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(var(--caption-out));
   }
 }
 
@@ -2788,46 +2979,6 @@ a:hover .arrow-icon {
     width: 5.25rem;
   }
 
-  .practice-stage {
-    width: min(100%, 42rem);
-  }
-
-  .practice-track {
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
-    margin-top: 2.5rem;
-  }
-
-  .practice-beat {
-    padding-top: 0;
-    padding-left: 1.6rem;
-    text-align: left;
-  }
-
-  .practice-beat::before {
-    top: 0.35rem;
-    bottom: -1.75rem;
-    left: 0.33rem;
-    width: 2px;
-    height: auto;
-    transform: none;
-  }
-
-  .practice-beat:last-child::before {
-    bottom: 0;
-  }
-
-  .practice-beat::after {
-    top: 0.25rem;
-    left: 0;
-    transform: none;
-  }
-
-  .practice-beat p {
-    margin-left: 0;
-    max-width: 32rem;
-  }
-
   .about-portrait {
     width: min(26rem, 85vw);
   }
@@ -2835,7 +2986,7 @@ a:hover .arrow-icon {
   .contact-section {
     --hand-size: min(32rem, 90vw);
     --hand-rot-a: -9deg;
-    --hand-rot-b: 11deg;
+    --hand-rot-b: -3deg;
   }
 
   .contact-copy {
@@ -2845,6 +2996,10 @@ a:hover .arrow-icon {
   .contact-stage {
     min-height: 28rem;
     margin-top: 0;
+  }
+
+  .contact-hand {
+    bottom: 0.75rem;
   }
 
   .site-footer {
@@ -2952,6 +3107,22 @@ a:hover .arrow-icon {
   }
 }
 
+@media (max-width: 700px) {
+  .practice-section {
+    --cel-width: min(22.75rem, 78vw);
+    --perf-size: 1.05rem;
+  }
+
+  .practice-captions {
+    width: min(36rem, calc(100% - 1.7rem));
+    min-height: 0;
+  }
+
+  .practice-captions p {
+    max-width: 32rem;
+  }
+}
+
 @media (max-width: 520px) {
   .site-header {
     gap: 1rem;
@@ -3015,7 +3186,6 @@ a:hover .arrow-icon {
   }
 
   .work-section,
-  .practice-section,
   .about-section,
   .contact-section {
     padding-inline: 0.85rem;
@@ -3060,8 +3230,8 @@ a:hover .arrow-icon {
     display: none;
   }
 
-  .practice-stage {
-    width: 100%;
+  .practice-heading {
+    padding-inline: 0.85rem;
   }
 
   .about-section {
@@ -3078,7 +3248,7 @@ a:hover .arrow-icon {
     --contact-inline: 0.85rem;
     --hand-size: min(24rem, 98vw);
     --hand-rot-a: -8deg;
-    --hand-rot-b: 10deg;
+    --hand-rot-b: -3deg;
     gap: 0.3rem;
   }
 
@@ -3089,6 +3259,10 @@ a:hover .arrow-icon {
   .contact-stage {
     min-height: 22.25rem;
     margin-top: 0;
+  }
+
+  .contact-hand {
+    bottom: 1.1rem;
   }
 
   .site-footer {

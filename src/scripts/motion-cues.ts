@@ -39,7 +39,7 @@ export function performanceFor(
 
   if (kind === 'title')
     return {
-      duration: compact ? 530 : 650,
+      duration: compact ? 460 : 560,
       frames: [
         { ...pose(0, '0px 0.44em', '1.12 0.32', -7 * direction), opacity: 0 },
         pose(0.3, '0px -0.12em', '0.91 1.15', 2.5 * direction, into),
@@ -53,7 +53,7 @@ export function performanceFor(
   // slides a little past its mark with a brief squash, and settles back.
   if (kind === 'action')
     return {
-      duration: compact ? 520 : 600,
+      duration: compact ? 450 : 520,
       frames: [
         pose(0, `${start}px 0px`, '1 1', 3 * direction),
         pose(0.66, `${12 * back}px 0px`, '1.035 0.965', -0.9 * direction),
@@ -64,7 +64,7 @@ export function performanceFor(
 
   if (kind === 'stamp')
     return {
-      duration: compact ? 440 : 560,
+      duration: compact ? 380 : 480,
       frames: [
         {
           ...pose(0, '0px -24px', '0.78 1.15', -8 * direction, into),
@@ -77,32 +77,42 @@ export function performanceFor(
       ],
     };
 
-  // A picture is pushed in from off-stage on its nearest side, leaning into
-  // the move, slides just past its mark and eases back. No growing in place.
+  // Same squash-stretch family as the titles: whoosh in, plant, rebound.
+  // The picture arrives on the title's 0.3 beat so the two read as one scene.
+  // Extra off-stage clearance covers the opening smear (origin is centred).
   if (kind === 'cel') {
-    const over = compact ? 10 : 16;
+    const over = compact ? 16 : 26;
+    const from =
+      start + (Math.sign(start) || -direction) * (compact ? 56 : 88);
     return {
-      duration: compact ? 660 : 800,
+      duration: compact ? 480 : 580,
       frames: [
-        pose(0, `${start}px 0px`, '1 1', 2.2 * direction),
-        pose(0.7, `${over * back}px 0px`, '1 1', -0.6 * direction),
-        pose(0.87, `${-over * 0.25 * back}px 0px`, '1 1', 0.15 * direction),
+        pose(0, `${from}px 0.28em`, compact ? '1.14 0.78' : '1.18 0.7', -7 * direction),
+        pose(
+          0.3,
+          `${over * back}px -0.1em`,
+          compact ? '0.9 1.12' : '0.86 1.16',
+          2.5 * direction,
+          into,
+        ),
+        pose(0.53, `${-over * 0.28 * back}px 0.03em`, '1.06 0.92', -1.2 * direction),
+        pose(0.74, `${over * 0.08 * back}px -0.02em`, '0.99 1.025', 0.4 * direction),
         { ...rest, offset: 1 },
       ],
     };
   }
 
-  // A prop enters from off-stage on its side, overshoots past its mark, and
-  // eases back onto it. The stage that holds it decides what happens next.
+  // A prop glides on from off-stage in one decelerating move. Segmented
+  // ease-outs stacked here used to kick the velocity at each key, which
+  // read as a choppy slide on the contact hand.
   if (kind === 'slide') {
-    const from = -direction;
     return {
-      duration: compact ? 820 : 960,
+      duration: compact ? 760 : 920,
       frames: [
-        { ...pose(0, `${72 * from}% 0px`, '1 1'), opacity: 0 },
-        { ...pose(0.18, `${52 * from}% 0px`, '1 1'), opacity: 1 },
-        pose(0.7, `${-2.4 * from}% 0px`, '1 1'),
-        pose(0.88, `${0.7 * from}% 0px`, '1 1'),
+        {
+          ...pose(0, `${start}px 0px`, '1 1'),
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        },
         { ...rest, offset: 1 },
       ],
     };
@@ -111,7 +121,7 @@ export function performanceFor(
   // Chips, captions and facts pop a little rather than sliding in.
   if (kind === 'detail')
     return {
-      duration: compact ? 320 : 380,
+      duration: compact ? 270 : 320,
       frames: [
         { ...pose(0, '0px 8px', '0.94 0.94'), opacity: 0 },
         { ...pose(0.62, '0px -1px', '1.015 1.015'), opacity: 1 },
@@ -120,7 +130,7 @@ export function performanceFor(
     };
 
   return {
-    duration: compact ? 300 : 360,
+    duration: compact ? 250 : 300,
     frames: [
       { opacity: 0, translate: '0px 14px', easing: out },
       { opacity: 1, translate: '0px 0px' },

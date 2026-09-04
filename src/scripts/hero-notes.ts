@@ -12,14 +12,22 @@ export function initHeroNotes(signal: AbortSignal): () => void {
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const flights = new Map<SVGSVGElement, Animation>();
+  const cel = stage.querySelector<HTMLElement>('.cel-enter');
   let timer: number | undefined;
   let visible = false;
   let disposed = false;
+  // The picture slides on from the right; notes wait until that settle, not
+  // the moment the stage is merely on screen.
+  let settled =
+    !cel ||
+    reducedMotion.matches ||
+    !document.documentElement.classList.contains('js');
 
   const canPlay = () =>
     !disposed &&
     !signal.aborted &&
     visible &&
+    settled &&
     !document.hidden &&
     !reducedMotion.matches;
 
@@ -100,6 +108,37 @@ export function initHeroNotes(signal: AbortSignal): () => void {
     stop();
     if (canPlay()) schedule(randomBetween(450, 800));
   };
+
+  const markSettled = () => {
+    if (settled || disposed) return;
+    settled = true;
+    syncPlayback();
+  };
+
+  const followCel = () => {
+    const entrance = cel
+      ?.getAnimations()
+      .find(
+        (animation): animation is CSSAnimation =>
+          animation instanceof CSSAnimation &&
+          animation.animationName === 'cel-enter',
+      );
+    if (!entrance) return false;
+    void entrance.finished.then(markSettled, () => {
+      if (entrance.playState === 'finished') markSettled();
+    });
+    return true;
+  };
+
+  if (!settled && !followCel()) {
+    cel?.addEventListener(
+      'animationstart',
+      (event) => {
+        if (event.animationName === 'cel-enter') followCel();
+      },
+      { signal },
+    );
+  }
 
   const observer = new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;

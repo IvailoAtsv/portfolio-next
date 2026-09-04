@@ -15,7 +15,7 @@
   transform-origin: 50% 85%;
 }
 
-/* Pictures grow up from their base, the way a cel is set down on the stand. */
+/* Pictures plant from their base, the way a cel is set down on the stand. */
 [data-motion='cel'] {
   transform-origin: 50% 80%;
 }
@@ -42,74 +42,18 @@
   transform-origin: 50% 50%;
 }
 
-/* The hand slides in, holds its mark, and only then begins to offer the
-   envelope. The swing's own delay is the hold; pausing it during the entrance
-   keeps that delay from running early. */
-.contact-stage:is([data-motion-state='pending'], [data-motion-state='running'])
+/* Hold the idle loop until JS marks the slide as moving. That flag is set
+   50ms after the hand starts coming on-stage. */
+.contact-stage:is(
+    [data-motion-state='pending'],
+    [data-motion-state='running']:not(.is-wobbling)
+  )
   .contact-hand {
-  animation-play-state: paused;
-}
-
-.practice-beat[data-motion-group]::before {
-  --connector-start: 0 1;
-  transform-origin: left center;
-}
-
-.practice-beat[data-motion-group]::after {
-  transform-origin: center;
-}
-
-.practice-beat[data-motion-group]:has(> [data-motion-state='pending'])::before {
-  scale: var(--connector-start);
-}
-
-.practice-beat[data-motion-group]:has(> [data-motion-state='pending'])::after {
-  scale: 0;
-}
-
-.practice-beat[data-motion-group]:has(> [data-motion-state='running'])::before {
-  animation: practice-connector 440ms var(--ease-out)
-    var(--motion-group-delay, 0ms) both;
-}
-
-.practice-beat[data-motion-group]:has(> [data-motion-state='running'])::after {
-  animation: practice-dot 460ms var(--ease-out)
-    calc(var(--motion-group-delay, 0ms) + 180ms) both;
+  animation: none;
 }
 
 .site-footer .footer-signoff[data-motion-state='running'] {
   transform-origin: right bottom;
-}
-
-@keyframes practice-connector {
-  from {
-    scale: var(--connector-start);
-  }
-  to {
-    scale: 1 1;
-  }
-}
-
-@keyframes practice-dot {
-  0% {
-    scale: 0;
-  }
-  62% {
-    scale: 1.28 0.9;
-  }
-  82% {
-    scale: 0.95 1.07;
-  }
-  100% {
-    scale: 1;
-  }
-}
-
-@media (max-width: 1024px) {
-  .practice-beat[data-motion-group]::before {
-    --connector-start: 1 0;
-    transform-origin: center top;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -122,14 +66,12 @@
   }
 
   [data-motion] .motion-word,
-  .practice-beat[data-motion-group]::before,
-  .practice-beat[data-motion-group]::after {
+  .practice-captions li {
     animation: none !important;
   }
 
-  .practice-beat[data-motion-group]::before,
-  .practice-beat[data-motion-group]::after {
-    scale: 1 !important;
+  .practice-section[data-reel-mode='pinned'] .practice-captions li.is-current {
+    opacity: 1;
   }
 }
 

@@ -1,5 +1,6 @@
 import { initHeroNotes } from './hero-notes';
 import { initMotion } from './motion';
+import { initPracticeReel } from './practice-reel';
 
 let cleanupPage = () => {};
 
@@ -13,10 +14,12 @@ document.addEventListener('astro:page-load', () => {
   const observers: IntersectionObserver[] = [];
   const stopMotion = initMotion(signal);
   const stopHeroNotes = initHeroNotes(signal);
+  const stopPracticeReel = initPracticeReel(signal);
   cleanupPage = () => {
     controller.abort();
     stopMotion();
     stopHeroNotes();
+    stopPracticeReel();
     observers.forEach((observer) => observer.disconnect());
   };
 

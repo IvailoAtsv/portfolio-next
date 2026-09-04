@@ -12,7 +12,7 @@ interface Props {
 const {
   id,
   words,
-  separator = '•',
+  separator = '·',
   repeats = 1,
   radius,
   size = 400,
@@ -23,6 +23,15 @@ const cx = size / 2;
 const cy = size / 2;
 const sequence = Array.from({ length: repeats }, () => words).flat();
 const wordCount = sequence.length;
+const showSeps = Boolean(separator) && wordCount > 0;
+const sepRadius = Math.max(1.7, size * 0.017);
+const sepPositions = sequence.map((_, index) => {
+  const angle = ((index + 1) / wordCount) * Math.PI * 2 - Math.PI / 2;
+  return {
+    x: +(cx + radius * Math.cos(angle)).toFixed(2),
+    y: +(cy + radius * Math.sin(angle)).toFixed(2),
+  };
+});
 ---
 
 <svg
@@ -35,7 +44,7 @@ const wordCount = sequence.length;
   <path
     id={id}
     data-circle-path
-    d={`M ${cx} ${cy - radius} a ${radius} ${radius} 0 1 1 0 ${radius * 2} a ${radius} ${radius} 0 1 1 0 ${-radius * 2} Z`}
+    d={`M ${cx} ${cy - radius} a ${radius} ${radius} 0 1 1 0 ${radius * 2} a ${radius} ${radius} 0 1 1 0 ${-radius * 2}`}
     fill="none"></path>
   {
     sequence.map((word, index) => (
@@ -52,18 +61,10 @@ const wordCount = sequence.length;
     ))
   }
   {
-    sequence.map((_, index) => (
-      <text>
-        <textPath
-          href={`#${id}`}
-          data-circle-sep
-          startOffset={`${((index + 0.95) / wordCount) * 100}%`}
-          text-anchor="middle"
-        >
-          {separator}
-        </textPath>
-      </text>
-    ))
+    showSeps &&
+      sepPositions.map((point) => (
+        <circle data-circle-sep cx={point.x} cy={point.y} r={sepRadius} />
+      ))
   }
   <slot />
 </svg>
@@ -77,6 +78,9 @@ const wordCount = sequence.length;
     const width = token.getComputedTextLength();
     let start = ((center - width / 2) % pathLength) + pathLength;
     start %= pathLength;
+    if (start + width > pathLength) {
+      start = Math.max(0, pathLength - width - 0.5);
+    }
     token.setAttribute('text-anchor', 'start');
     token.setAttribute('startOffset', String(start));
   };
@@ -87,7 +91,7 @@ const wordCount = sequence.length;
       ...svg.querySelectorAll<SVGTextPathElement>('[data-circle-word]'),
     ];
     const separators = [
-      ...svg.querySelectorAll<SVGTextPathElement>('[data-circle-sep]'),
+      ...svg.querySelectorAll<SVGCircleElement>('[data-circle-sep]'),
     ];
     if (!path || words.length === 0) return;
 
@@ -101,12 +105,20 @@ const wordCount = sequence.length;
     const gap = (pathLength - totalWordWidth) / words.length;
     if (gap <= 0) return;
 
+    const fontSize = parseFloat(getComputedStyle(words[0]).fontSize) || 16;
+    const sepRadius = Math.max(1.6, fontSize * 0.12);
+
     let cursor = gap / 2;
     words.forEach((word, index) => {
       placeOnPath(word, cursor + wordWidths[index] / 2, pathLength);
       cursor += wordWidths[index];
-      if (separators[index]) {
-        placeOnPath(separators[index], cursor + gap / 2, pathLength);
+      const sep = separators[index];
+      if (sep) {
+        const at = (cursor + gap / 2) % pathLength;
+        const point = path.getPointAtLength(at);
+        sep.setAttribute('cx', String(point.x));
+        sep.setAttribute('cy', String(point.y));
+        sep.setAttribute('r', String(sepRadius));
       }
       cursor += gap;
     });
