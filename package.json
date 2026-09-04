@@ -16,7 +16,6 @@
     "@fontsource/barlow-condensed": "latest",
     "@tailwindcss/vite": "latest",
     "astro": "latest",
-    "gsap": "^3.15.0",
     "tailwindcss": "latest"
   },
   "devDependencies": {

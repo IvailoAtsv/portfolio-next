@@ -147,7 +147,6 @@ export function initHeroNotes(signal: AbortSignal): () => void {
   observer.observe(stage);
   document.addEventListener('visibilitychange', syncPlayback, { signal });
   reducedMotion.addEventListener('change', syncPlayback, { signal });
-  window.addEventListener('resize', syncPlayback, { signal, passive: true });
 
   return () => {
     disposed = true;

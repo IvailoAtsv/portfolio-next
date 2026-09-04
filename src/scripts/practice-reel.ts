@@ -106,7 +106,19 @@ export function initPracticeReel(signal: AbortSignal): () => void {
   );
 
   viewport.addEventListener('scroll', onScroll, { passive: true, signal });
-  window.addEventListener('resize', onScroll, { signal });
+
+  // iOS Safari fires resize when the chrome hides on the first scroll.
+  // Only remeasure when the width actually changes.
+  let viewportWidth = window.innerWidth;
+  window.addEventListener(
+    'resize',
+    () => {
+      if (window.innerWidth === viewportWidth) return;
+      viewportWidth = window.innerWidth;
+      onScroll();
+    },
+    { signal },
+  );
 
   sync();
 

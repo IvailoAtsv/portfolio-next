@@ -25,9 +25,9 @@ document.addEventListener('astro:page-load', () => {
 
   const revealItems = document.querySelectorAll('[data-reveal]');
   const loopItems = document.querySelectorAll('.hero-stage[data-loop]');
+  loopItems.forEach((item) => item.classList.add('is-live'));
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     revealItems.forEach((item) => item.classList.add('is-visible'));
-    loopItems.forEach((item) => item.classList.add('is-live'));
   } else {
     const revealObserver = new IntersectionObserver(
       (entries) => {
@@ -41,17 +41,7 @@ document.addEventListener('astro:page-load', () => {
       { rootMargin: '0px 0px -8%', threshold: 0.1 },
     );
     revealItems.forEach((item) => revealObserver.observe(item));
-
-    const loopObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          entry.target.classList.toggle('is-live', entry.isIntersecting);
-        });
-      },
-      { rootMargin: '10% 0px' },
-    );
-    loopItems.forEach((item) => loopObserver.observe(item));
-    observers.push(revealObserver, loopObserver);
+    observers.push(revealObserver);
   }
 
   document.querySelectorAll('[data-squash]').forEach((control) => {

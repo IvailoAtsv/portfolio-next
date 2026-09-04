@@ -89,6 +89,7 @@
 
 html {
   scroll-padding-top: 7rem;
+  overflow-x: clip;
   background: var(--ink);
 }
 
@@ -2040,15 +2041,6 @@ a:hover .arrow-icon {
 
 .js [data-loop].is-live {
   --loop-state: running;
-}
-
-/* Promote movers only while they are on screen so layers do not leak. */
-.js [data-loop].is-live .film-static::before,
-.js [data-loop].is-live .portrait-ring,
-.js [data-loop].is-live .contact-hand,
-.js [data-loop].is-live .reel-seal svg,
-.js [data-loop].is-live.wave-divider svg {
-  will-change: transform;
 }
 
 .js .pop {

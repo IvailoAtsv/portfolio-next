@@ -92,7 +92,6 @@ export function initMotion(signal: AbortSignal): () => void {
   const loops = Array.from(
     document.querySelectorAll<HTMLElement>('[data-loop]:not(.hero-stage)'),
   );
-  const liveLoops = new Set<Element>();
   const groupClocks = new Map<Element, number>();
   let centredCels = 0;
   let ready = false;
@@ -261,11 +260,7 @@ export function initMotion(signal: AbortSignal): () => void {
       );
       const siblings = group.parentElement?.children;
       const siblingIndex = siblings ? Array.from(siblings).indexOf(group) : 0;
-      if (
-        group.matches(
-          '.decision-row > div, .decision-ledger > div',
-        )
-      ) {
+      if (group.matches('.decision-row > div, .decision-ledger > div')) {
         cursor += Math.min(siblingIndex, 3) * 64;
       }
       cursor = Math.min(cursor, now + 420);
@@ -305,9 +300,7 @@ export function initMotion(signal: AbortSignal): () => void {
   const syncLoops = () => {
     const canPlay = ready && !document.hidden && !reduced.matches;
     document.body.classList.toggle('motion-paused', !canPlay);
-    loops.forEach((loop) =>
-      loop.classList.toggle('is-live', canPlay && liveLoops.has(loop)),
-    );
+    loops.forEach((loop) => loop.classList.toggle('is-live', canPlay));
   };
 
   // No stylesheet hides content until this controller has successfully started.
@@ -347,17 +340,7 @@ export function initMotion(signal: AbortSignal): () => void {
       });
       queue();
     },
-    { threshold: 0, rootMargin: '0px 0px -15% 0px' },
-  );
-  const loopObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) liveLoops.add(entry.target);
-        else liveLoops.delete(entry.target);
-      });
-      syncLoops();
-    },
-    { threshold: 0 },
+    { threshold: 0, rootMargin: '0px 0px 25% 0px' },
   );
 
   cues.forEach((cue) => {
@@ -367,7 +350,6 @@ export function initMotion(signal: AbortSignal): () => void {
       cue.group.classList.contains('system-map') ? cue.group : cue.element,
     );
   });
-  loops.forEach((loop) => loopObserver.observe(loop));
 
   // Start the scene while the shutters are still parting, not after they park.
   const cssMs = (token: string, fallback: number) => {
@@ -453,7 +435,6 @@ export function initMotion(signal: AbortSignal): () => void {
     clearTimeout(failOpen);
     gateObserver.disconnect();
     revealObserver.disconnect();
-    loopObserver.disconnect();
     cues.forEach(finish);
     loops.forEach((loop) => loop.classList.remove('is-live'));
     groupClocks.clear();
