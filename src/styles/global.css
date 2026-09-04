@@ -186,14 +186,24 @@ ol {
    ------------------------------------------------------------------------- */
 
 .site-shell {
+  --shell-radius: 30px;
   position: relative;
   z-index: 1;
   width: min(100% - 12px, 1800px);
   margin: 6px auto;
   overflow: visible;
   border: var(--line) solid var(--ink);
-  border-radius: 30px;
+  border-radius: var(--shell-radius);
   background: var(--paper);
+}
+
+/* Cover the bottom corner crescents in red so a child radius cannot leak paper. */
+.site-shell:has(> .site-footer) {
+  background-color: var(--red-field);
+  background-image: linear-gradient(var(--paper), var(--paper));
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 100% calc(100% - var(--shell-radius));
 }
 
 .skip-link {
@@ -2018,8 +2028,10 @@ a:hover .arrow-icon {
 }
 
 .site-footer {
+  /* Follow the shell's inner curve so paper cannot leak at the red corners. */
+  --shell-inner-radius: max(0px, calc(var(--shell-radius) - var(--line)));
   overflow: clip;
-  border-radius: 0 0 28px 28px;
+  border-radius: 0 0 var(--shell-inner-radius) var(--shell-inner-radius);
   background: var(--red-field);
   color: var(--ink);
   padding-top: clamp(3.75rem, 7vw, 5.5rem);
@@ -2916,9 +2928,9 @@ a:hover .arrow-icon {
   }
 
   .site-shell {
+    --shell-radius: 22px;
     width: calc(100% - 8px);
     margin: 4px auto;
-    border-radius: 22px;
   }
 
   .desktop-nav {
