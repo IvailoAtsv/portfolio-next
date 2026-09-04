@@ -212,6 +212,27 @@ ol {
   transform: translateY(0);
 }
 
+/* Safari samples background-color (not opacity) from fixed elements that
+   touch a viewport edge and span at least 80% of its width. */
+.safari-tint {
+  position: fixed;
+  z-index: 300;
+  right: 0;
+  left: 0;
+  height: 12px;
+  background-color: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.safari-tint-top {
+  top: 0;
+}
+
+.safari-tint-bottom {
+  bottom: 0;
+}
+
 /* ---------------------------------------------------------------------------
    Film gate
    ------------------------------------------------------------------------- */
@@ -1417,7 +1438,10 @@ a:hover .arrow-icon {
   position: relative;
   border-top: 3px solid var(--ink);
   border-bottom: 3px solid var(--ink);
-  background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
+  /* This wrapper is sticky and full-height while the reel plays, so Safari
+     would sample its color for the bars. The yellow is painted by
+     .practice-pin, which fills it, so the wrapper itself stays transparent. */
+  background: transparent;
 }
 
 .pin-spacer:has(> .practice-section) {
