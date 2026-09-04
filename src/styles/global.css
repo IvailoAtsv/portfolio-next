@@ -1472,7 +1472,14 @@ a:hover .arrow-icon {
   gap: 0.35rem;
   width: 100%;
   padding: 1.15rem 0 1.85rem;
-  background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
+  /* Painted as a flat gradient on purpose: this sits inside the sticky reel
+     wrapper and Safari 26 reads background-color (never background-image)
+     from sticky content to tint its bars. Same yellow, invisible to Safari. */
+  background-color: transparent;
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--yellow) 62%, var(--paper-light)),
+    color-mix(in srgb, var(--yellow) 62%, var(--paper-light))
+  );
 }
 
 .practice-heading {
