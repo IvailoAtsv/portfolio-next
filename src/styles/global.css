@@ -1593,22 +1593,28 @@ a:hover .arrow-icon {
   object-position: center;
 }
 
-/* Winding controls: a row under the film on compact screens, and a pair of
-   round pill buttons sitting in the dark gutters of the gate on wide ones. */
-.practice-controls {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.25rem;
+/* Caption row: the two winding arrows sit either side of the step title and
+   the description runs the full width beneath them. Without JS the arrows are
+   hidden and every step is simply listed. */
+.practice-caption-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: min(40rem, calc(100% - 1.5rem));
+  padding-top: 1.9rem;
 }
 
-.js .practice-controls {
-  display: flex;
+.js .practice-caption-row {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  column-gap: 0.75rem;
 }
 
 .practice-arrow {
-  display: inline-grid;
+  position: relative;
+  z-index: 1;
+  display: none;
+  align-self: center;
+  grid-row: 1;
   width: 3rem;
   height: 3rem;
   place-items: center;
@@ -1624,6 +1630,18 @@ a:hover .arrow-icon {
     color 200ms ease,
     opacity 200ms ease,
     transform 340ms var(--ease-snap);
+}
+
+.js .practice-arrow {
+  display: inline-grid;
+}
+
+.practice-arrow-prev {
+  grid-column: 1;
+}
+
+.practice-arrow-next {
+  grid-column: 3;
 }
 
 .practice-arrow .arrow-icon {
@@ -1654,63 +1672,17 @@ a:hover .arrow-icon {
   transform: none;
 }
 
-.practice-counter {
-  min-width: 4.5ch;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.06em;
-  text-align: center;
-}
-
-@media (min-width: 1025px) {
-  .js .practice-controls {
-    display: contents;
-  }
-
-  .practice-counter {
-    display: none;
-  }
-
-  .practice-arrow {
-    position: absolute;
-    z-index: 3;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .practice-arrow:hover {
-    transform: translateY(calc(-50% - 3px));
-  }
-
-  .practice-arrow.is-pressed {
-    transform: translateY(calc(-50% + 1px)) scale(0.94);
-  }
-
-  .practice-arrow[aria-disabled='true']:hover {
-    transform: translateY(-50%);
-  }
-
-  .practice-arrow-prev {
-    left: clamp(0.9rem, 3vw, 3rem);
-  }
-
-  .practice-arrow-next {
-    right: clamp(0.9rem, 3vw, 3rem);
-  }
-}
-
-/* Captions: every step is listed without JS; with JS only the framed step is
-   shown and the copy slides in from the side the film came from. */
+/* Captions: with JS only the framed step is shown and the copy slides in from
+   the side the film came from. The list and each step share the row's grid
+   (subgrid) so the title occupies the middle column between the arrows while
+   the description spans all three. */
 .practice-captions {
   list-style: none;
   position: relative;
   display: grid;
   gap: 1.15rem;
-  width: min(34rem, calc(100% - 2rem));
   margin: 0;
-  padding: 1.9rem 0.5rem 0;
+  padding: 0 0.5rem;
   text-align: center;
 }
 
@@ -1720,21 +1692,41 @@ a:hover .arrow-icon {
 }
 
 .js .practice-captions {
+  grid-area: 1 / 1 / 3 / 4;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
   gap: 0;
-  min-height: 6.4rem;
+  padding: 0;
   overflow: hidden;
+  /* The list covers the arrow columns too; only the visible text is hit-testable. */
+  pointer-events: none;
 }
 
 .js .practice-captions li {
-  grid-area: 1 / 1;
+  grid-area: 1 / 1 / 3 / 4;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
   pointer-events: none;
   opacity: 0;
 }
 
+.js .practice-beat-heading {
+  grid-area: 1 / 2;
+  align-self: center;
+  min-width: 0;
+}
+
+.js .practice-captions p {
+  grid-area: 2 / 1 / 3 / 4;
+}
+
 .js .practice-captions li.is-current {
-  pointer-events: auto;
   opacity: 1;
   animation: practice-caption-in 420ms var(--ease-out) both;
+}
+
+.js .practice-captions li.is-current > * {
+  pointer-events: auto;
 }
 
 .js .practice-captions li.is-leaving {
@@ -1778,7 +1770,7 @@ a:hover .arrow-icon {
 
 .practice-captions p {
   max-width: 28rem;
-  margin: 0.4rem 0 0;
+  margin: 0.55rem 0 0;
   font-size: 1.1rem;
   line-height: 1.32;
   text-wrap: pretty;
@@ -3213,9 +3205,20 @@ a:hover .arrow-icon {
     --perf-size: 1.05rem;
   }
 
-  .practice-captions {
-    width: min(36rem, calc(100% - 1.7rem));
-    min-height: 0;
+  .practice-caption-row {
+    width: calc(100% - 1.4rem);
+  }
+
+  .js .practice-caption-row {
+    column-gap: 0.5rem;
+  }
+
+  .practice-number {
+    font-size: 1.3rem;
+  }
+
+  .practice-captions h3 {
+    font-size: 1.4rem;
   }
 
   .practice-captions p {

@@ -1,12 +1,10 @@
 const clamp = (min: number, max: number, value: number) =>
   Math.min(max, Math.max(min, value));
 
-const pad = (value: number) => String(value).padStart(2, '0');
-
 /**
  * The practice reel is a native horizontal scroller with snap points. This
- * only keeps the caption, counter, arrow state and sprocket holes in step with
- * wherever the visitor has wound the film to.
+ * only keeps the caption, arrow state and sprocket holes in step with wherever
+ * the visitor has wound the film to.
  */
 export function initPracticeReel(signal: AbortSignal): () => void {
   const section = document.querySelector<HTMLElement>('[data-practice-reel]');
@@ -21,7 +19,6 @@ export function initPracticeReel(signal: AbortSignal): () => void {
   );
   const prev = section.querySelector<HTMLButtonElement>('[data-reel-prev]');
   const next = section.querySelector<HTMLButtonElement>('[data-reel-next]');
-  const counter = section.querySelector<HTMLElement>('[data-reel-counter]');
 
   if (!viewport || cels.length === 0) return () => {};
 
@@ -47,8 +44,6 @@ export function initPracticeReel(signal: AbortSignal): () => void {
     });
     cels.forEach((cel, i) => cel.classList.toggle('is-current', i === index));
 
-    if (counter)
-      counter.textContent = `${pad(index + 1)} / ${pad(cels.length)}`;
     prev?.setAttribute('aria-disabled', String(index === 0));
     next?.setAttribute('aria-disabled', String(index === lastIndex));
   };

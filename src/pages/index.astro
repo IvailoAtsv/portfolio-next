@@ -380,55 +380,47 @@ const practiceBeats = [
               >
               </div>
             </div>
-
-            <div class="practice-controls">
-              <button
-                class="practice-arrow practice-arrow-prev"
-                type="button"
-                aria-label="Previous step"
-                aria-disabled="true"
-                data-reel-prev
-                data-squash
-              >
-                <ArrowIcon direction="left" />
-              </button>
-              <span
-                class="practice-counter"
-                data-reel-counter
-                aria-hidden="true"
-              >
-                01 / {String(practiceBeats.length).padStart(2, '0')}
-              </span>
-              <button
-                class="practice-arrow practice-arrow-next"
-                type="button"
-                aria-label="Next step"
-                data-reel-next
-                data-squash
-              >
-                <ArrowIcon />
-              </button>
-            </div>
           </div>
 
-          <ol class="practice-captions">
-            {
-              practiceBeats.map((beat, index) => (
-                <li
-                  class:list={[index === 0 && 'is-current']}
-                  aria-current={index === 0 ? 'step' : undefined}
-                >
-                  <div class="practice-beat-heading">
-                    <span class="practice-number" aria-hidden="true">
-                      {beat.step}
-                    </span>
-                    <h3>{beat.title}</h3>
-                  </div>
-                  <p>{beat.copy}</p>
-                </li>
-              ))
-            }
-          </ol>
+          <div class="practice-caption-row">
+            <button
+              class="practice-arrow practice-arrow-prev"
+              type="button"
+              aria-label="Previous step"
+              aria-disabled="true"
+              data-reel-prev
+              data-squash
+            >
+              <ArrowIcon direction="left" />
+            </button>
+            <ol class="practice-captions">
+              {
+                practiceBeats.map((beat, index) => (
+                  <li
+                    class:list={[index === 0 && 'is-current']}
+                    aria-current={index === 0 ? 'step' : undefined}
+                  >
+                    <div class="practice-beat-heading">
+                      <span class="practice-number" aria-hidden="true">
+                        {beat.step}
+                      </span>
+                      <h3>{beat.title}</h3>
+                    </div>
+                    <p>{beat.copy}</p>
+                  </li>
+                ))
+              }
+            </ol>
+            <button
+              class="practice-arrow practice-arrow-next"
+              type="button"
+              aria-label="Next step"
+              data-reel-next
+              data-squash
+            >
+              <ArrowIcon />
+            </button>
+          </div>
         </div>
       </section>
 
