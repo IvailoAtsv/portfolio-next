@@ -89,7 +89,6 @@
 
 html {
   scroll-padding-top: 7rem;
-  overflow-x: clip;
   background: var(--ink);
 }
 
@@ -188,7 +187,7 @@ ol {
   z-index: 1;
   width: min(100% - 12px, 1800px);
   margin: 6px auto;
-  overflow-x: clip;
+  overflow: visible;
   border: var(--line) solid var(--ink);
   border-radius: 30px;
   background: var(--paper);
@@ -553,8 +552,7 @@ ol {
 }
 
 .work-section .title-outline,
-.case-next .title-outline,
-.practice-section .title-outline {
+.case-next .title-outline {
   color: var(--ink);
   -webkit-text-stroke-color: var(--paper-light);
   text-shadow: none;
@@ -690,6 +688,9 @@ a:hover .arrow-icon {
   align-items: center;
   gap: clamp(1.5rem, 3vw, 3rem);
   min-height: calc(100svh - 14.5rem);
+  /* The cel waits at translateX(125%) before it slides on; iOS ignores
+     overflow-x on the viewport, so clip it here instead. */
+  overflow-x: clip;
   padding: clamp(0.65rem, 1.6vw, 1.6rem) clamp(1rem, 4vw, 4.5rem)
     clamp(2.2rem, 3.6vw, 3.4rem);
 }
@@ -765,7 +766,7 @@ a:hover .arrow-icon {
 .hero-stage {
   position: relative;
   width: 100%;
-  overflow-x: clip;
+  overflow: visible;
 }
 
 .hero-cel {
@@ -1417,14 +1418,17 @@ a:hover .arrow-icon {
   --caption-out: -1rem;
   --sprocket: 0px;
   position: relative;
-  border-top: 3px solid var(--paper-light);
-  border-bottom: 3px solid var(--paper-light);
-  background: var(--ink);
-  color: var(--paper-light);
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  /* Safari 26 tints its status bar and toolbar from the background-color of
+     sticky/fixed elements at the viewport edges. The section is sticky and
+     full-height while the reel plays, so it stays transparent and the yellow
+     lives on .practice-pin, which Safari does not sample. */
+  background: transparent;
 }
 
 .pin-spacer:has(> .practice-section) {
-  background: var(--ink);
+  background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
 }
 
 .practice-scroll-track:has([data-reel-mode='scroll']) {
@@ -1451,6 +1455,7 @@ a:hover .arrow-icon {
   gap: 0.35rem;
   width: 100%;
   padding: 1.15rem 0 1.85rem;
+  background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
 }
 
 .practice-heading {
@@ -1473,7 +1478,6 @@ a:hover .arrow-icon {
 .practice-intro {
   max-width: 34rem;
   margin: 0.55rem auto 0;
-  color: var(--paper-dim);
   font-size: clamp(1.05rem, 1.6vw, 1.25rem);
   line-height: 1.3;
   text-align: center;
@@ -1668,7 +1672,7 @@ a:hover .arrow-icon {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scrollbar-color: var(--paper-light) var(--ink-soft);
+  scrollbar-color: var(--ink) var(--yellow);
 }
 
 .practice-section[data-reel-mode='free'] .practice-frames {
@@ -2056,6 +2060,7 @@ a:hover .arrow-icon {
   grid-template-columns: minmax(20rem, 0.85fr) minmax(28rem, 1.15fr);
   align-items: center;
   gap: clamp(2rem, 4vw, 4rem);
+  overflow-x: clip;
   padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 5vw, 5rem) clamp(3rem, 6vw, 6rem);
 }
 
@@ -2769,7 +2774,7 @@ a:hover .arrow-icon {
 
 @media (max-width: 1100px) {
   .hero {
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    grid-template-columns: minmax(0, 0.95fr) minmax(25rem, 1.05fr);
   }
 
   .proof-seals {
