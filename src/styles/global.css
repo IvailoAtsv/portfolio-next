@@ -688,9 +688,6 @@ a:hover .arrow-icon {
   align-items: center;
   gap: clamp(1.5rem, 3vw, 3rem);
   min-height: calc(100svh - 14.5rem);
-  /* The cel waits at translateX(125%) before it slides on; iOS ignores
-     overflow-x on the viewport, so clip it here instead. */
-  overflow-x: clip;
   padding: clamp(0.65rem, 1.6vw, 1.6rem) clamp(1rem, 4vw, 4.5rem)
     clamp(2.2rem, 3.6vw, 3.4rem);
 }
@@ -1420,11 +1417,7 @@ a:hover .arrow-icon {
   position: relative;
   border-top: 3px solid var(--ink);
   border-bottom: 3px solid var(--ink);
-  /* Safari 26 tints its status bar and toolbar from the background-color of
-     sticky/fixed elements at the viewport edges. The section is sticky and
-     full-height while the reel plays, so it stays transparent and the yellow
-     lives on .practice-pin, which Safari does not sample. */
-  background: transparent;
+  background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
 }
 
 .pin-spacer:has(> .practice-section) {
@@ -2060,7 +2053,6 @@ a:hover .arrow-icon {
   grid-template-columns: minmax(20rem, 0.85fr) minmax(28rem, 1.15fr);
   align-items: center;
   gap: clamp(2rem, 4vw, 4rem);
-  overflow-x: clip;
   padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 5vw, 5rem) clamp(3rem, 6vw, 6rem);
 }
 
