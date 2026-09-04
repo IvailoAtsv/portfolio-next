@@ -1,0 +1,75 @@
+package-lock.json
+  s_f1bb95c9682e3e::t_0a5c7ab9ecc9ac 15,3623-3628
+package.json
+  s_f1bb95c9682e3e::t_28a4f5c07cfe97 19
+src/components/CircleWords.astro
+  s_c621a36e1d82b6::t_f09dc29a1fa2eb 15,26-34,47,64-67,81-83,94,108-110,115-121
+src/components/ProjectVideo.astro
+  s_c621a36e1d82b6::t_cc6f9ce9bf8fa2 27-28,36,47-75,95,97-114,121-137,154,156,165,173-206,229,235
+src/pages/index.astro
+  s_c621a36e1d82b6::t_1b0ebfeb02c9ee 8-11,22,35,48,61,70-74,77,79-81,84-95,328-329,331-340,342-372,374-377,380,382,384-395,428-434,441,445-447,449-467
+src/pages/work/finance-me.astro
+  s_c621a36e1d82b6::t_86288387de101f 35-36
+src/pages/work/hlp-labs.astro
+  s_c621a36e1d82b6::t_216c559910e37e 62-63,529
+src/pages/work/keep-up.astro
+  s_c621a36e1d82b6::t_0045a7074d2c1f 18-19
+src/pages/work/sellphy.astro
+  s_c621a36e1d82b6::t_2e9ba735709104 17-18
+src/scripts/hero-notes.ts
+  s_c621a36e1d82b6::t_d6e287d72f9f1a 15,19-24,30,112-142
+src/scripts/motion-cues.ts
+  s_c621a36e1d82b6::t_060a3e760af194 42,56,67,80-82,84-86,88,90-99,105-107,110,112-115,124,133
+src/scripts/motion.ts
+  s_c621a36e1d82b6::t_f23df1c79be10a 141-142,164-165,181-182,218-219,226-234,266,269,271,277-278,282-283,288,290,292,294,296-297,350,372-383,387-389,396
+src/scripts/page-interactions.ts
+  s_c621a36e1d82b6::t_f2a7f2f0721f73 3,17,22
+src/scripts/practice-reel.ts
+  s_c621a36e1d82b6::t_27b17fbe611c72 1-142
+src/styles/global.css
+  s_c621a36e1d82b6::t_6bb4e654686ccc 98,190,375-376,1350-1353,1359,1407,1411-1417,1420,1423-1446,1455-1461,1464,1466-1467,1470-1478,1481-1486,1489-1490,1492-1494,1497,1499-1511,1514-1519,1522-1523,1526-1527,1529-1561,1564-1565,1567-1570,1574-1576,1579-1597,1600-1617,1619-1620,1622,1626-1686,1746-1749,1756-1757,1760-1785,1787-1788,1804,1806-1807,1809,1880-1882,1888,1907-1911,1974,1976,1986,1988,1999-2000,2008-2009,2016-2018,2708-2712,2714-2726,2989,3001-3004,3110-3125,3233-3234,3251,3264-3267
+src/styles/motion.css
+  s_c621a36e1d82b6::t_d0afabdc027c3d 18,45-50,52,69,73-74
+public/assets/generated/manifest.md
+  s_c259fd877630c2::t_b46a4579ffd809 3,12-15,19
+src/assets/practice-design-build.webp.json
+  s_c259fd877630c2::t_d792a4fbf8cae8 1-14
+src/assets/practice-discovery.webp.json
+  s_c259fd877630c2::t_2bc2e19dae288b 1-14
+src/assets/practice-maintain-improve.webp.json
+  s_c259fd877630c2::t_2b43f2fc10bb69 1-16
+src/assets/practice-test-iterate.webp.json
+  s_c259fd877630c2::t_fa9b3c5b085f20 1-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "bc9a54bbfe794a2c4f69e45230dd2cdf7b61e6e3",
+  "prompts": {},
+  "sessions": {
+    "s_c259fd877630c2": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0690d-2039-7262-a8d0-84a8db9d67b3",
+        "model": "unknown"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_c621a36e1d82b6": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "6de2270b-9344-4f3a-b273-0368250508b3",
+        "model": "grok-4.6"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    },
+    "s_f1bb95c9682e3e": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "4d904d6c-ceb7-40c3-ae1e-e3ebdca9a326",
+        "model": "grok-4.6"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    }
+  }
+}
