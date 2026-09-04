@@ -1,0 +1,19 @@
+src/pages/index.astro
+  s_b4f6a54db39ae3::t_273cd796506455 324-327,329-335,339-341,404-405,514,516,532-533
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "91a495899445e1e4c260b1640eee611247b50d09",
+  "prompts": {},
+  "sessions": {
+    "s_b4f6a54db39ae3": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ea29edcd-8e22-40f2-bd8b-429b0b26c534",
+        "model": "composer-2.5"
+      },
+      "human_author": "Ivaylo Atanasov <ivailoatanassovv@gmail.com>"
+    }
+  }
+}
