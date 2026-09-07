@@ -95,10 +95,12 @@ html {
   background: var(--ink);
 }
 
+/* Do not set overflow-x: hidden/clip on html or body. iOS Safari treats that
+   as a document trap and the nested practice reel can no longer be panned.
+   Oversized art and off-stage translates are clipped on their local stages. */
 body {
   margin: 0;
   min-width: 320px;
-  overflow-x: clip;
   background: var(--ink);
   color: var(--ink);
   font-family: var(--font-body);
@@ -190,6 +192,7 @@ ol {
   position: relative;
   z-index: 1;
   width: min(100% - 12px, 1800px);
+  max-width: 100%;
   margin: 6px auto;
   overflow: visible;
   border: var(--line) solid var(--ink);
@@ -416,6 +419,7 @@ ol {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  min-width: 0;
   padding: clamp(1rem, 2vw, 1.65rem) clamp(1rem, 4vw, 4.5rem);
 }
 
@@ -734,6 +738,10 @@ a:hover .arrow-icon {
   align-items: center;
   gap: clamp(1.5rem, 3vw, 3rem);
   min-height: calc(100svh - 14.5rem);
+  /* The cel waits at translateX(125%) before it slides on. Clip here so that
+     off-stage start cannot widen the document; hanging notes and the stage
+     sign still have room inside the hero padding. */
+  overflow: hidden;
   padding: clamp(0.65rem, 1.6vw, 1.6rem) clamp(1rem, 4vw, 4.5rem)
     clamp(2.2rem, 3.6vw, 3.4rem);
 }
@@ -742,6 +750,7 @@ a:hover .arrow-icon {
   position: relative;
   z-index: 3;
   max-width: 49rem;
+  min-width: 0;
   padding-top: clamp(0.2rem, 1.4vw, 1.15rem);
 }
 
@@ -809,6 +818,7 @@ a:hover .arrow-icon {
 .hero-stage {
   position: relative;
   width: 100%;
+  min-width: 0;
   overflow: visible;
 }
 
@@ -1018,6 +1028,7 @@ a:hover .arrow-icon {
 
 .work-section {
   position: relative;
+  overflow: hidden;
   padding: clamp(4rem, 8vw, 8rem) clamp(1rem, 4vw, 4.5rem)
     clamp(5rem, 9vw, 9rem);
   background: var(--ink);
@@ -1045,6 +1056,7 @@ a:hover .arrow-icon {
   grid-template-columns: minmax(22rem, 1fr) minmax(26rem, 1fr);
   gap: clamp(1.5rem, 3vw, 3rem);
   max-width: 95rem;
+  min-width: 0;
   margin: 0 auto;
   padding: clamp(1rem, 2vw, 1.5rem);
   border: 2px solid var(--paper-light);
@@ -1324,6 +1336,7 @@ a:hover .arrow-icon {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 6rem);
   align-items: center;
+  min-width: 0;
   padding: clamp(2.5rem, 5vw, 5.5rem) 0;
   border-bottom: 2px solid var(--paper-light);
 }
@@ -1334,6 +1347,8 @@ a:hover .arrow-icon {
 
 .reel-stage {
   position: relative;
+  min-width: 0;
+  overflow: visible;
 }
 
 .reel-scene {
@@ -1463,6 +1478,8 @@ a:hover .arrow-icon {
   --caption-out: -1rem;
   --sprocket: 0px;
   position: relative;
+  min-width: 0;
+  overflow: hidden;
   border-top: 3px solid var(--ink);
   border-bottom: 3px solid var(--ink);
   background: color-mix(in srgb, var(--yellow) 62%, var(--paper-light));
@@ -1474,11 +1491,14 @@ a:hover .arrow-icon {
   align-items: center;
   gap: 0.35rem;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   padding: clamp(2.75rem, 5.5vw, 4.5rem) 0 clamp(2.5rem, 4vw, 3.5rem);
 }
 
 .practice-heading {
   width: 100%;
+  min-width: 0;
   padding-inline: clamp(1rem, 4vw, 4.5rem);
 }
 
@@ -1507,13 +1527,19 @@ a:hover .arrow-icon {
   position: relative;
   isolation: isolate;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .practice-stock {
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: var(--perf-size) auto var(--perf-size);
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  contain: inline-size;
   border-block: 2px solid color-mix(in srgb, var(--paper-light) 18%, var(--ink));
   background: var(--ink);
   box-shadow:
@@ -1553,6 +1579,8 @@ a:hover .arrow-icon {
   overflow-x: auto;
   overflow-y: hidden;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   background: var(--ink);
   container-type: inline-size;
   overscroll-behavior-x: contain;
@@ -1630,6 +1658,8 @@ a:hover .arrow-icon {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   width: min(40rem, calc(100% - 1.5rem));
+  max-width: 100%;
+  min-width: 0;
   padding-top: 1.9rem;
 }
 
@@ -1816,6 +1846,7 @@ a:hover .arrow-icon {
   align-items: center;
   gap: clamp(3rem, 8vw, 8rem);
   padding: clamp(5rem, 10vw, 10rem) clamp(1rem, 7vw, 8rem);
+  overflow: hidden;
   background: var(--paper);
 }
 
@@ -1989,6 +2020,7 @@ a:hover .arrow-icon {
   z-index: 3;
   align-self: stretch;
   min-height: clamp(24rem, 34vw, 36rem);
+  min-width: 0;
   width: calc(100% + var(--contact-inline));
   margin-right: calc(-1 * var(--contact-inline));
   overflow: visible;
@@ -2145,6 +2177,7 @@ a:hover .arrow-icon {
   grid-template-columns: minmax(20rem, 0.85fr) minmax(28rem, 1.15fr);
   align-items: center;
   gap: clamp(2rem, 4vw, 4rem);
+  overflow: hidden;
   padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 5vw, 5rem) clamp(3rem, 6vw, 6rem);
 }
 
@@ -2291,6 +2324,7 @@ a:hover .arrow-icon {
 
 .case-section {
   padding: clamp(3.5rem, 7vw, 7rem) 0;
+  overflow: hidden;
   border-bottom: 1px solid #4a4943;
 }
 
@@ -2335,6 +2369,7 @@ a:hover .arrow-icon {
 
 .case-screen {
   padding: clamp(4rem, 8vw, 8rem) 0;
+  overflow: hidden;
   border-bottom: 1px solid #4a4943;
 }
 
@@ -2358,6 +2393,7 @@ a:hover .arrow-icon {
   grid-template-columns: 1fr 1fr;
   gap: clamp(1.25rem, 3vw, 2.5rem);
   padding: clamp(4rem, 8vw, 8rem) 0;
+  overflow: hidden;
   border-bottom: 1px solid #4a4943;
 }
 
@@ -2580,10 +2616,16 @@ a:hover .arrow-icon {
   background: var(--green);
 }
 
+.knowledge-section,
+.operations-section {
+  overflow: visible;
+}
+
 .operations-frame {
   position: relative;
   margin-top: 3rem;
   padding-bottom: 5.5rem;
+  overflow: hidden;
 }
 
 .admin-callout {
@@ -2650,6 +2692,7 @@ a:hover .arrow-icon {
   align-items: end;
   justify-content: space-between;
   gap: 3rem;
+  overflow: hidden;
   padding: clamp(5rem, 9vw, 9rem) 0 clamp(2rem, 5vw, 4rem);
 }
 
@@ -2883,12 +2926,15 @@ a:hover .arrow-icon {
     display: flex;
     flex-wrap: nowrap;
     gap: 0 1.2rem;
+    min-width: 0;
     margin: 0 calc(-1 * var(--case-inline));
     padding: calc(var(--case-nav-block) + env(safe-area-inset-top, 0px))
       var(--case-inline) var(--case-nav-block);
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
     background:
       linear-gradient(var(--case-rule), var(--case-rule)) bottom center /
         calc(100% - 2 * var(--case-inline)) 1px no-repeat,
@@ -3373,6 +3419,7 @@ a:hover .arrow-icon {
   .contact-section .button {
     width: 100%;
     overflow-wrap: anywhere;
+    white-space: normal;
     font-size: 0.86rem;
   }
 

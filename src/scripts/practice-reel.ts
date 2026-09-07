@@ -4,7 +4,8 @@ const clamp = (min: number, max: number, value: number) =>
 /**
  * The practice reel is a native horizontal scroller with snap points. This
  * only keeps the caption, arrow state and sprocket holes in step with wherever
- * the visitor has wound the film to.
+ * the visitor has wound the film to. The strip never auto-advances; it moves
+ * when the visitor slides it or uses the arrows.
  */
 export function initPracticeReel(signal: AbortSignal): () => void {
   const section = document.querySelector<HTMLElement>('[data-practice-reel]');
