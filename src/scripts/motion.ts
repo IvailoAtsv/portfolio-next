@@ -343,7 +343,7 @@ export function initMotion(signal: AbortSignal): () => void {
       });
       queue();
     },
-    { threshold: 0, rootMargin: '0px 0px 25% 0px' },
+    { threshold: 0, rootMargin: '0px 0px -15% 0px' },
   );
   const loopObserver = new IntersectionObserver(
     (entries) => {
